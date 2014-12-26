@@ -104,7 +104,7 @@ $config['data'] = array(
 
 //api
 $config['api_uri'] = 'http://yunfudao.strongwind.cn/api/index.php';
-$config['api_key'] = '731222260492(readboy)254898843641';
+$config['api_key'] = '731222260492(readboy)25489884364';
 
 //1：小学，2：初中，3：高中
 $config['grade_list'] = array(
@@ -126,15 +126,14 @@ $config['subject_list'] = array(
 	"9"=>"政治",
 );
 
-//0：老师，1：客服
+//角色 0：老师，1：客服
 $config['role_list'] = array(0,1);
 //1男,2女,3未知
 $config['gender_list'] = array('1'=>'男','2'=>'女','3'=>'未知');
-//0：激活，1：冻结，2：删除，3：彻底删除，4：测试
+//老师状态  0：激活，1：冻结，2：删除，3：彻底删除，4：测试
 $config['status_list'] = array('0'=>'激活','1'=>'冻结','2'=>'删除','3'=>'彻底删除','4'=>'测试');
 $config['status_list_view'] = array('0'=>'激活的老师','1'=>'冻结的老师','2'=>'删除的老师','4'=>'测试的老师');
-
-//
+//列表页面
 $config['page'] = 10;
 
 /* End of file my_config.php */

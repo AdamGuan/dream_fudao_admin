@@ -259,9 +259,13 @@ function api_curl($url, $data, $method,$key){
 		$data = array();
 	}
 	else{
-		$url = $url."?sign=".$sign;
+		$tmp_data = array();
+		$tmp_data['c'] = $data['c'];
+		$tmp_data['m'] = $data['m'];
+		unset($data['c']);
+		unset($data['m']);
+		$url = $url."?".http_build_query($tmp_data)."&sign=".$sign;
 	}
-
 	return curlrequest($url,$data,$method);
 }
 
@@ -286,7 +290,12 @@ function api_curl_multi($url, $data_list, $method_list,$key){
 			$data = array();
 		}
 		else{
-			$tmpurl = $url."?sign=".$sign;
+			$tmp_data = array();
+			$tmp_data['c'] = $data['c'];
+			$tmp_data['m'] = $data['m'];
+			unset($data['c']);
+			unset($data['m']);
+			$tmpurl = $url."?".http_build_query($tmp_data)."&sign=".$sign;
 		}
 		$url_list[$k] = $tmpurl;
 		$data_list[$k] = $data;

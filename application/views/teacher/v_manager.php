@@ -3,12 +3,17 @@
 		<div class="am-fl am-cf">
 			<div class="am-btn-toolbar am-fl">
 				<div class="am-btn-group am-btn-group-xs">
-					<button type="button" class="am-btn am-btn-default"><span class="am-icon-plus"></span> 新增</button>
-					<button type="button" class="am-btn am-btn-default"><span class="am-icon-save"></span> 删除</button>
-					<button type="button" class="am-btn am-btn-default"><span class="am-icon-archive"></span>冻结</button>
-					<button type="button" class="am-btn am-btn-default"><span class="am-icon-archive"></span>激活</button>
-					<button type="button" class="am-btn am-btn-default"><span class="am-icon-archive"></span>设为测试帐号</button>
-					<button type="button" class="am-btn am-btn-default"><span class="am-icon-archive"></span>设为正常帐号</button>
+					<button type="button" class="am-btn am-btn-default" id="teacher_add"><span
+							class="am-icon-plus"></span>
+						新增</button>
+					<button type="button" class="am-btn am-btn-default" id="teachers_delete"><span
+							class="am-icon-save"></span> 删除</button>
+					<button type="button" class="am-btn am-btn-default" id="teachers_freezon"><span
+							class="am-icon-archive"></span>冻结</button>
+					<button type="button" class="am-btn am-btn-default" id="teachers_active"><span
+							class="am-icon-archive"></span>激活</button>
+					<button type="button" class="am-btn am-btn-default" id="teachers_test"><span
+							class="am-icon-archive"></span>设为测试帐号</button>
 				</div>
 
 				<div class="am-form-group am-margin-left am-fl">
@@ -26,6 +31,7 @@
 			</div>
 		</div>
 	</div>
+	<!--
 	<div class="am-u-md-3 am-cf">
 		<div class="am-fr">
 			<div class="am-input-group am-input-group-sm">
@@ -36,6 +42,7 @@
 			</div>
 		</div>
 	</div>
+	-->
 </div>
 
 
@@ -45,14 +52,14 @@
 <table class="am-table am-table-striped am-table-hover table-main">
 <thead>
 <tr>
-	<th class="table-check"><input type="checkbox" /></th><th>序号</th><th>账号</th><th>名字</th><th>ID</th><th>专长学科</th><th>年级</th><th>状态</th><th>金币</th><th>管理</th>
+	<th class="table-check"><input type="checkbox" id="teacher_select" /></th><th>序号</th><th>账号</th><th>名字</th><th>ID</th><th>专长学科</th><th>年级</th><th>状态</th><th>金币</th><th>管理</th>
 </tr>
 </thead>
 <tbody>
 <?php foreach($teacher_list as $k=>$teacher){
 	$str = '';
 	$str .= '<tr>';
-	$str .= '<td><input type="checkbox" /></td>';
+	$str .= '<td><input type="checkbox" F_teacher_id="'.$teacher['F_teacher_id'].'" id="teacher_check'.$teacher['F_teacher_id'].'" /></td>';
 	$str .= '<td>'.($k+1).'</td>';
 	$str .= '<td>'.$teacher['F_teacher_name'].'</td>';
 	$str .= '<td>'.$teacher['F_real_name'].'</td>';
@@ -76,9 +83,6 @@
 				 class="am-icon-trash-o"></span>活激</button>
 				<button class="am-btn am-btn-default am-btn-xs am-text-danger" F_teacher_id="'.$teacher['F_teacher_id'].'" id="teacher_test'.$k.'"><span
 				 class="am-icon-trash-o"></span>设为测试帐号</button>
-				<button class="am-btn am-btn-default am-btn-xs am-text-danger" F_teacher_id="'.$teacher['F_teacher_id'].'"
-				 id="teacher_normal'.$k.'"><span
-				 class="am-icon-trash-o"></span>设为正常帐号</button>
 			</div>
 		</div>
 	</td>';
@@ -111,5 +115,8 @@
 </div>
 
 <script>
-	var change_teacher_status_uri = "<?php echo $change_teacher_status_uri;?>";
+	var teacher_freeze_uri = "<?php echo $teacher_freeze_uri;?>";
+	var teacher_delete_uri = "<?php echo $teacher_delete_uri;?>";
+	var teacher_active_uri = "<?php echo $teacher_active_uri;?>";
+	var teacher_set_test_uri = "<?php echo $teacher_set_test_uri;?>";
 </script>

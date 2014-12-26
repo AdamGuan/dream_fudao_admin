@@ -107,3 +107,16 @@
 			<div class="am-fl am-cf"><strong class="am-text-primary am-text-lg"><?php echo isset($content_title)
 	?$content_title:"";?></strong></div>
 		</div>
+
+
+		<?php if(isset($do) && !is_null($do) && $do == "success"){?>
+			<div class="am-alert am-alert-success" data-am-alert>
+				<button type="button" class="am-close">&times;</button>
+				<p>操作成功!</p>
+			</div>
+		<?php }else if(isset($do) && !is_null($do) && $do == "fail"){?>
+		<div class="am-alert am-alert-warning" data-am-alert>
+			<button type="button" class="am-close">&times;</button>
+			<p>操作失败!请重试!</p>
+		</div>
+		<?php }?>

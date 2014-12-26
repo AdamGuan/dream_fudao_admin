@@ -6,7 +6,12 @@ class C_teacher extends MY_Controller {
 		parent :: __construct();
 	}
 
-	//老师管理
+	/**
+	 * 老师管理
+	 * @param array $parames
+	 *          type    int 0：激活，1：冻结，2：删除，3：彻底删除，4：测试
+	 *          page    int 列表页面
+	 */
 	public function manager($parames = array())
 	{
 		//检查是否有登录
@@ -92,6 +97,7 @@ class C_teacher extends MY_Controller {
 
 		//data
 		$data = $this->_get_data(__CLASS__,__METHOD__);
+		$data['do'] = $this->session->flashdata('do');
 		$data['teacher_list'] = isset($teacher_list_result['list'])?$teacher_list_result['list']:array();
 		$data['teacher_total'] = isset($teacher_list_result['total'])?$teacher_list_result['total']:0;
 		$data['page_total'] = $page_total;
@@ -101,11 +107,41 @@ class C_teacher extends MY_Controller {
 		$data['page_pre_url'] = $page_pre_url;
 		$data['page_next_url'] = $page_next_url;
 		$data['status_list'] = $status_list;
-		$data['change_teacher_status_uri'] = base_url("c_teacher/manager");
+		$data['teacher_freeze_uri'] = base_url("c_teacher/teacher_freeze");
+		$data['teacher_delete_uri'] = base_url("c_teacher/teacher_delete");
+		$data['teacher_active_uri'] = base_url("c_teacher/teacher_active");
+		$data['teacher_set_test_uri'] = base_url("c_teacher/teacher_set_test");
+
 		$this->_output_view("teacher/v_manager", $data);
 	}
 
-	public function do_change_teacher_status($parames = array()){
+	/**
+	 * 改变老师状态
+	 * @param array $parames
+	 *                  F_teacher_ids   string  老师IDs,如1,2,3
+	 *                  F_status   int 0：激活，1：冻结，2：删除，3：彻底删除，4：测试
+	 */
+	private  function _do_change_teacher_status($parames = array()){
+		//
+		$this -> load -> model('M_teacher', 'mteacher');
+		$result = $this->mteacher->change_teacher_status($parames);
+		if($result === true)
+		{
+			$this->session->set_flashdata('do', 'success');
+		}else{
+			$this->session->set_flashdata('do', 'fail');
+		}
+
+		$data = array('result'=>$result);
+		$this->_ajax_echo($data);
+	}
+
+	/**
+	 * 冻结老师
+	 * @param array $parames
+	 *                  F_teacher_ids   string  老师IDs,如1,2,3
+	 */
+	public function teacher_freeze($parames = array()){
 		//检查是否有登录
 		$result = $this->_check_login();
 		if(is_array($result) && isset($result['redirect_url']))	//未登录
@@ -118,12 +154,112 @@ class C_teacher extends MY_Controller {
 			$this->_ajax_echo(array('msg'=>'没有权限'));
 		}
 		//业务
-		//
-		$this -> load -> model('M_teacher', 'mteacher');
-		$result = $this->mteacher->change_teacher_status($parames);
+		$parames['F_status'] = 1;
+		$this->_do_change_teacher_status($parames);
+	}
 
-		$data = array('result'=>$result);
-		$this->_ajax_echo($data);
+	/**
+	 * 删除老师
+	 * @param array $parames
+	 *                  F_teacher_ids   string  老师IDs,如1,2,3
+	 */
+	public function teacher_delete($parames = array()){
+		//检查是否有登录
+		$result = $this->_check_login();
+		if(is_array($result) && isset($result['redirect_url']))	//未登录
+		{
+			top_redirect($result['redirect_url']);
+		}
+		//检查是否有权限
+		if($this->_check_privity() === false)
+		{
+			$this->_ajax_echo(array('msg'=>'没有权限'));
+		}
+		//业务
+		$parames['F_status'] = 2;
+		$this->_do_change_teacher_status($parames);
+	}
+
+	/**
+	 * 激活老师
+	 * @param array $parames
+	 *                  F_teacher_ids   string  老师IDs,如1,2,3
+	 */
+	public function teacher_active($parames = array()){
+		//检查是否有登录
+		$result = $this->_check_login();
+		if(is_array($result) && isset($result['redirect_url']))	//未登录
+		{
+			top_redirect($result['redirect_url']);
+		}
+		//检查是否有权限
+		if($this->_check_privity() === false)
+		{
+			$this->_ajax_echo(array('msg'=>'没有权限'));
+		}
+		//业务
+		$parames['F_status'] = 0;
+		$this->_do_change_teacher_status($parames);
+	}
+
+	/**
+	 * 设置老师为测试帐号
+	 * @param array $parames
+	 *                  F_teacher_ids   string  老师IDs,如1,2,3
+	 */
+	public function teacher_set_test($parames = array()){
+		//检查是否有登录
+		$result = $this->_check_login();
+		if(is_array($result) && isset($result['redirect_url']))	//未登录
+		{
+			top_redirect($result['redirect_url']);
+		}
+		//检查是否有权限
+		if($this->_check_privity() === false)
+		{
+			$this->_ajax_echo(array('msg'=>'没有权限'));
+		}
+		//业务
+		$parames['F_status'] = 4;
+		$this->_do_change_teacher_status($parames);
+	}
+
+	/**
+	 * 获取一个老师的信息
+	 * @param array $parames
+	 *          F_teacher_id    string
+	 */
+	public function teacher_edit($parames = array())
+	{
+		//检查是否有登录
+		$result = $this->_check_login();
+		if(is_array($result) && isset($result['redirect_url']))	//未登录
+		{
+			top_redirect($result['redirect_url']);
+		}
+		//检查是否有权限
+		if($this->_check_privity() === false)
+		{
+			redirect_to_no_privity_page();
+		}
+		//业务
+		//get teacher info
+		$this -> load -> model('M_teacher', 'mteacher');
+		$teacher_info = $this->mteacher->get_teacher_info($parames);
+
+		//data
+		$data = $this->_get_data(__CLASS__,__METHOD__);
+		$data['do'] = $this->session->flashdata('do');
+		$data['teacher_info'] = $teacher_info;
+		$data['grade_list'] = $this->my_config['grade_list'];
+		$data['subject_list'] = $this->my_config['subject_list'];
+		$data['gender_list'] = $this->my_config['gender_list'];
+
+		$this->_output_view("teacher/v_edit", $data);
+	}
+
+	public function teacher_modify($parames = array()){
+
 	}
 
 }

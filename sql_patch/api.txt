@@ -1,0 +1,2182 @@
+========================================================================================
+
+版本： server_v1
+
+目前签名用的Key假定为"731222260492(readboy)25489884364"
+
+========================================================================================
+
+//响应代码
+$config['0'] = '正常';
+$config['-1'] = '服务版本关闭';
+$config['-2'] = '服务版本不存在';
+$config['-3'] = '服务版本维护';
+$config['-4'] = '参数错误';
+$config['-5'] = '签名错误';
+$config['-6'] = '编解码错误';
+$config['-10000'] = '用户已注册';
+$config['-10001'] = '用户名或密码错误';
+$config['-7'] = '当前访问不存在';
+$config['-8'] = '数据库错误';
+$config['-9'] = '暂无数据'
+$config['-10'] = '真实名已使用'
+$config['-11'] = '头像上传失败';
+$config['-12'] = '删除失败';
+$config['-13'] = '查询不到';
+$config['-14'] = '处理失败';
+$config['-15'] = '账号未激活';
+
+========================================================================================
+
+//年级
+array('grade' => 513, 'name' => "一年级"),
+array('grade' => 514, 'name' => "二年级"),
+array('grade' => 515, 'name' => "三年级"),
+array('grade' => 516, 'name' => "四年级"),
+array('grade' => 517, 'name' => "五年级"),
+array('grade' => 518, 'name' => "六年级"),
+array('grade' => 519, 'name' => "初中一年级"),
+array('grade' => 520, 'name' => "初中二年级"),
+array('grade' => 521, 'name' => "初中三年级"),
+array('grade' => 769, 'name' => "高中一年级"),
+array('grade' => 770, 'name' => "高中二年级"),
+array('grade' => 771, 'name' => "高中三年级")),
+
+========================================================================================
+
+//老师头像上传大小限制
+$config['teacher_header_img_size'] = 1024*200;
+
+//广告状态
+$config['ad_status_list'] = array(0,2);	//0激活，2冻结
+
+//1：小学，2：初中，3：高中
+$config['grade_list'] = array(
+	"1"=>"小学",
+	"2"=>"初中",
+	"3"=>"高中"
+);
+
+//1"数学",2"语文",3"化学",4"物理",5"英语"
+$config['subject_list'] = array(
+	"1"=>"语文",
+	"2"=>"数学",
+	"3"=>"英语",
+	"4"=>"化学",
+	"5"=>"物理",
+	"6"=>"生物",
+	"7"=>"历史",
+    "8"=>"地理",
+    "9"=>"政治",
+);
+//1男,2女
+$config['gender_list'] = array('1'=>'男','2'=>'女');
+//0激活，1冻结，2删除,3不可恢复,4测试
+$config['status_list'] = array(0,1,2,3,4);
+
+========================================================================================
+
+查询老师列表：
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		GET
+	参数:
+		version			常量		server_v1
+		c			常量		teacher
+		m			常量		get_teacher_list
+		type			int		0：激活，1：冻结，2：删除,-1所有
+		offset:			int		查询偏移量(用于分页查询)
+		limit:			int		查看数量(用于分页查询)
+		F_real_name:		string		老师真实名(可选)
+		F_teacher_name:		string		老师登录名(可选)
+		F_group:	    int		    老师分组ID(可选,默认为0,代表不分组)
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+				"total":int,
+				"list":
+				{
+					{
+						"F_teacher_id":string,
+						"F_real_name":string,
+						"F_teacher_name":string,
+						"F_grade":string,
+						"F_subject_id":int,
+						"F_description":string,
+						"F_teaching_experience":int,
+						"F_subject_ids":string,
+						"F_gender":int,
+						"F_coin":int,
+						"F_status":int,
+						"F_create_time":datetime,
+						"F_update_time":datetime,
+						"F_teacher_header_img_url":string,
+						"F_group":int,
+					}
+				}
+			}
+
+		responseNo	错误代码:
+			[0|-4|-9]
+		msg		错误信息
+		total		老师总数
+		list		老师列表信息,二维
+			F_teacher_id		老师ID
+	 		F_real_name		老师真实名
+	 		F_teacher_name		老师登录名
+	 		F_grade			可以辅导年级
+	 		F_coin			金币
+	 		F_subject_id		专长的科目
+	 		F_description		简介
+	 		F_teaching_experience	教学经验
+	 		F_subject_ids		可辅导的多个科目
+	 		F_gender		性别
+	 		F_status		账号状态
+			F_create_time		老师添加时间
+	 		F_update_time		老师修改时间
+	 		F_teacher_header_img_url 头像URL
+	 		F_group 分组ID
+	其它说明:
+
+		F_grade: 值对应$config['grade_list'],多个值","号分隔
+		F_subject_id: 值对应$config['subject_list']
+		F_subject_ids: 值对应$config['subject_list'],多个值","号分隔
+		F_gender: 值对应$config['gender_list']
+		F_status: 值对应$config['status_list']
+
+	例:		
+		PHP代码演示构建最终请求url
+
+		<?php
+		//参数列表
+		$list = array(
+			'c'=>'teacher',
+			'm'=>'get_teacher_list',
+			'version'=>'server_v1',
+			'type'=>0,
+			'offset'=>0,
+			'limit'=>10,
+		);
+		//按照key排序参数列表
+		ksort($list);
+		//构建url请求部分如： a=1&b=2
+		$parames = http_build_query($list);
+		//签名
+		$key = "731222260492(readboy)25489884364";
+		$sign = md5($parames."&key=".$key);
+		//构建Url
+		$url = 'http://115.29.100.13/api/index.php?'.$parames.'&sign='.$sign;
+		//输出
+		echo $url;
+		?>
+
+========================================================================================
+
+查询一个老师信息：
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		GET
+	参数:
+		version			常量		server_v1
+		c			常量		teacher
+		m			常量		get_a_teacher
+		F_teacher_id:		string		老师ID
+	返回:
+		json格式
+			{
+			"responseNo":int,
+			"msg":string,
+			"info":
+				{
+				"F_teacher_id":string,
+				"F_real_name":string,
+				"F_teacher_name":string,
+				"F_grade":string,
+				"F_subject_id":int,
+				"F_description":string,
+				"F_teaching_experience":int,
+				"F_header_update_time":datetime,
+				"F_subject_ids":string,
+				"F_gender":int,
+				"F_coin":int,
+				"F_status":int,
+				"F_create_time":datetime,
+				"F_update_time":datetime,
+				"F_teacher_header_img_url":string,
+				"F_group":int,
+				}
+			}
+
+		responseNo	错误代码:
+			[0|-4|-13]
+		msg		错误信息
+		info		老师信息,一维
+			F_teacher_id		老师ID
+			F_real_name		老师真实名
+			F_teacher_name		老师登录名
+			F_grade			可以辅导年级
+			F_subject_id		专长的科目
+			F_description		简介
+			F_teaching_experience	教学经验(单位年)
+			F_header_update_time	头像更新时间
+			F_subject_ids		可辅导的多个科目
+			F_gender		性别
+			F_coin			金币
+			F_status		账号状态
+			F_create_time		老师添加时间
+			F_update_time		老师修改时间
+			F_teacher_header_img_url 头像URL
+			F_group 分组ID
+	其它说明:
+			F_grade: 值见$config['grade_list']，多个值用","分隔
+			F_subject_id: 值见$config['subject_list']
+			F_subject_ids:值见$config['subject_list']，多个值用","分隔
+			F_gender: 值见$config['gender_list']
+			F_status: 值见$config['status_list']
+
+========================================================================================
+
+改变老师状态：
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		GET/POST
+	参数:
+		version			常量		server_v1
+		c			常量		teacher
+		m			常量		change_teacher_status
+		F_teacher_ids:		string		老师IDs(","号分隔ID)
+		F_status:		int		状态 0：激活，1：冻结，2：删除,3：不可恢复
+		F_who:			string		操作人
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,			
+			}
+
+		responseNo	响应代码:
+			[0|-4|-14]
+		msg		响应信息
+	其它说明:
+
+========================================================================================
+
+添加一个老师：
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST
+	参数:
+		version			常量		server_v1
+		c			常量		teacher
+		m			常量		add_a_teacher
+		F_real_name:		string		老师真实名
+		F_teacher_name:		string		老师登录名
+		F_teacher_password:	string		老师密码
+		F_grade:		string		可以辅导年级
+		F_subject_id:		INT		专长的科目
+		F_description:		string		简介
+		F_teaching_experience:	INT		教学经验,单位年
+		F_subject_ids:		string		可辅导的多个科目
+		F_gender:		INT		性别
+		F_who:			string		操作人
+		F_group:		INT		分组ID
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,			
+			}
+
+		responseNo	响应代码:
+			[0|-4|-10|-10000|-11]
+		msg		响应信息
+	其它说明:
+		上传的头像的附件名：teacher_header, 前端大小要判断<=200k
+
+		添加前需要调用“检查老师真实名是否已使用”,"检查老师登录名是否已使用"这两个个api检查老师真实名，老师登录名是否已被使用
+
+		F_real_name: (length <= 12,不为空,有效字母[0-9A-Za-z_\-]以字母开头)
+		F_teacher_name: (length <= 30,不为空)
+		F_teacher_password: ([a-zA-Z0-9_]{6,10} ,不为空)
+		F_grade: 值见$config['grade_list']，多个值用","分隔
+		F_subject_id: 值见$config['subject_list']
+		F_subject_ids:值见$config['subject_list']，多个值用","分隔
+		F_gender: 值见$config['gender_list']
+
+========================================================================================
+
+检查老师真实名是否已使用：
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		GET/POST
+	参数:
+		version			常量		server_v1
+		c			常量		teacher
+		m			常量		check_teacher_realname_used
+		F_real_name:		string		老师真实名
+		F_teacher_id:		string		老师ID,可选
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,	
+				"used":boolean,	
+			}
+
+		responseNo	响应代码:
+			[0|-4|-10|-10000|-11]
+		msg		响应信息
+		used		是否已被使用（true已使用，false未使用）
+	其它说明:	
+	
+========================================================================================
+
+检查老师登录名是否已使用：
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		GET/POST
+	参数:
+		version			常量		server_v1
+		c			常量		teacher
+		m			常量		check_teacher_loginname_used
+		F_teacher_name:		string		老师登录名
+		F_teacher_id:		string		老师ID,可选
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,	
+				"used":boolean,	
+			}
+
+		responseNo	响应代码:
+			[0|-4|-10|-10000|-11]
+		msg		响应信息
+		used		是否已被使用（true已使用，false未使用）
+	其它说明:
+
+========================================================================================
+
+修改一个老师：
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST
+	参数:
+		version			常量		server_v1
+		c			常量		teacher
+		m			常量		update_a_teacher
+		F_teacher_id		string		老师ID
+		F_real_name:		string		老师真实名,可选
+		F_teacher_name:		string		老师登录名,可选
+		F_teacher_password:	string		老师密码,可选
+		F_grade:		string		可以辅导年级,可选
+		F_subject_id:		INT		专长的科目,可选
+		F_description:		string		简介,可选
+		F_teaching_experience:	INT		教学经验,单位年,可选
+		F_subject_ids:		string		可辅导的多个科目,可选
+		F_gender:		INT		性别,可选
+		F_who:			string		操作人
+		F_group			int	    分组ID,可选
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,			
+			}
+
+		responseNo	错误代码:
+			[0|-4|-10|-10000|-11]
+		msg		错误信息
+	其它说明:
+		上传的头像的附件名：teacher_header, 前端大小要判断<=200k
+
+		修改前需要调用“检查老师真实名是否已使用”,"检查老师登录名是否已使用"这两个个api检查老师真实名，老师登录名是否已被使用
+
+		F_real_name: (length <= 12,不为空)
+		F_teacher_name: (length <= 30,不为空)
+		F_teacher_password: ([a-zA-Z0-9_]{6,10} ,不为空)
+		F_grade: 值见$config['grade_list']，多个值用","分隔
+		F_subject_id: 值见$config['subject_list']
+		F_subject_ids:值见$config['subject_list']，多个值用","分隔
+		F_gender: 值见$config['gender_list']
+
+========================================================================================
+
+老师登录
+
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		GET/POST
+	参数:
+		version			常量		server_v1
+		c			常量		teacher
+		m			常量		login
+		F_teacher_name		string		登录名
+		F_teacher_password	string		密码,未加密的
+	返回:
+		json格式
+			{
+			"responseNo":int,
+			"msg":string,
+			"F_teacher_id":string,
+			}
+
+		responseNo	响应代码:
+			[0|-4|-15|-10001]
+		msg		响应信息
+		F_teacher_id	老师ID
+	其它说明:
+
+========================================================================================
+
+删除老师
+
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		GET/POST
+	参数:
+		version			常量		server_v1
+		c			常量		teacher
+		m			常量		delete_teacher
+		F_teacher_ids		string		老师ID，如：1,2,4 or 1
+	返回:
+		json格式
+			{
+			"responseNo":int,
+			"msg":string,
+			}
+
+		responseNo	响应代码:
+			[0|-12|-4]
+		msg		响应信息
+	其它说明:
+
+========================================================================================
+
+查询学生列表：
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		GET/POST
+	参数:
+		version		常量		server_v1
+		c		常量		student
+		m		常量		get_student_list
+		offset:		int		
+		limit:		int		
+		type:		int		查询类型,见$config['status_list']
+		F_real_name:	string		学生真实名,可选
+		F_user_name:	string		学生登录名,可选
+	返回:
+		json格式
+			{
+			"responseNo":int,
+			"msg":string,
+			"student_total":int,
+			"list_info":
+				{
+					{
+						"F_user_id":string,
+						"F_user_name":string,
+						"F_real_name":string,
+						"F_coin":int,
+						"F_grade":int,
+						"F_school":string,
+						"F_status":int,
+						"F_gender":int,
+						"F_create_time":datetime,
+						"F_update_time":datetime,
+					}
+				},
+			}
+
+		responseNo	响应代码:
+			[0|-9|-4]
+		msg		响应信息
+		student_total	学生总数
+		list_info	学生列表信息,二维
+			F_user_id	string	学生ID
+			F_user_name	string	学生登录名
+			F_real_name	string	学生真实名 
+			F_coin		int	学生金币
+			F_grade		int	年级,见顶部grade
+			F_school	int	学校
+			F_status	int	账号状态,见$config['status_list']
+			F_gender	int	性别,见$config['gender_list']
+			F_create_time	int	创建时间
+			F_update_time	int	更新时间
+	其它说明:
+
+========================================================================================
+
+查询一个学生的信息：
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		GET/POST
+	参数:
+		version		常量		server_v1
+		c		常量		student
+		m		常量		get_a_student
+		F_user_id:	string		学生ID
+	返回:
+		json格式
+			{
+			"responseNo":int,
+			"msg":string,
+			"student_total":int,
+			"list_info":
+				{
+					{
+						"F_user_id":string,
+						"F_user_name":string,
+						"F_real_name":string,
+						"F_coin":int,
+						"F_grade":int,
+						"F_school":string,
+						"F_status":int,
+						"F_gender":int,
+						"F_create_time":datetime,
+						"F_update_time":datetime,
+					}
+				},
+			}
+
+		responseNo	响应代码:
+			[0|-9|-4]
+		msg		响应信息
+		student_total	学生总数
+		list_info	学生列表信息,二维
+			F_user_id	string	学生ID
+			F_user_name	string	学生登录名
+			F_real_name	string	学生真实名 
+			F_coin		int	学生金币
+			F_grade		int	年级,见顶部grade
+			F_school	int	学校
+			F_status	int	账号状态,见$config['status_list']
+			F_gender	int	性别,见$config['gender_list']
+			F_create_time	datetime	创建时间
+			F_update_time	datetime	更新时间
+	其它说明:
+
+========================================================================================
+
+改变学生状态：
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		GET/POST
+	参数:
+		version		常量		server_v1
+		c		常量		student
+		m		常量		change_student_status
+		F_user_ids:	string		学生ID string，多个用","分隔
+		F_status:	int		状态，见$config['status_list']
+		F_who:		string		操作人
+	返回:
+		返回:
+		json格式
+			{
+			"responseNo":int,
+			"msg":string,
+			}
+
+		responseNo	响应代码:
+			[0|-9|-4]
+		msg		响应信息
+	其它说明:
+
+========================================================================================
+
+查询客服列表：
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		GET
+	参数:
+		version			常量		server_v1
+		c			常量		custom
+		m			常量		get_custom_list
+		type			int		0：激活，1：冻结，2：删除,-1所有
+		offset:			int		查询偏移量(用于分页查询)
+		limit:			int		查看数量(用于分页查询)
+		F_real_name:		string		客服真实名(可选)
+		F_teacher_name:		string		客服登录名(可选)
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+				"total":int,
+				"list":
+				{
+					{
+						"F_teacher_id":string,
+						"F_real_name":string,
+						"F_teacher_name":string,
+						"F_gender":int,
+						"F_status":int,
+						"F_create_time":datetime,
+						"F_update_time":datetime,
+					}
+				}
+			}
+
+		responseNo	错误代码:
+			[0|-4|-9]
+		msg		错误信息
+		total		客服总数
+		list		客服列表信息,二维
+			F_teacher_id		客服ID
+	 		F_real_name		客服真实名
+	 		F_teacher_name		客服登录名
+	 		F_gender		性别
+	 		F_status		账号状态
+			F_create_time		客服添加时间
+	 		F_update_time		客服修改时间
+	其它说明:
+
+		F_gender: 值对应$config['gender_list']
+		F_status: 值对应$config['status_list']
+
+========================================================================================
+
+查询一个客服信息：
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		GET
+	参数:
+		version			常量		server_v1
+		c			常量		custom
+		m			常量		get_a_custom
+		F_teacher_id:		string		客服ID
+	返回:
+		json格式
+			{
+			"responseNo":int,
+			"msg":string,
+			"info":
+				{
+				"F_teacher_id":string,
+				"F_real_name":string,
+				"F_teacher_name":string,
+				"F_gender":int,
+				"F_status":int,
+				"F_create_time":datetime,
+				"F_update_time":datetime,
+				}
+			}
+
+		responseNo	错误代码:
+			[0|-4|-13]
+		msg		错误信息
+		info		客服信息,一维
+			F_teacher_id		客服ID
+			F_real_name		客服真实名
+			F_teacher_name		客服登录名
+			F_gender		性别
+			F_status		账号状态
+			F_create_time		客服添加时间
+			F_update_time		客服修改时间
+	其它说明:
+			F_gender: 值见$config['gender_list']
+			F_status: 值见$config['status_list']
+
+========================================================================================
+
+改变客服状态：
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		GET/POST
+	参数:
+		version			常量		server_v1
+		c			常量		custom
+		m			常量		change_custom_status
+		F_teacher_ids:		string		客服IDs(","号分隔ID)
+		F_status:		int		状态 0：激活，1：冻结，2：删除,3：不可恢复
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,			
+			}
+
+		responseNo	响应代码:
+			[0|-4|-14]
+		msg		响应信息
+	其它说明:
+
+========================================================================================
+
+添加一个客服：
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		GET/POST
+	参数:
+		version			常量		server_v1
+		c			常量		custom
+		m			常量		add_a_custom
+		F_real_name:		string		客服真实名
+		F_teacher_name:		string		客服登录名
+		F_teacher_password:	string		客服密码
+		F_gender:		INT		性别
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,			
+			}
+
+		responseNo	响应代码:
+			[0|-4|-10|-10000]
+		msg		响应信息
+	其它说明:
+		
+		添加前需要调用“检查客服真实名是否已使用”,"检查客服登录名是否已使用"这两个个api检查客服真实名，客服登录名是否已被使用
+
+		F_real_name: (length <= 12,不为空)
+		F_teacher_name: (length <= 30,不为空)
+		F_teacher_password: ([a-zA-Z0-9_]{6,10} ,不为空)
+		F_gender: 值见$config['gender_list']
+
+========================================================================================
+
+检查客服真实名是否已使用：
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		GET/POST
+	参数:
+		version			常量		server_v1
+		c			常量		custom
+		m			常量		check_custom_realname_used
+		F_real_name:		string		客服真实名
+		F_teacher_id:		string		客服ID,可选
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,	
+				"used":boolean,	
+			}
+
+		responseNo	响应代码:
+			[0|-4|-10|-10000|-11]
+		msg		响应信息
+		used		是否已被使用（true已使用，false未使用）
+	其它说明:	
+	
+========================================================================================
+
+检查客服登录名是否已使用：
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		GET/POST
+	参数:
+		version			常量		server_v1
+		c			常量		custom
+		m			常量		check_custom_loginname_used
+		F_teacher_name:		string		客服登录名
+		F_teacher_id:		string		客服ID,可选
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,	
+				"used":boolean,	
+			}
+
+		responseNo	响应代码:
+			[0|-4|-10|-10000|-11]
+		msg		响应信息
+		used		是否已被使用（true已使用，false未使用）
+	其它说明:
+
+========================================================================================
+
+修改一个客服：
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		custom
+		m			常量		update_a_custom
+		F_teacher_id		string		客服ID
+		F_real_name:		string		客服真实名,可选
+		F_teacher_name:		string		客服登录名,可选
+		F_teacher_password:	string		客服密码,可选
+		F_gender:		INT		性别,可选
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,			
+			}
+
+		responseNo	错误代码:
+			[0|-4|-10|-10000|-11]
+		msg		错误信息
+	其它说明:
+		F_real_name: (length <= 12,不为空)
+		F_teacher_name: (length <= 30,不为空)
+		F_teacher_password: ([a-zA-Z0-9_]{6,10} ,不为空)
+		F_gender: 值见$config['gender_list']
+
+========================================================================================
+
+获取回放列表：
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		playback
+		m			常量		get_playback_list
+		type			int		类型(0所有，1精彩,2非精彩)
+		offset:			int		分页用
+		limit:			int		分页用
+		F_teacher_real_name:	string		老师名(可选)
+		F_user_real_name:	string		学生名(可选)
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+				"total":int,
+				"list":
+				{
+					"F_order_id":string,
+					"F_user_id":string,
+					"F_teacher_id":string,
+					"F_start_time":datetime,
+					"F_end_time":datetime,
+					"F_wonderful":int,
+					"F_cover_url":string,
+					"F_teacher_real_name":string,
+					"F_user_real_name":string
+				}
+			}
+
+		responseNo	错误代码:
+			[0|-4|-9]
+		msg		错误信息
+		total		回放总数
+		list		回放列表，二维
+					F_order_id		订单ID号
+					F_user_id		用户ID号
+					F_teacher_id		老师ID号
+					F_start_time		开始时间
+					F_end_time		结束时间
+					F_wonderful		0：一般，1：精彩
+					F_cover_url		封面图
+					F_teacher_real_name	老师真实名
+					F_user_real_name	用户真实名
+	其它说明:
+		
+
+========================================================================================
+
+改变回放状态：
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		playback
+		m			常量		set_playback_status
+		type			int		类型(0所有，1精彩,2非精彩)
+		F_order_ids:		string		回复IDs,","号分隔
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+			}
+
+		responseNo	错误代码:
+			[0|-4|-9]
+		msg		错误信息
+	其它说明:
+		
+
+========================================================================================
+
+添加一个广告：
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		ads
+		m			常量		add_a_ad
+		F_title			string		广告标题
+		F_content		string		广告描述
+		F_start_time		datetime	广告开始时间
+		F_end_time		datetime	广告结束时间
+		F_status		int		广告状态(0激活，2冻结)
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+			}
+
+		responseNo	错误代码:
+			[0|-17|-11|-4]
+		msg		错误信息
+	其它说明:
+		上传的头像的附件名：ad, 前端大小要判断<=1000k
+
+========================================================================================
+
+修改一个广告：
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		ads
+		m			常量		update_a_ad
+		F_advertisement_id	int		广告ID
+		F_title			string		广告标题(可选)
+		F_content		string		广告描述(可选)
+		F_start_time		datetime	广告开始时间(可选)
+		F_end_time		datetime	广告结束时间(可选)
+		F_status		int		广告状态(0激活，2冻结)(可选)
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+			}
+
+		responseNo	错误代码:
+			[0|-4|-11|-17]
+		msg		错误信息
+	其它说明:
+		(可选)上传的头像的附件名：ad, 前端大小要判断<=1000k
+
+========================================================================================
+
+获取一个广告信息：
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		ads
+		m			常量		get_a_ad_info
+		F_advertisement_id	int		广告ID
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+				"info":
+				{
+					"F_advertisement_id":int,
+					"F_title":string,
+					"F_content":string,
+					"F_start_time":datetime,
+					"F_end_time":datetime,
+					"F_status":int,
+					"F_create_time":datetime,
+					"F_update_time":datetime,
+					"F_ad_img_url":string
+				}
+			}
+
+		responseNo	错误代码:
+			[0|-9|-4]
+		msg		错误信息
+		info		广告信息
+			F_advertisement_id	广告id
+			F_title		广告标题
+			F_content	广告描述
+			F_start_time	广告开始时间
+			F_end_time	广告结束时间
+			F_status	广告状态(0激活，2冻结)
+			F_create_time	广告更新时间
+			F_update_time	广告添加时间
+			F_ad_img_url	广告图片url
+	其它说明:
+		
+
+========================================================================================
+
+获取广告列表：
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		ads
+		m			常量		get_ad_list
+		offset			int		
+		limit			int		
+		F_title			string		广告标题(可选)
+		F_content		string		广告内容(可选)
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+				"total":int,
+				"list":
+				{{
+					"F_advertisement_id":int,
+					"F_title":string,
+					"F_content":string,
+					"F_start_time":datetime,
+					"F_end_time":datetime,
+					"F_status":int,
+					"F_create_time":datetime,
+					"F_update_time":datetime,
+					"F_ad_img_url":string
+				}}
+			}
+
+		responseNo	错误代码:
+			[0|-9|-4]
+		msg		错误信息
+		info		广告信息,二维数组
+			F_advertisement_id	广告id
+			F_title		广告标题
+			F_content	广告描述
+			F_start_time	广告开始时间
+			F_end_time	广告结束时间
+			F_status	广告状态(0激活，2冻结)
+			F_create_time	广告更新时间
+			F_update_time	广告添加时间
+			F_ad_img_url	广告图片url
+	其它说明:
+		
+
+========================================================================================
+
+删除广告：
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		ads
+		m			常量		delete_ad
+		F_advertisement_ids	string		广告IDs,用","号分隔
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+			}
+
+		responseNo	错误代码:
+			[0|-4|-14]
+		msg		错误信息
+	其它说明:
+		
+
+========================================================================================
+
+改变广告状态：
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		ads
+		m			常量		change_ad_status
+		F_advertisement_ids	string		广告IDs,用","号分隔
+		F_status		int		广告状态（0：激活，2：冻结)
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+			}
+
+		responseNo	错误代码:
+			[0|-4|-14]
+		msg		错误信息
+	其它说明:
+
+========================================================================================
+
+实时统计：获取老师实时在线统计信息：
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		statistics_realtime
+		m			常量		get_teacher_statistics_realtime
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+				"info":
+				{
+					"teacher_total":int,
+					"teacher_online_free":int,
+					"teacher_online_teaching":int,
+					"teacher_offline":int,
+				}
+			}
+
+		responseNo	错误代码:
+			[0]
+		msg		错误信息
+		info		老师实时在线统计信息
+			teacher_total	老师总数
+			teacher_online_free	空闲的数量
+			teacher_online_teaching	辅导中的数量
+			teacher_offline	离线的数量
+	其它说明:
+
+========================================================================================
+
+实时统计：获取学生实时在线统计信息:
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		statistics_realtime
+		m			常量		get_user_statistics_realtime
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+				"info":
+				{
+					"user_total":int,
+					"user_online_free":int,
+					"user_online_teaching":int,
+					"user_offline":int,
+				}
+			}
+
+		responseNo	错误代码:
+			[0]
+		msg		错误信息
+		info		学生实时在线统计信息
+			user_total	学生总数
+			user_online_free	空闲的数量
+			user_online_teaching	辅导中的数量
+			user_offline	离线的数量
+	其它说明:
+
+========================================================================================
+
+实时统计：获取今天全时间段提问次数:
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		statistics_realtime
+		m			常量		get_ask_times_today_timesection
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+				"info":
+				{
+					"ask_times":int,
+					"start_time":datetime,
+					"end_time":datetime,
+				}
+			}
+
+		responseNo	错误代码:
+			[0]
+		msg		错误信息
+		info		学生实时在线统计信息
+			ask_times	提问次数
+			start_time	开始时间区间
+			end_time	结束时间区间
+	其它说明:
+
+========================================================================================
+
+实时统计：获取今天全时间段提问人数:
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		statistics_realtime
+		m			常量		get_ask_people_number_today_timesection
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+				"info":
+				{
+					"ask_people_number":int,
+					"start_time":datetime,
+					"end_time":datetime,
+				}
+			}
+
+		responseNo	错误代码:
+			[0]
+		msg		错误信息
+		info		学生实时在线统计信息
+			ask_people_number	提问人数
+			start_time	开始时间区间
+			end_time	结束时间区间
+	其它说明:
+
+========================================================================================
+
+实时统计：获取今天全时间段辅导次数:
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		statistics_realtime
+		m			常量		get_teaching_times_today_timesection
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+				"info":
+				{
+					"teaching_times":int,
+					"start_time":datetime,
+					"end_time":datetime,
+				}
+			}
+
+		responseNo	错误代码:
+			[0]
+		msg		错误信息
+		info		学生实时在线统计信息
+			teaching_times	辅导次数
+			start_time	开始时间区间
+			end_time	结束时间区间
+	其它说明:
+
+========================================================================================
+
+实时统计：获取今天全时间段在线人数:
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		statistics_realtime
+		m			常量		get_online_people_number_today_timesection
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+				"info":
+				{
+					"online_people_number":int,
+					"start_time":datetime,
+					"end_time":datetime,
+				}
+			}
+
+		responseNo	错误代码:
+			[0]
+		msg		错误信息
+		info		学生实时在线统计信息
+			online_people_number	在线人数
+			start_time	开始时间区间
+			end_time	结束时间区间
+	其它说明:
+
+========================================================================================
+
+时段统计：获取某天的提问次数(全时间段):
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		statistics_timesection
+		m			常量		get_ask_times_someday
+		date			date		要查询的日期，如2014-08-14
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+				"info":
+				{{
+					"ask_times":int,
+					"start_time":datetime,
+					"end_time":datetime,
+				}}
+			}
+
+		responseNo	错误代码:
+			[0|-4]
+		msg		错误信息
+		info		信息,二维
+			ask_times	提问次数
+			start_time	开始时间,如 00:00:01
+			end_time	结束时间,如 00:59:59
+	其它说明:
+		
+		目前统计日期有效范围2014-2019, 对应的前端需要做限制
+
+========================================================================================
+
+时段统计：获取某天的提问人数(全时间段):
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		statistics_timesection
+		m			常量		get_ask_people_number_someday
+		date			date		要查询的日期，如2014-08-14
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+				"info":
+				{{
+					"ask_people_number":int,
+					"start_time":datetime,
+					"end_time":datetime,
+				}}
+			}
+
+		responseNo	错误代码:
+			[0|-4]
+		msg		错误信息
+		info		信息,二维
+			ask_people_number	提问人数
+			start_time	开始时间,如 00:00:01
+			end_time	结束时间,如 00:59:59
+	其它说明:
+		
+		目前统计日期有效范围2014-2019, 对应的前端需要做限制
+
+========================================================================================
+
+时段统计：获取某天的辅导次数(全时间段):
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		statistics_timesection
+		m			常量		get_teaching_times_someday
+		date			date		要查询的日期，如2014-08-14
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+				"info":
+				{{
+					"teaching_times":int,
+					"start_time":datetime,
+					"end_time":datetime,
+				}}
+			}
+
+		responseNo	错误代码:
+			[0|-4]
+		msg		错误信息
+		info		信息,二维
+			teaching_times	辅导次数
+			start_time	开始时间,如 00:00:01
+			end_time	结束时间,如 00:59:59
+	其它说明:
+
+		目前统计日期有效范围2014-2019, 对应的前端需要做限制
+
+========================================================================================
+
+时段统计：获取某天的在线人数(全时间段):
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		statistics_timesection
+		m			常量		get_online_people_number_someday
+		date			date		要查询的日期，如2014-08-14
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+				"info":
+				{{
+					"online_people_number":int,
+					"start_time":datetime,
+					"end_time":datetime,
+				}}
+			}
+
+		responseNo	错误代码:
+			[0|-4]
+		msg		错误信息
+		info		信息,二维
+			online_people_number	在线人数
+			start_time	开始时间,如 00:00:01
+			end_time	结束时间,如 00:59:59
+	其它说明:
+
+		目前统计日期有效范围2014-2019, 对应的前端需要做限制
+
+========================================================================================
+
+时段统计：获取某月的提问次数(月中的每天):
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		statistics_timesection
+		m			常量		get_ask_times_somemonth
+		date			date		要查询的月，如2014-08
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+				"info":
+				{{
+					"ask_times":int,
+					"day":int,
+				}}
+			}
+
+		responseNo	错误代码:
+			[0|-4]
+		msg		错误信息
+		info		信息,二维
+			ask_times	提问次数
+			day		月中的天,如1
+	其它说明:
+
+		目前统计日期有效范围2014-2019, 对应的前端需要做限制
+
+========================================================================================
+
+时段统计：获取某月的提问人数(月中的每天):
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		statistics_timesection
+		m			常量		get_ask_people_number_somemonth
+		date			date		要查询的月，如2014-08
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+				"info":
+				{{
+					"ask_people_number":int,
+					"day":int,
+				}}
+			}
+
+		responseNo	错误代码:
+			[0|-4]
+		msg		错误信息
+		info		信息,二维
+			ask_people_number	提问人数
+			day		月中的天,如1
+	其它说明:
+		
+		目前统计日期有效范围2014-2019, 对应的前端需要做限制
+
+========================================================================================
+
+时段统计：获取某月的辅导次数(月中的每天):
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		statistics_timesection
+		m			常量		get_teaching_times_somemonth
+		date			date		要查询的月，如2014-08
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+				"info":
+				{{
+					"teaching_times":int,
+					"day":int,
+				}}
+			}
+
+		responseNo	错误代码:
+			[0|-4]
+		msg		错误信息
+		info		信息,二维
+			teaching_times	辅导次数
+			day		月中的天,如1
+	其它说明:
+
+		目前统计日期有效范围2014-2019, 对应的前端需要做限制
+
+========================================================================================
+
+时段统计：获取某月的在线人数(月中的每天):
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		statistics_timesection
+		m			常量		get_online_people_number_somemonth
+		date			date		要查询的月，如2014-08
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+				"info":
+				{{
+					"online_people_number":int,
+					"day":int,
+				}}
+			}
+
+		responseNo	错误代码:
+			[0|-4]
+		msg		错误信息
+		info		信息,二维
+			online_people_number	在线人数
+			day		月中的天,如1
+	其它说明:
+
+		目前统计日期有效范围2014-2019, 对应的前端需要做限制
+
+========================================================================================
+
+时段统计：获取某年的提问次数(某年中每个月):
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		statistics_timesection
+		m			常量		get_ask_times_someyear
+		date			date		要查询的年，如2014
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+				"info":
+				{{
+					"ask_times":int,
+					"month":int,
+				}}
+			}
+
+		responseNo	错误代码:
+			[0|-4]
+		msg		错误信息
+		info		信息,二维
+			ask_times	提问次数
+			month		月份,如1
+	其它说明:
+
+		目前统计日期有效范围2014-2019, 对应的前端需要做限制
+
+========================================================================================
+
+时段统计：获取某年的提问人数(某年中每个月):
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		statistics_timesection
+		m			常量		get_ask_people_number_someyear
+		date			date		要查询的年，如2014
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+				"info":
+				{{
+					"ask_people_number":int,
+					"month":int,
+				}}
+			}
+
+		responseNo	错误代码:
+			[0|-4]
+		msg		错误信息
+		info		信息,二维
+			ask_people_number	提问人数
+			month		月份,如1
+	其它说明:
+
+		目前统计日期有效范围2014-2019, 对应的前端需要做限制
+
+========================================================================================
+
+时段统计：获取某年的辅导次数(某年中每个月):
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		statistics_timesection
+		m			常量		get_teaching_times_someyear
+		date			date		要查询的年，如2014
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+				"info":
+				{{
+					"teaching_times":int,
+					"month":int,
+				}}
+			}
+
+		responseNo	错误代码:
+			[0|-4]
+		msg		错误信息
+		info		信息,二维
+			teaching_times	辅导次数
+			month		月份,如1
+	其它说明:
+
+		目前统计日期有效范围2014-2019, 对应的前端需要做限制
+
+========================================================================================
+
+时段统计：获取某年的在线人数(某年中每个月):
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		statistics_timesection
+		m			常量		get_online_people_number_someyear
+		date			date		要查询的年，如2014
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+				"info":
+				{{
+					"online_people_number":int,
+					"month":int,
+				}}
+			}
+
+		responseNo	错误代码:
+			[0|-4]
+		msg		错误信息
+		info		信息,二维
+			online_people_number	在线人数
+			month		月份,如1
+	其它说明:
+		
+		目前统计日期有效范围2014-2019, 对应的前端需要做限制
+
+========================================================================================
+
+时段统计：获取日区间的提问次数(天):
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		statistics_timesection
+		m			常量		get_ask_times_daysection
+		start_date		date		要查询的开始日期，如2014-08-12
+		end_date		date		要查询的结束日期，如2014-08-20
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+				"info":
+				{{
+					"ask_times":int,
+					"date":date,
+				}}
+			}
+
+		responseNo	错误代码:
+			[0|-4]
+		msg		错误信息
+		info		信息,二维
+			ask_times	提问次数
+			date		日期,如2014-08-12
+	其它说明:
+
+		目前统计日期有效范围2014-2019, 对应的前端需要做限制
+
+========================================================================================
+
+时段统计：获取日区间的提问人数(天):
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		statistics_timesection
+		m			常量		get_ask_people_number_daysection
+		start_date		date		要查询的开始日期，如2014-08-12
+		end_date		date		要查询的结束日期，如2014-08-20
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+				"info":
+				{{
+					"ask_people_number":int,
+					"date":date,
+				}}
+			}
+
+		responseNo	错误代码:
+			[0|-4]
+		msg		错误信息
+		info		信息,二维
+			ask_people_number	提问人数
+			date		日期,如2014-08-12
+	其它说明:
+
+		目前统计日期有效范围2014-2019, 对应的前端需要做限制
+
+========================================================================================
+
+时段统计：获取日区间的辅导次数(天):
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		statistics_timesection
+		m			常量		get_teaching_times_daysection
+		start_date		date		要查询的开始日期，如2014-08-12
+		end_date		date		要查询的结束日期，如2014-08-20
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+				"info":
+				{{
+					"get_teaching_times_daysection":int,
+					"date":date,
+				}}
+			}
+
+		responseNo	错误代码:
+			[0|-4]
+		msg		错误信息
+		info		信息,二维
+			get_teaching_times_daysection	辅导次数
+			date		日期,如2014-08-12
+	其它说明:
+
+		目前统计日期有效范围2014-2019, 对应的前端需要做限制
+
+========================================================================================
+
+时段统计：获取日区间的在线人数(天):
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		statistics_timesection
+		m			常量		get_online_people_number_daysection
+		start_date		date		要查询的开始日期，如2014-08-12
+		end_date		date		要查询的结束日期，如2014-08-20
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+				"info":
+				{{
+					"online_people_number":int,
+					"date":date,
+				}}
+			}
+
+		responseNo	错误代码:
+			[0|-4]
+		msg		错误信息
+		info		信息,二维
+			online_people_number	在线人数
+			date		日期,如2014-08-12
+	其它说明:
+
+		目前统计日期有效范围2014-2019, 对应的前端需要做限制
+
+========================================================================================
+
+老师统计：获取某天老师的辅导统计:
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		statistics_teacher
+		m			常量		get_teaching_statistics_info_someday
+		date			date		要查询的日期,如2014-08-20
+		offset			int		分页用
+		limit			int		分页用
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+				"total":int,
+				"list":
+				{{
+					"F_teacher_id":string,
+					"F_total_times":int,
+					"F_total_coin":int,
+					"F_time":time,
+				}}
+			}
+
+		responseNo	错误代码:
+			[0|-4]
+		msg		错误信息
+		total		总数
+		list		信息,二维
+			F_teacher_id	老师ID
+			F_total_times	辅导总次数
+			F_total_coin	辅导所得总金币
+			F_time		辅导总时长,格式如:01:05:01
+	其它说明:
+
+		目前统计日期有效范围2014-2019, 对应的前端需要做限制
+
+========================================================================================
+
+老师统计：获取某月老师的辅导统计:
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		statistics_teacher
+		m			常量		get_teaching_statistics_info_somemonth
+		date			date		要查询的月,如2014-08
+		offset			int		分页用
+		limit			int		分页用
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+				"total":int,
+				"list":
+				{{
+					"F_teacher_id":string,
+					"F_total_times":int,
+					"F_total_coin":int,
+					"F_time":time,
+				}}
+			}
+
+		responseNo	错误代码:
+			[0|-4]
+		msg		错误信息
+		total		总数
+		list		信息,二维
+			F_teacher_id	老师ID
+			F_total_times	辅导总次数
+			F_total_coin	辅导所得总金币
+			F_time		辅导总时长,格式如:01:05:01
+	其它说明:
+
+		目前统计日期有效范围2014-2019, 对应的前端需要做限制
+
+========================================================================================
+
+老师统计：获取某年老师的辅导统计:
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		statistics_teacher
+		m			常量		get_teaching_statistics_info_someyear
+		date			date		要查询的年,如2014
+		offset			int		分页用
+		limit			int		分页用
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+				"total":int,
+				"list":
+				{{
+					"F_teacher_id":string,
+					"F_total_times":int,
+					"F_total_coin":int,
+					"F_time":time,
+				}}
+			}
+
+		responseNo	错误代码:
+			[0|-4]
+		msg		错误信息
+		total		总数
+		list		信息,二维
+			F_teacher_id	老师ID
+			F_total_times	辅导总次数
+			F_total_coin	辅导所得总金币
+			F_time		辅导总时长,格式如:01:05:01
+	其它说明:
+
+		目前统计日期有效范围2014-2019, 对应的前端需要做限制
+
+========================================================================================
+
+老师统计：获取自定义日期老师的辅导统计:
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		statistics_teacher
+		m			常量		get_teaching_statistics_info_daysection
+		start_date		date		要查询的开始日期,如2014-08-11
+		end_date		date		要查询的结束日期,如2014-08-12
+		offset			int		分页用
+		limit			int		分页用
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+				"total":int,
+				"list":
+				{{
+					"F_teacher_id":string,
+					"F_total_times":int,
+					"F_total_coin":int,
+					"F_time":time,
+				}}
+			}
+
+		responseNo	错误代码:
+			[0|-4]
+		msg		错误信息
+		total		总数
+		list		信息,二维
+			F_teacher_id	老师ID
+			F_total_times	辅导总次数
+			F_total_coin	辅导所得总金币
+			F_time		辅导总时长,格式如:01:05:01
+	其它说明:
+
+		目前统计日期有效范围2014-2019, 对应的前端需要做限制
+
+========================================================================================
+
+学生统计：获取学生某月中每日的统计
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		statistics_student
+		m			常量		get_student_statistics_info_month
+		date			date		要查询的日期,格式:Y-m
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+				"list":
+				{{
+					"F_date":date,
+					"F_online_person_number":int,
+					"F_ask_person_number":int,
+					"F_ask_times":int,
+					"F_total_coin":int,
+					"F_time":time,
+				}}
+			}
+
+		responseNo	错误代码:
+			[0|-4]
+		msg		错误信息
+		list		信息,二维
+			F_date			日期，格式：Y-m-d
+			F_online_person_number	在线人数
+			F_ask_person_number	提问人数
+			F_ask_times		提问次数
+			F_total_coin		消耗金币
+			F_time			辅导时长,格式:00:00:00
+	其它说明:
+
+		目前统计日期有效范围2014-2019, 对应的前端需要做限制
+
+========================================================================================
+
+学生统计：获取学生某年中每月的统计
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		statistics_student
+		m			常量		get_student_statistics_info_year
+		date			date		要查询的年,如:2014
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+				"list":
+				{{
+					"F_date":date,
+					"F_online_person_number":int,
+					"F_ask_person_number":int,
+					"F_ask_times":int,
+					"F_total_coin":int,
+					"F_time":time,
+				}}
+			}
+
+		responseNo	错误代码:
+			[0|-4]
+		msg		错误信息
+		list		信息,二维
+			F_date			月，格式：Y-m
+			F_online_person_number	在线人数
+			F_ask_person_number	提问人数
+			F_ask_times		提问次数
+			F_total_coin		消耗金币
+			F_time			辅导时长,格式:00:00:00
+	其它说明:
+
+		目前统计日期有效范围2014-2019, 对应的前端需要做限制
+
+========================================================================================
+
+学生统计：获取学生日期区间的统计
+	地址:
+		'http://115.29.100.13/api/index.php';
+	请求方式:
+		POST/GET
+	参数:
+		version			常量		server_v1
+		c			常量		statistics_student
+		m			常量		get_student_statistics_info_daysection
+		start_date		date		要查询的开始日期,如:2014-08-14
+		end_date		date		要查询的开始日期,如:2014-08-30
+	返回:
+		json格式
+			{
+				"responseNo":int,
+				"msg":string,
+				"list":
+				{{
+					"F_date":date,
+					"F_online_person_number":int,
+					"F_ask_person_number":int,
+					"F_ask_times":int,
+					"F_total_coin":int,
+					"F_time":time,
+				}}
+			}
+
+		responseNo	错误代码:
+			[0|-4]
+		msg		错误信息
+		list		信息,二维
+			F_date			日期，格式：Y-m-d
+			F_online_person_number	在线人数
+			F_ask_person_number	提问人数
+			F_ask_times		提问次数
+			F_total_coin		消耗金币
+			F_time			辅导时长,格式:00:00:00
+	其它说明:
+
+		目前统计日期有效范围2014-2019, 对应的前端需要做限制
+
+========================================================================================
