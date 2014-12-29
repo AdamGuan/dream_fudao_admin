@@ -77,9 +77,8 @@ class MY_Controller extends CI_Controller {
 	 */
 	protected function _check_login() {
 		$result = array();
-		/*
-		$F_user_id = $this -> session -> userdata('F_user_id');
-		if(isset($F_user_id))
+		$F_user_id = $this -> session -> userdata('F_id');
+		if(isset($F_user_id) && $F_user_id > 0)
 		{
 			$this -> load -> model('M_login', 'mlogin');
 			$logined = $this->mlogin->login_page_check_login();
@@ -88,10 +87,18 @@ class MY_Controller extends CI_Controller {
 				$result = array('error'=>-1,'redirect_url'=>get_login_url());
 			}
 		}
-		*/
+		else{
+			$result = array('error'=>-1,'redirect_url'=>get_login_url());
+		}
 		return $result;
 	}
 
+	/**
+	 *
+	 * @param $class
+	 * @param $mothod
+	 * @return string
+	 */
 	protected function _get_current_class_method($class,$mothod)
 	{
 		$class = strtolower(str_replace('_Controller', '', $class));
@@ -99,6 +106,12 @@ class MY_Controller extends CI_Controller {
 		return $class.'/'.$mothod;
 	}
 
+	/**
+	 * 获取data
+	 * @param $class
+	 * @param $mothod
+	 * @return mixed
+	 */
 	protected function _get_data($class,$mothod)
 	{
 		$data = $this->my_config['data'];
@@ -113,13 +126,41 @@ class MY_Controller extends CI_Controller {
 		$data['global_login_name'] = 'admin';
 		$data['global_role'] = '超级管理员';
 		$data['global_notice'] = '<p>时光静好，与君语；细水流年，与君同。—— Amaze UI</p>';
+		//set privity
+		$this->session->set_userdata('privaty',array("c_login/index",
+			"c_index/index",
+			"c_teacher/manager",
+			"c_teacher/teacher_edit",
+			"c_teacher/teacher_add",
+			"c_student/manager",
+			"c_teacher/teacher_freeze",
+			"c_teacher/teacher_delete",
+			"c_teacher/teacher_active",
+			"c_teacher/teacher_set_test",
+			"c_index/index4",
+			"c_index/index5",
+			"c_index/index6",
+			"c_index/index7",
+			"c_index/index8",
+			"c_index/index9",
+			"c_index/index10",
+			"c_index/index11",
+			"c_index/index12",
+			)
+		);
 
 		return $data;
 	}
 
-
-	protected function _check_privity(){
-		return true;
+	/**
+	 * 检查权限
+	 * @param $class
+	 * @param $mothod
+	 * @return bool
+	 */
+	protected function _check_privity($class,$mothod){
+		$class_method = $this->_get_current_class_method($class,$mothod);
+		return check_privity($class_method);
 	}
 
 } 

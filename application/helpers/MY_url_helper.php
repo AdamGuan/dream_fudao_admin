@@ -28,7 +28,7 @@ function get_public_url($file) {
  */
 function get_assets_js_url($file) {
 	return base_url('public/assets/js/' . $file);
-} 
+}
 
 /**
  * 获取public/assets/css下面的资源url.
@@ -62,11 +62,31 @@ function get_teacher_manager_list_url($parames = array()) {
 	return base_url("c_teacher/manager?".$p);
 }
 
+function get_teacher_edit_url($parames){
+	$p = http_build_query($parames);
+	return base_url("c_teacher/teacher_edit?".$p);
+}
+
+function get_controll_url($uri,$parames){
+	$p = http_build_query($parames);
+	return base_url($uri."?".$p);
+}
+
+function get_student_manager_list_url($parames = array()) {
+	$p = http_build_query($parames);
+	return base_url("c_student/manager?".$p);
+}
+
+function get_login_url() {
+	return base_url('c_login/index');
+}
+
+
 /**
  * 获取login_valid url.
  *
  */
-/*
+
 function get_login_valid_url() {
 	return base_url('c_login/login_valid');
 }

@@ -247,7 +247,17 @@ function api_curl($url, $data, $method,$key){
 	if(count($data) > 0)
 	{
 		ksort($data);
-		$sign = md5(http_build_query($data)."&key=".$key);
+		if(isset($data['teacher_header']))
+		{
+			$data2 = $data;
+			unset($data2['teacher_header']);
+			$sign = md5(http_build_query($data2)."&key=".$key);
+
+			$data['teacher_header'] = curl_file_create($data['teacher_header']);
+		}
+		else{
+			$sign = md5(http_build_query($data)."&key=".$key);
+		}
 	}
 	else
 	{
@@ -278,7 +288,15 @@ function api_curl_multi($url, $data_list, $method_list,$key){
 		if(count($data) > 0)
 		{
 			ksort($data);
-			$sign = md5(http_build_query($data)."&key=".$key);
+			if(isset($data['teacher_header']))
+			{
+				$data2 = $data;
+				unset($data2['teacher_header']);
+				$sign = md5(http_build_query($data2)."&key=".$key);
+			}
+			else{
+				$sign = md5(http_build_query($data)."&key=".$key);
+			}
 		}
 		else
 		{
@@ -302,6 +320,15 @@ function api_curl_multi($url, $data_list, $method_list,$key){
 	}
 
 	return curlrequestMulti($url_list, $data_list, $method_list);
+}
+
+function check_privity($privaty){
+	$CI =& get_instance();
+	$privaty_list = $CI->session->userdata('privaty');
+	if(isset($privaty) && is_array($privaty_list) && in_array($privaty,$privaty_list)){
+		return true;
+	}
+	return false;
 }
 
 /**

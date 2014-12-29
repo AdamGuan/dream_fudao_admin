@@ -22,7 +22,7 @@ class C_index extends MY_Controller {
 			top_redirect($result['redirect_url']);
 		}
 		//检查是否有权限
-		if($this->_check_privity() === false)
+		if($this->_check_privity(__CLASS__,__METHOD__) === false)
 		{
 			redirect_to_no_privity_page();
 		}
@@ -45,7 +45,7 @@ class C_index extends MY_Controller {
 			top_redirect($result['redirect_url']);
 		}
 		//检查是否有权限
-		if($this->_check_privity() === false)
+		if($this->_check_privity(__CLASS__,__METHOD__) === false)
 		{
 			redirect_to_no_privity_page();
 		}
@@ -62,7 +62,7 @@ class C_index extends MY_Controller {
 			top_redirect($result['redirect_url']);
 		}
 		//检查是否有权限
-		if($this->_check_privity() === false)
+		if($this->_check_privity(__CLASS__,__METHOD__) === false)
 		{
 			redirect_to_no_privity_page();
 		}
@@ -79,7 +79,7 @@ class C_index extends MY_Controller {
 			top_redirect($result['redirect_url']);
 		}
 		//检查是否有权限
-		if($this->_check_privity() === false)
+		if($this->_check_privity(__CLASS__,__METHOD__) === false)
 		{
 			redirect_to_no_privity_page();
 		}

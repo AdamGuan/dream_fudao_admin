@@ -8,6 +8,14 @@ $config['data'] = array(
 	'global_left_bar'=>array(
 		array(
 			'prefix_class'=>'am-icon-home',
+			'text'=>'登录',
+			'link'=>'c_login/index',
+			'active'=>0,
+			'children'=>array(),
+			'hidden'=>1
+		),
+		array(
+			'prefix_class'=>'am-icon-home',
 			'text'=>'首页',
 			'link'=>'c_index/index',
 			'active'=>0,
@@ -27,8 +35,50 @@ $config['data'] = array(
 				),
 				array(
 					'prefix_class'=>'am-icon-file',
+					'text'=>'修改老师',
+					'link'=>'c_teacher/teacher_edit',
+					'active'=>0,
+					'hidden'=>1
+				),
+				array(
+					'prefix_class'=>'am-icon-file',
+					'text'=>'添加老师',
+					'link'=>'c_teacher/teacher_add',
+					'active'=>0,
+					'hidden'=>1
+				),
+				array(
+					'prefix_class'=>'am-icon-file',
+					'text'=>'冻结老师',
+					'link'=>'c_teacher/teacher_freeze',
+					'active'=>0,
+					'hidden'=>1
+				),
+				array(
+					'prefix_class'=>'am-icon-file',
+					'text'=>'删除老师',
+					'link'=>'c_teacher/teacher_delete',
+					'active'=>0,
+					'hidden'=>1
+				),
+				array(
+					'prefix_class'=>'am-icon-file',
+					'text'=>'激活老师',
+					'link'=>'c_teacher/teacher_active',
+					'active'=>0,
+					'hidden'=>1
+				),
+				array(
+					'prefix_class'=>'am-icon-file',
+					'text'=>'设置老师为测试帐号',
+					'link'=>'c_teacher/teacher_set_test',
+					'active'=>0,
+					'hidden'=>1
+				),
+				array(
+					'prefix_class'=>'am-icon-file',
 					'text'=>'学生管理',
-					'link'=>'c_index/index3',
+					'link'=>'c_student/manager',
 					'active'=>0
 				),
 				array(
@@ -105,6 +155,7 @@ $config['data'] = array(
 //api
 $config['api_uri'] = 'http://yunfudao.strongwind.cn/api/index.php';
 $config['api_key'] = '731222260492(readboy)25489884364';
+$config['api_version'] = 'server_v1';
 
 //1：小学，2：初中，3：高中
 $config['grade_list'] = array(
@@ -132,9 +183,30 @@ $config['role_list'] = array(0,1);
 $config['gender_list'] = array('1'=>'男','2'=>'女','3'=>'未知');
 //老师状态  0：激活，1：冻结，2：删除，3：彻底删除，4：测试
 $config['status_list'] = array('0'=>'激活','1'=>'冻结','2'=>'删除','3'=>'彻底删除','4'=>'测试');
-$config['status_list_view'] = array('0'=>'激活的老师','1'=>'冻结的老师','2'=>'删除的老师','4'=>'测试的老师');
+$config['status_list_view'] = array(
+	array("id"=>"0","text"=>"激活的老师","privity"=>"c_teacher/teacher_active"),
+	array("id"=>"1","text"=>"冻结的老师","privity"=>"c_teacher/teacher_freeze"),
+	array("id"=>"2","text"=>"删除的老师","privity"=>"c_teacher/teacher_delete"),
+	array("id"=>"4","text"=>"测试的老师","privity"=>"c_teacher/teacher_set_test"),
+);
 //列表页面
 $config['page'] = 10;
+
+//年级
+$config['class_list'] = array(
+	'513'=>'一年级',
+	'514'=> "二年级",
+	'515'=> "三年级",
+	'516'=> "四年级",
+	'517'=> "五年级",
+	'518'=> "六年级",
+	'519'=> "初中一年级",
+	'520'=> "初中二年级",
+	'521'=> "初中三年级",
+	'769'=> "高中一年级",
+	'770'=> "高中二年级",
+	'771'=> "高中三年级"
+);
 
 /* End of file my_config.php */
 /* Location: ./application/config/my_config.php */

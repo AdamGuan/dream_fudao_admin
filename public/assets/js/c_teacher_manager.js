@@ -120,6 +120,12 @@ $(document).ready(function(){
                 });
                 return false;
             });
+
+            $("button[id^='teacher_edit']").click( function() {
+                location.href = $(this).attr("url")+"&refrence="+encodeURI(location.href);
+                return false;
+            });
+
         };
 
         var teacher_select = function(){
@@ -140,6 +146,11 @@ $(document).ready(function(){
 
         //批量修改老师状态
         var teacherStatusChange_mulit = function() {
+
+            $("#teacher_add").click( function() {
+                location.href = $(this).attr("url")+"?refrence="+encodeURI(location.href);
+                return false;
+            });
 
             $("#teachers_delete").click( function() {
                 //loading start

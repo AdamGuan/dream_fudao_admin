@@ -58,14 +58,27 @@
 					$active = 0;
 					foreach($item['children'] as $subitem)
 					{
-						if($subitem['link'] == $global_active)
+						if(check_privity($subitem['link']))
 						{
-							$active = 1;
-							$content_title = $subitem['text'];
-							$output_str_tmp .= '<li><a href="'.base_url($subitem['link']).'"><span class="'.$subitem['prefix_class'].'"></span> '.$subitem['text'].'<span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span></a></li>';
-						}
-						else{
-							$output_str_tmp .= '<li><a href="'.base_url($subitem['link']).'"><span class="'.$subitem['prefix_class'].'"></span> '.$subitem['text'].'</a></li>';
+							if(isset($subitem['hidden']) && $subitem['hidden'] == 1)
+							{
+								if($subitem['link'] == $global_active)
+								{
+									$content_title = $subitem['text'];
+								}
+							}
+							else
+							{
+								if($subitem['link'] == $global_active)
+								{
+									$active = 1;
+									$content_title = $subitem['text'];
+									$output_str_tmp .= '<li><a href="'.base_url($subitem['link']).'"><span class="'.$subitem['prefix_class'].'"></span> '.$subitem['text'].'<span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span></a></li>';
+								}
+								else{
+									$output_str_tmp .= '<li><a href="'.base_url($subitem['link']).'"><span class="'.$subitem['prefix_class'].'"></span> '.$subitem['text'].'</a></li>';
+								}
+							}
 						}
 					}
 					if($active == 1)
@@ -75,17 +88,37 @@
 					else{
 						$output_str .= '<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav' .$key.'">';
 					}
-					$output_str .= $output_str_tmp;
-					$output_str .= '</ul>';
-					$output_str .= '</li>';
-				}else{
-					$output_str .= '<li><a href="'.base_url($item['link']).'"><span class="'.$item['prefix_class'] .'"></span> ' .$item['text'];
-					if($item['link'] == $global_active)
+					if(isset($output_str_tmp[1]))
 					{
-						$output_str .= '<span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span>';
-						$content_title = $item['text'];
+						$output_str .= $output_str_tmp;
+						$output_str .= '</ul>';
+						$output_str .= '</li>';
 					}
-					$output_str .= '</a></li>';
+					else{
+						$output_str = '';
+					}
+				}
+				else{
+					if(check_privity($item['link']))
+					{
+						if(isset($item['hidden']) && $item['hidden'] == 1)
+						{
+							if($item['link'] == $global_active)
+							{
+								$content_title = $item['text'];
+							}
+						}
+						else
+						{
+							$output_str .= '<li><a href="'.base_url($item['link']).'"><span class="'.$item['prefix_class'] .'"></span> ' .$item['text'];
+							if($item['link'] == $global_active)
+							{
+								$output_str .= '<span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span>';
+								$content_title = $item['text'];
+							}
+							$output_str .= '</a></li>';
+						}
+					}
 				}
 				echo $output_str;
 			}?>

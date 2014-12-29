@@ -3,19 +3,24 @@
 		<div class="am-fl am-cf">
 			<div class="am-btn-toolbar am-fl">
 				<div class="am-btn-group am-btn-group-xs">
-					<button type="button" class="am-btn am-btn-default" id="teacher_add"><span
-							class="am-icon-plus"></span>
-						新增</button>
-					<button type="button" class="am-btn am-btn-default" id="teachers_delete"><span
-							class="am-icon-save"></span> 删除</button>
-					<button type="button" class="am-btn am-btn-default" id="teachers_freezon"><span
-							class="am-icon-archive"></span>冻结</button>
-					<button type="button" class="am-btn am-btn-default" id="teachers_active"><span
-							class="am-icon-archive"></span>激活</button>
-					<button type="button" class="am-btn am-btn-default" id="teachers_test"><span
-							class="am-icon-archive"></span>设为测试帐号</button>
+					<?php if(check_privity("c_teacher/teacher_add")){?>
+					<button type="button" class="am-btn am-btn-default" id="teacher_add" url="<?php echo $teacher_add_uri;?>"><span class="am-icon-plus"></span>新增</button>
+					<?php }?>
+					<?php if(check_privity("c_teacher/teacher_delete")){?>
+					<button type="button" class="am-btn am-btn-default" id="teachers_delete"><span class="am-icon-save"></span> 删除</button>
+					<?php }?>
+					<?php if(check_privity("c_teacher/teacher_freeze")){?>
+					<button type="button" class="am-btn am-btn-default" id="teachers_freezon"><span class="am-icon-archive"></span>冻结</button>
+					<?php }?>
+					<?php if(check_privity("c_teacher/teacher_active")){?>
+					<button type="button" class="am-btn am-btn-default" id="teachers_active"><span class="am-icon-archive"></span>激活</button>
+					<?php }?>
+					<?php if(check_privity("c_teacher/teacher_set_test")){?>
+					<button type="button" class="am-btn am-btn-default" id="teachers_test"><span class="am-icon-archive"></span>设为测试帐号</button>
+					<?php }?>
 				</div>
 
+				<?php if(is_array($status_list) && count($status_list) > 0){?>
 				<div class="am-form-group am-margin-left am-fl">
 					<select id="teacher_status_choose">
 						<?php foreach($status_list as $item){
@@ -28,6 +33,7 @@
 						}?>
 					</select>
 				</div>
+				<?php }?>
 			</div>
 		</div>
 	</div>
@@ -57,6 +63,7 @@
 </thead>
 <tbody>
 <?php foreach($teacher_list as $k=>$teacher){
+	$edit_url = get_teacher_edit_url(array("F_teacher_id"=>$teacher["F_teacher_id"]));
 	$str = '';
 	$str .= '<tr>';
 	$str .= '<td><input type="checkbox" F_teacher_id="'.$teacher['F_teacher_id'].'" id="teacher_check'.$teacher['F_teacher_id'].'" /></td>';
@@ -68,22 +75,25 @@
 	$str .= '<td>'.$teacher['F_grade_text'].'</td>';
 	$str .= '<td>'.$teacher['F_status_text'].'</td>';
 	$str .= '<td>'.$teacher['F_coin'].'</td>';
+	$tmp  = "";
+	if(check_privity("c_teacher/teacher_edit")){
+		$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-secondary" F_teacher_id="'.$teacher['F_teacher_id'].'"  id="teacher_edit'.$k.'" url="'.$edit_url.'"><span class="am-icon-pencil-square-o"></span> 编辑</button>';
+	}
+	if(check_privity("c_teacher/teacher_freeze")){
+		$tmp .= '<button class="am-btn am-btn-default am-btn-xs" F_teacher_id="'.$teacher['F_teacher_id'].'" id="teacher_freezon'.$k.'"><span class="am-icon-copy"></span> 冻结</button>';
+	}
+	if(check_privity("c_teacher/teacher_delete")){
+		$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-danger" F_teacher_id="'.$teacher['F_teacher_id'].'" id="teacher_delete'.$k.'><span class="am-icon-trash-o"></span>删除</button>';
+	}
+	if(check_privity("c_teacher/teacher_active")){
+		$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-danger" F_teacher_id="'.$teacher['F_teacher_id'].'" id="teacher_active'.$k.'"><span class="am-icon-trash-o"></span>活激</button>';
+	}
+	if(check_privity("c_teacher/teacher_set_test")){
+		$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-danger" F_teacher_id="'.$teacher['F_teacher_id'].'" id="teacher_test'.$k.'"><span  class="am-icon-trash-o"></span>设为测试帐号</button>';
+	}
 	$str .= '<td>
 		<div class="am-btn-toolbar">
-			<div class="am-btn-group am-btn-group-xs">
-				<button class="am-btn am-btn-default am-btn-xs am-text-secondary" F_teacher_id="'.$teacher['F_teacher_id'].'"
-				 id="teacher_edit'.$k.'"><span class="am-icon-pencil-square-o"></span> 编辑</button>
-				<button class="am-btn am-btn-default am-btn-xs" F_teacher_id="'.$teacher['F_teacher_id'].'" id="teacher_freezon'.$k.'"><span
-				class="am-icon-copy"></span> 冻结</button>
-				<button class="am-btn am-btn-default am-btn-xs am-text-danger" F_teacher_id="'.$teacher['F_teacher_id'].'"
-				 id="teacher_delete'.$k.'><span
-				 class="am-icon-trash-o"></span>删除</button>
-				<button class="am-btn am-btn-default am-btn-xs am-text-danger" F_teacher_id="'.$teacher['F_teacher_id'].'"
-				 id="teacher_active'.$k.'"><span
-				 class="am-icon-trash-o"></span>活激</button>
-				<button class="am-btn am-btn-default am-btn-xs am-text-danger" F_teacher_id="'.$teacher['F_teacher_id'].'" id="teacher_test'.$k.'"><span
-				 class="am-icon-trash-o"></span>设为测试帐号</button>
-			</div>
+			<div class="am-btn-group am-btn-group-xs">'.$tmp.'</div>
 		</div>
 	</td>';
 	echo $str;

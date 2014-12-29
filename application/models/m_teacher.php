@@ -1,8 +1,6 @@
 <?php
 class M_teacher extends MY_Model {
 
-	protected $captcha_table;
-
 	public function __construct() {
 		parent :: __construct();
 //		$this -> load -> database();
@@ -17,7 +15,7 @@ class M_teacher extends MY_Model {
 	 */
 	public function get_teacher_list($parames = array()){
 		$data = array(
-			'version'=>'server_v1',
+			'version'=>$this->my_config['api_version'],
 			'c'=>'teacher',
 			'm'=>'get_teacher_list',
 			'type'=>0,
@@ -54,7 +52,7 @@ class M_teacher extends MY_Model {
 		if(isset($parames['F_teacher_ids'],$parames['F_status']))
 		{
 			$data = array(
-				'version'=>'server_v1',
+				'version'=>$this->my_config['api_version'],
 				'c'=>'teacher',
 				'm'=>'change_teacher_status',
 				'F_teacher_ids'=>$parames['F_teacher_ids'],
@@ -64,7 +62,6 @@ class M_teacher extends MY_Model {
 
 			$result = api_curl($this->my_config['api_uri'], $data, "POST", $this->my_config['api_key']);
 			$result = json_decode($result,true);
-			debug($result);
 
 			if(is_array($result) && isset($result['responseNo']) && $result['responseNo'] == 0)
 			{
@@ -74,11 +71,16 @@ class M_teacher extends MY_Model {
 		return false;
 	}
 
+	/**
+	 * 获取老师信息
+	 * @param array $parames
+	 * @return array
+	 */
 	public function get_teacher_info($parames = array()){
 		if(isset($parames['F_teacher_id'],$parames['F_teacher_id']))
 		{
 			$data = array(
-				'version'=>'server_v1',
+				'version'=>$this->my_config['api_version'],
 				'c'=>'teacher',
 				'm'=>'get_a_teacher',
 				'F_teacher_id'=>(int)$parames['F_teacher_id'],
@@ -95,23 +97,53 @@ class M_teacher extends MY_Model {
 		return array();
 	}
 
+	/**
+	 * 修改老师信息
+	 * @param array $parames
+	 * @return array
+	 */
 	public function teacher_modify($parames = array()){
-		/*
+		//修改老师信息
 		$data = array(
-			'version'=>'server_v1',
+			'version'=>$this->my_config['api_version'],
 			'c'=>'teacher',
 			'm'=>'update_a_teacher',
-			'F_teacher_id'=>(int)$parames['F_teacher_id'],
 		);
 
-		$result = api_curl($this->my_config['api_uri'], $data, "GET",$this->my_config['api_key']);
+		$data = array_merge($data,$parames);
+		$result = api_curl($this->my_config['api_uri'], $data, "POST", $this->my_config['api_key']);
 		$result = json_decode($result,true);
 
-		if(is_array($result) && isset($result['responseNo']) && $result['responseNo'] == 0 && isset($result['info']))
+		if(is_array($result) && isset($result['responseNo']) && $result['responseNo'] == 0)
 		{
-			return $result['info'];
+			return $result;
 		}
-		*/
+		return array();
+	}
+
+	/**
+	 * 添加老师
+	 * @param array $parames
+	 * @return array
+	 */
+	public function teacher_add($parames = array()){
+		//dd老师
+		$data = array(
+			'version'=>$this->my_config['api_version'],
+			'c'=>'teacher',
+			'm'=>'add_a_teacher',
+		);
+
+		$data = array_merge($data,$parames);
+
+		$result = api_curl($this->my_config['api_uri'], $data, "POST", $this->my_config['api_key']);
+		$result = json_decode($result,true);
+
+		if(is_array($result) && isset($result['responseNo']) && $result['responseNo'] == 0)
+		{
+			return $result;
+		}
+		return array();
 	}
 
 }

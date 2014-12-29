@@ -19,6 +19,13 @@
 <script src="<?php echo get_assets_js_url('jquery.min.js');?>"></script>
 <script src="<?php echo get_assets_js_url('amazeui.min.js');?>"></script>
 <!--<![endif]-->
+
+<?php if(isset($js_list) && is_array($js_list) && count($js_list) > 0){
+	foreach($js_list as $js)
+	{
+		echo "<script src='".$js."'></script>";
+	}
+}?>
 <script src="<?php echo get_assets_js_url($global_js);?>"></script>
 
 </body>

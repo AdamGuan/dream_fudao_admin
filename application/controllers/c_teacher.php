@@ -21,7 +21,7 @@ class C_teacher extends MY_Controller {
 			top_redirect($result['redirect_url']);
 		}
 		//检查是否有权限
-		if($this->_check_privity() === false)
+		if($this->_check_privity(__CLASS__,__METHOD__) === false)
 		{
 			redirect_to_no_privity_page();
 		}
@@ -85,14 +85,18 @@ class C_teacher extends MY_Controller {
 		}
 		//set teacher status list
 		$status_list = array();
-		foreach($this->my_config['status_list_view'] as $k=>$item)
+		foreach($this->my_config['status_list_view'] as $item)
 		{
-			$it = array('key'=>get_teacher_manager_list_url(array('type'=>$k)),'value'=>$item, 'active'=>false);
-			if((int)$parames['type'] == $k)
+			if(check_privity($item['privity']))
 			{
-				$it['active'] = true;
+				$it = array('key'=>get_teacher_manager_list_url(array('type'=>$item['id'])),'value'=>$item['text'],
+					'active'=>false);
+				if((int)$parames['type'] == $item['id'])
+				{
+					$it['active'] = true;
+				}
+				$status_list[] = $it;
 			}
-			$status_list[] = $it;
 		}
 
 		//data
@@ -111,6 +115,7 @@ class C_teacher extends MY_Controller {
 		$data['teacher_delete_uri'] = base_url("c_teacher/teacher_delete");
 		$data['teacher_active_uri'] = base_url("c_teacher/teacher_active");
 		$data['teacher_set_test_uri'] = base_url("c_teacher/teacher_set_test");
+		$data['teacher_add_uri'] = base_url("c_teacher/teacher_add");
 
 		$this->_output_view("teacher/v_manager", $data);
 	}
@@ -137,7 +142,7 @@ class C_teacher extends MY_Controller {
 	}
 
 	/**
-	 * 冻结老师
+	 * ajax冻结老师
 	 * @param array $parames
 	 *                  F_teacher_ids   string  老师IDs,如1,2,3
 	 */
@@ -149,7 +154,7 @@ class C_teacher extends MY_Controller {
 			top_redirect($result['redirect_url']);
 		}
 		//检查是否有权限
-		if($this->_check_privity() === false)
+		if($this->_check_privity(__CLASS__,__METHOD__) === false)
 		{
 			$this->_ajax_echo(array('msg'=>'没有权限'));
 		}
@@ -159,7 +164,7 @@ class C_teacher extends MY_Controller {
 	}
 
 	/**
-	 * 删除老师
+	 * ajax删除老师
 	 * @param array $parames
 	 *                  F_teacher_ids   string  老师IDs,如1,2,3
 	 */
@@ -171,7 +176,7 @@ class C_teacher extends MY_Controller {
 			top_redirect($result['redirect_url']);
 		}
 		//检查是否有权限
-		if($this->_check_privity() === false)
+		if($this->_check_privity(__CLASS__,__METHOD__) === false)
 		{
 			$this->_ajax_echo(array('msg'=>'没有权限'));
 		}
@@ -181,7 +186,7 @@ class C_teacher extends MY_Controller {
 	}
 
 	/**
-	 * 激活老师
+	 * ajax激活老师
 	 * @param array $parames
 	 *                  F_teacher_ids   string  老师IDs,如1,2,3
 	 */
@@ -193,7 +198,7 @@ class C_teacher extends MY_Controller {
 			top_redirect($result['redirect_url']);
 		}
 		//检查是否有权限
-		if($this->_check_privity() === false)
+		if($this->_check_privity(__CLASS__,__METHOD__) === false)
 		{
 			$this->_ajax_echo(array('msg'=>'没有权限'));
 		}
@@ -203,7 +208,7 @@ class C_teacher extends MY_Controller {
 	}
 
 	/**
-	 * 设置老师为测试帐号
+	 * ajax设置老师为测试帐号
 	 * @param array $parames
 	 *                  F_teacher_ids   string  老师IDs,如1,2,3
 	 */
@@ -215,7 +220,7 @@ class C_teacher extends MY_Controller {
 			top_redirect($result['redirect_url']);
 		}
 		//检查是否有权限
-		if($this->_check_privity() === false)
+		if($this->_check_privity(__CLASS__,__METHOD__) === false)
 		{
 			$this->_ajax_echo(array('msg'=>'没有权限'));
 		}
@@ -238,12 +243,17 @@ class C_teacher extends MY_Controller {
 			top_redirect($result['redirect_url']);
 		}
 		//检查是否有权限
-		if($this->_check_privity() === false)
+		if($this->_check_privity(__CLASS__,__METHOD__) === false)
 		{
 			redirect_to_no_privity_page();
 		}
 		//业务
 		//get teacher info
+		if(isset($parames['refrence']))
+		{
+			$refrence = $parames['refrence'];
+			unset($parames['refrence']);
+		}
 		$this -> load -> model('M_teacher', 'mteacher');
 		$teacher_info = $this->mteacher->get_teacher_info($parames);
 
@@ -254,12 +264,208 @@ class C_teacher extends MY_Controller {
 		$data['grade_list'] = $this->my_config['grade_list'];
 		$data['subject_list'] = $this->my_config['subject_list'];
 		$data['gender_list'] = $this->my_config['gender_list'];
+		$data['F_teacher_id'] = isset($parames['F_teacher_id'])?$parames['F_teacher_id']:0;
+		$data['js_list'] = array(get_assets_js_url("upload/ajaxfileupload.js"));
+		$data['upload_url'] = base_url("c_teacher/teacher_upload_header");
+		if(isset($refrence))
+		{
+			$data['refrence'] = $refrence;
+		}
 
 		$this->_output_view("teacher/v_edit", $data);
 	}
 
-	public function teacher_modify($parames = array()){
+	/**
+	 * ajax上传老师头像
+	 * @param array $parames
+	 */
+	public function teacher_upload_header($parames = array()){
+		//检查是否有登录
+		$result = $this->_check_login();
+		if(is_array($result) && isset($result['redirect_url']))	//未登录
+		{
+			top_redirect($result['redirect_url']);
+		}
+		//检查是否有权限
+		if($this->_check_privity(__CLASS__,__METHOD__) === false)
+		{
+			redirect_to_no_privity_page();
+		}
+		//业务
+		$data = array();
+		$data['error'] = 0;
+		$data['msg'] = "成功";
+		$fileElementName = 'user-pic';
+		if(is_array($_FILES[$fileElementName]) && isset($_FILES[$fileElementName]['error'],
+				$_FILES[$fileElementName]['tmp_name']) && $_FILES[$fileElementName]['error'] == 0 && file_exists($_FILES[$fileElementName]['tmp_name'])) {
+			//判断图片格式
+			//type
+			if (!in_array(strtolower($_FILES[$fileElementName]['type']), array("image/png", "image/jpeg", "image/jpg"))) {
+				$data['error'] = -1;
+				$data['msg'] = "头像格式仅允许png,jpg";
+			}
+			//判断图片大小
+			if ($data['error'] == 0)
+			{
+				//size
+				if(!($_FILES[$fileElementName]['size'] <= 200*1024))
+				{
+					$data['error'] = -2;
+					$data['msg'] = "头像文件大小应该小于200k";
+				}
+			}
+			if ($data['error'] == 0){
+				//移动图片到public
+				$file = APPPATH."../public/images/upload/";
+				$tmp = explode("/",$_FILES[$fileElementName]['type']);
+				$tmp = $tmp[count($tmp)-1];
+				$name = time().rand(0,100).".".$tmp;
+				$file .= $name;
+				rename($_FILES[$fileElementName]['tmp_name'],$file);
+				$data['name'] = $name;
+				$data['url'] = base_url("public/images/upload/".$name);
+			}
+		}
+		else{
+			$data['error'] = -3;
+			$data['msg'] = "头像格式仅允许png,jpg,且文件大小应该小于200k";
+		}
+		//
+		ob_end_clean();
+		echo json_encode($data);exit;
+	}
 
+	/**
+	 * ajax修改老师信息
+	 * @param array $parames
+	 */
+	public function teacher_modify($parames = array()){
+		//检查是否有登录
+		$result = $this->_check_login();
+		if(is_array($result) && isset($result['redirect_url']))	//未登录
+		{
+			top_redirect($result['redirect_url']);
+		}
+		//检查是否有权限
+		if($this->_check_privity(__CLASS__,__METHOD__) === false)
+		{
+			redirect_to_no_privity_page();
+		}
+		//业务
+		$data = array("error"=>0);
+		$this -> load -> model('M_teacher', 'mteacher');
+		if(isset($parames['teacher_header']))
+		{
+			$file = APPPATH."../public/images/upload/";
+			$parames['teacher_header'] = $file.$parames['teacher_header'];
+		}
+		if(isset($parames['F_teacher_name']))
+		{
+			unset($parames['F_teacher_name']);
+		}
+		$result = $this->mteacher->teacher_modify($parames);
+		if(!is_array($result) || count($result) <= 0)
+		{
+			$data["error"] = -1;
+			$data["msg"] = $result['msg'];
+		}
+		else{
+			//删除已经上传的图片
+			if(isset($parames['teacher_header']) && file_exists($parames['teacher_header']))
+			{
+				unlink($parames['teacher_header']);
+			}
+			$this->session->set_flashdata('do', 'success');
+		}
+		$this->_ajax_echo($data);
+	}
+
+	/**
+	 * 显示添加一个老师的页面
+	 * @param array $parames
+	 *          F_teacher_id    string
+	 */
+	public function teacher_add($parames = array())
+	{
+		//检查是否有登录
+		$result = $this->_check_login();
+		if(is_array($result) && isset($result['redirect_url']))	//未登录
+		{
+			top_redirect($result['redirect_url']);
+		}
+		//检查是否有权限
+		if($this->_check_privity(__CLASS__,__METHOD__) === false)
+		{
+			redirect_to_no_privity_page();
+		}
+		//业务
+		if(isset($parames['refrence']))
+		{
+			$refrence = $parames['refrence'];
+			unset($parames['refrence']);
+		}
+		$this -> load -> model('M_teacher', 'mteacher');
+
+		//data
+		$data = $this->_get_data(__CLASS__,__METHOD__);
+		$data['grade_list'] = $this->my_config['grade_list'];
+		$data['subject_list'] = $this->my_config['subject_list'];
+		$data['gender_list'] = $this->my_config['gender_list'];
+		$data['upload_url'] = base_url("c_teacher/teacher_upload_header");
+		if(isset($refrence))
+		{
+			$data['refrence'] = $refrence;
+		}
+		else{
+			$data['refrence'] = base_url("c_teacher/manager");
+		}
+		$data['manager_test_url'] = get_controll_url("c_teacher/manager",array("type"=>4));
+		$data['manager_url'] = base_url("c_teacher/manager");
+		$data['js_list'] = array(get_assets_js_url("upload/ajaxfileupload.js"));
+
+		$this->_output_view("teacher/v_add", $data);
+	}
+
+	/**
+	 * ajax添加老师
+	 * @param array $parames
+	 */
+	public function teacher_add_do($parames = array()){
+		//检查是否有登录
+		$result = $this->_check_login();
+		if(is_array($result) && isset($result['redirect_url']))	//未登录
+		{
+			top_redirect($result['redirect_url']);
+		}
+		//检查是否有权限
+		if($this->_check_privity(__CLASS__,__METHOD__) === false)
+		{
+			redirect_to_no_privity_page();
+		}
+		//业务
+		$data = array("error"=>0);
+		$this -> load -> model('M_teacher', 'mteacher');
+		if(isset($parames['teacher_header']))
+		{
+			$file = APPPATH."../public/images/upload/";
+			$parames['teacher_header'] = $file.$parames['teacher_header'];
+		}
+		$parames['F_who'] = "1";
+		$result = $this->mteacher->teacher_add($parames);
+		if(!is_array($result) || count($result) <= 0)
+		{
+			$data["error"] = -1;
+			$data["msg"] = $result['msg'];
+		}
+		else{
+			//删除已经上传的图片
+			if(isset($parames['teacher_header']) && file_exists($parames['teacher_header']))
+			{
+				unlink($parames['teacher_header']);
+			}
+			$this->session->set_flashdata('do', 'success');
+		}
+		$this->_ajax_echo($data);
 	}
 
 }

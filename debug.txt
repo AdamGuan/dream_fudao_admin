@@ -93,3 +93,289 @@ Array
     [responseNo] => 0
     [msg] => 正常
 )
+
+
+--------------------------------------------------
+2014-12-29 10:03:10
+--------------------------------------------------
+Array
+(
+    [name] => icon.png
+    [type] => image/png
+    [tmp_name] => /tmp/phpWXY8Lh
+    [error] => 0
+    [size] => 23571
+)
+
+
+--------------------------------------------------
+2014-12-29 14:03:32
+--------------------------------------------------
+Array
+(
+    [version] => server_v1
+    [c] => teacher
+    [m] => update_a_teacher
+    [F_teacher_name] => hgtest11
+    [F_real_name] => 李生
+    [F_gender] => 1
+    [F_grade] => 1
+    [F_teaching_experience] => 1
+    [F_subject_id] => 3
+    [F_subject_ids] => 2,1
+    [F_group] => 测试帐号
+    [F_description] => 英语，测试
+)
+
+
+--------------------------------------------------
+2014-12-29 14:03:33
+--------------------------------------------------
+{"responseNo":-4,"msg":"\u53c2\u6570\u9519\u8bef"}
+
+--------------------------------------------------
+2014-12-29 14:08:34
+--------------------------------------------------
+Array
+(
+    [version] => server_v1
+    [c] => teacher
+    [m] => update_a_teacher
+    [F_teacher_name] => hgtest11
+    [F_real_name] => 李生
+    [F_gender] => 1
+    [F_grade] => 1
+    [F_teaching_experience] => 1
+    [F_subject_id] => 3
+    [F_subject_ids] => 2,1
+    [F_group] => 测试帐号
+    [F_description] => 英语
+)
+
+
+--------------------------------------------------
+2014-12-29 14:08:34
+--------------------------------------------------
+{"responseNo":-4,"msg":"\u53c2\u6570\u9519\u8bef"}
+
+--------------------------------------------------
+2014-12-29 14:08:34
+--------------------------------------------------
+Array
+(
+    [error] => 0
+)
+
+
+--------------------------------------------------
+2014-12-29 14:08:57
+--------------------------------------------------
+Array
+(
+    [error] => 0
+)
+
+
+--------------------------------------------------
+2014-12-29 14:17:09
+--------------------------------------------------
+Array
+(
+    [version] => server_v1
+    [c] => teacher
+    [m] => update_a_teacher
+    [F_teacher_name] => hgtest11
+    [F_real_name] => 李生
+    [F_gender] => 1
+    [F_grade] => 1
+    [F_teaching_experience] => 1
+    [F_subject_id] => 3
+    [F_subject_ids] => 2,1,9
+    [F_group] => 测试帐号
+    [F_description] => 英语,test
+    [teacher_header] => @application/../public/images/upload/141983382588.png
+    [F_teacher_id] => 7810000000403
+)
+
+
+--------------------------------------------------
+2014-12-29 14:18:18
+--------------------------------------------------
+Array
+(
+    [version] => server_v1
+    [c] => teacher
+    [m] => update_a_teacher
+    [F_teacher_name] => hgtest11
+    [F_real_name] => 李生
+    [F_gender] => 1
+    [F_grade] => 1
+    [F_teaching_experience] => 1
+    [F_subject_id] => 3
+    [F_subject_ids] => 2,1,9
+    [F_group] => 测试帐号
+    [F_description] => 英语,test
+    [teacher_header] => @application/../public/images/upload/141983389338.png
+    [F_teacher_id] => 7810000000403
+)
+
+
+--------------------------------------------------
+2014-12-29 14:24:24
+--------------------------------------------------
+Array
+(
+    [version] => server_v1
+    [c] => teacher
+    [m] => update_a_teacher
+    [F_teacher_name] => hgtest11
+    [F_real_name] => 李生
+    [F_gender] => 1
+    [F_grade] => 1
+    [F_teaching_experience] => 1
+    [F_subject_id] => 3
+    [F_subject_ids] => 2,1,9
+    [F_group] => 测试帐号
+    [F_description] => 英语,test
+    [teacher_header] => application/../public/images/upload/141983425878.png
+    [F_teacher_id] => 7810000000403
+)
+
+
+--------------------------------------------------
+2014-12-29 14:26:04
+--------------------------------------------------
+Array
+(
+    [version] => server_v1
+    [c] => teacher
+    [m] => update_a_teacher
+    [F_teacher_name] => hgtest11
+    [F_real_name] => 李生
+    [F_gender] => 1
+    [F_grade] => 1
+    [F_teaching_experience] => 1
+    [F_subject_id] => 3
+    [F_subject_ids] => 2,1,9
+    [F_group] => 测试帐号
+    [F_description] => 英语,test
+    [teacher_header] => application/../public/images/upload/141983436057.png
+    [F_teacher_id] => 7810000000403
+)
+
+
+--------------------------------------------------
+2014-12-29 14:26:56
+--------------------------------------------------
+Array
+(
+    [version] => server_v1
+    [c] => teacher
+    [m] => update_a_teacher
+    [F_teacher_name] => hgtest11
+    [F_real_name] => 李生
+    [F_gender] => 1
+    [F_grade] => 1
+    [F_teaching_experience] => 1
+    [F_subject_id] => 3
+    [F_subject_ids] => 2,1,9
+    [F_group] => 测试帐号
+    [F_description] => 英语,test
+    [teacher_header] => application/../public/images/upload/141983441121.png
+    [F_teacher_id] => 7810000000403
+)
+
+
+--------------------------------------------------
+2014-12-29 14:26:56
+--------------------------------------------------
+141983441121.png
+
+--------------------------------------------------
+2014-12-29 14:27:55
+--------------------------------------------------
+application/../public/images/upload/141983446959.png
+
+--------------------------------------------------
+2014-12-29 15:48:28
+--------------------------------------------------
+Array
+(
+    [version] => server_v1
+    [c] => teacher
+    [m] => add_a_teacher
+    [F_teacher_password] => 
+    [F_real_name] => testabc
+    [F_gender] => 1
+    [F_grade] => 1
+    [F_teaching_experience] => 1
+    [F_subject_id] => 1
+    [F_subject_ids] => 1
+    [F_group] => 4
+    [F_description] => testabc
+    [teacher_header] => application/../public/images/upload/141983930629.png
+    [F_who] => 1
+)
+
+
+--------------------------------------------------
+2014-12-29 15:48:28
+--------------------------------------------------
+Array
+(
+    [responseNo] => -4
+    [msg] => 参数错误
+)
+
+
+--------------------------------------------------
+2014-12-29 15:49:49
+--------------------------------------------------
+Array
+(
+    [version] => server_v1
+    [c] => teacher
+    [m] => add_a_teacher
+    [F_teacher_password] => testabc
+    [F_real_name] => testabc
+    [F_gender] => 1
+    [F_grade] => 1
+    [F_teaching_experience] => 1
+    [F_subject_id] => 1
+    [F_subject_ids] => 1
+    [F_group] => 4
+    [F_description] => testabc
+    [teacher_header] => application/../public/images/upload/141983938686.png
+    [F_who] => 1
+)
+
+
+--------------------------------------------------
+2014-12-29 15:49:49
+--------------------------------------------------
+Array
+(
+    [responseNo] => -4
+    [msg] => 参数错误
+)
+
+
+--------------------------------------------------
+2014-12-29 16:32:45
+--------------------------------------------------
+Array
+(
+    [version] => server_v1
+    [c] => teacher
+    [m] => update_a_teacher
+    [F_real_name] => 李生
+    [F_gender] => 1
+    [F_grade] => 1
+    [F_teaching_experience] => 1
+    [F_subject_id] => 2
+    [F_subject_ids] => 2,3
+    [F_group] => 4
+    [F_description] => 英语,数学
+    [teacher_header] => application/../public/images/upload/141984196364.png
+    [F_teacher_id] => 7810000000403
+)

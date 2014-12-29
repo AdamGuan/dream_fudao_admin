@@ -13,20 +13,13 @@ class C_Login extends MY_Controller {
 	public function index()
 	{
 		//检查是否有登录
-		$data = $this->_check_login();
-		if(is_array($data) && isset($data['redirect_url']))	//未登录
+		$result = $this->_check_login();
+		if(is_array($result) && isset($result['redirect_url']))	//未登录
 		{
-			//获取验证码
-			$this -> load -> model('M_captcha', 'mcaptcha');
-			$cap = $this->mcaptcha->create_captcha();
-
-			$data = array(
-				'web_title'=>$this -> my_config['web_title'],
-				'login_valid_url'=>get_login_valid_url(),
-				'get_cap_url'=>get_cap_url(),
-				'cap'=>$cap,
-			);
-			$this->_output_view("v_login", $data);
+			//data
+			$data = $this->_get_data(__CLASS__,__METHOD__);
+			$data['login_valid_url'] = get_login_valid_url();
+			$this->_output_view("login/v_login", $data,true);
 		}
 		else	//已登录
 		{
@@ -42,43 +35,23 @@ class C_Login extends MY_Controller {
 	public function login_valid($parames = array())
 	{
 		$data = array();
-		//验证cap是否正确
-		$this -> load -> model('M_captcha', 'mcaptcha');
-		$result = $this->mcaptcha->check_captcha_exists($parames['cap']);
-		if($result == 1)
+
+		//验证登录
+		$this -> load -> model('M_login', 'mlogin');
+		$user_info = $this->mlogin->check_user_login($parames['name'],$parames['pwd']);
+		if(is_array($user_info) && isset($user_info['F_id']))
 		{
-			$result = 0;
-			//验证登录
-			$this -> load -> model('M_login', 'mlogin');
-			$user_info = $this->mlogin->check_user_login($parames['name'],$parames['pwd']);
-			if(is_array($user_info) && isset($user_info['F_user_id']))
-			{
-				$result = 1;
-				//设置session
-				$session_array = array(
-					'F_user_login_name'=>$user_info['F_user_login_name'],
-					'F_user_id'=>$user_info['F_user_id'],
-				);
-				$this->session->set_userdata($session_array);
-			}
-			else
-			{
-				//用户名或密码错误
-				$data['error'] = -3;
-			}
+			//设置session
+			$session_array = array(
+				'F_login_name'=>$user_info['F_login_name'],
+				'F_id'=>$user_info['F_id'],
+			);
+			$this->session->set_userdata($session_array);
 		}
 		else
 		{
-			//验证码错误
-			$data['error'] = -2;
-		}
-		
-		if($result == 0)
-		{
-			//获取验证码
-			$this -> load -> model('M_captcha', 'mcaptcha');
-			$cap = $this->mcaptcha->create_captcha();
-			$data['cap'] = $cap;
+			//用户名或密码错误
+			$data['error'] = -1;
 		}
 
 		//返回json数据
@@ -87,23 +60,6 @@ class C_Login extends MY_Controller {
 			$data['redirect_url'] = get_index_url();
 		}
 		$this->_ajax_echo($data);
-	}
-	
-	/**
-	 * 获取验证码
-	 *
-	 */
-	public function get_cap()
-	{
-		//获取验证码
-		$this -> load -> model('M_captcha', 'mcaptcha');
-		$cap = $this->mcaptcha->create_captcha();
-
-		//返回json数据
-		$data = array(
-			'cap'=>$cap,
-		);
-		$this->_ajax_echo($data);exit;
 	}
 
 	/**
@@ -116,8 +72,8 @@ class C_Login extends MY_Controller {
 		$this -> load -> model('M_login', 'mlogin');
 		$cap = $this->mlogin->login_out();
 		
-		//跳转到首页
-		top_redirect(get_index_url());
+		//跳转到登陆页面
+		top_redirect(get_login_url());
 	}
 
 }
