@@ -31,49 +31,51 @@ $config['data'] = array(
 					'prefix_class'=>'am-icon-file',
 					'text'=>'老师管理',
 					'link'=>'c_teacher/manager',
-					'active'=>0
-				),
-				array(
-					'prefix_class'=>'am-icon-file',
-					'text'=>'修改老师',
-					'link'=>'c_teacher/teacher_edit',
 					'active'=>0,
-					'hidden'=>1
-				),
-				array(
-					'prefix_class'=>'am-icon-file',
-					'text'=>'添加老师',
-					'link'=>'c_teacher/teacher_add',
-					'active'=>0,
-					'hidden'=>1
-				),
-				array(
-					'prefix_class'=>'am-icon-file',
-					'text'=>'冻结老师',
-					'link'=>'c_teacher/teacher_freeze',
-					'active'=>0,
-					'hidden'=>1
-				),
-				array(
-					'prefix_class'=>'am-icon-file',
-					'text'=>'删除老师',
-					'link'=>'c_teacher/teacher_delete',
-					'active'=>0,
-					'hidden'=>1
-				),
-				array(
-					'prefix_class'=>'am-icon-file',
-					'text'=>'激活老师',
-					'link'=>'c_teacher/teacher_active',
-					'active'=>0,
-					'hidden'=>1
-				),
-				array(
-					'prefix_class'=>'am-icon-file',
-					'text'=>'设置老师为测试帐号',
-					'link'=>'c_teacher/teacher_set_test',
-					'active'=>0,
-					'hidden'=>1
+					'children'=>array(
+						array(
+							'prefix_class'=>'am-icon-file',
+							'text'=>'修改老师',
+							'link'=>'c_teacher/teacher_edit',
+							'active'=>0,
+							'hidden'=>1
+						),
+						array(
+							'prefix_class'=>'am-icon-file',
+							'text'=>'添加老师',
+							'link'=>'c_teacher/teacher_add',
+							'active'=>0,
+							'hidden'=>1
+						),
+						array(
+							'prefix_class'=>'am-icon-file',
+							'text'=>'冻结老师',
+							'link'=>'c_teacher/teacher_freeze',
+							'active'=>0,
+							'hidden'=>1
+						),
+						array(
+							'prefix_class'=>'am-icon-file',
+							'text'=>'删除老师',
+							'link'=>'c_teacher/teacher_delete',
+							'active'=>0,
+							'hidden'=>1
+						),
+						array(
+							'prefix_class'=>'am-icon-file',
+							'text'=>'激活老师',
+							'link'=>'c_teacher/teacher_active',
+							'active'=>0,
+							'hidden'=>1
+						),
+						array(
+							'prefix_class'=>'am-icon-file',
+							'text'=>'设置老师为测试帐号',
+							'link'=>'c_teacher/teacher_set_test',
+							'active'=>0,
+							'hidden'=>1
+						),
+					)
 				),
 				array(
 					'prefix_class'=>'am-icon-file',
@@ -123,29 +125,51 @@ $config['data'] = array(
 		),
 		array(
 			'prefix_class'=>'am-icon-home',
-			'text'=>'分组管理',
-			'link'=>'c_index/index9',
-			'active'=>0,
-			'children'=>array()
-		),
-		array(
-			'prefix_class'=>'am-icon-home',
 			'text'=>'回放分类',
 			'link'=>'c_index/index10',
 			'active'=>0,
 			'children'=>array()
 		),
 		array(
-			'prefix_class'=>'am-icon-home',
+			'prefix_class'=>'am-icon-file',
 			'text'=>'权限设置',
-			'link'=>'c_index/index11',
+			'link'=>'',
 			'active'=>0,
-			'children'=>array()
+			'children'=>array(
+				array(
+					'prefix_class'=>'am-icon-file',
+					'text'=>'权限组管理',
+					'link'=>'c_privity/group_manager',
+					'active'=>0,
+					'children'=>array(
+						array(
+							'prefix_class'=>'am-icon-file',
+							'text'=>'添加权限组',
+							'link'=>'c_privity/group_add',
+							'active'=>0,
+							'hidden'=>1
+						),
+					),
+				),
+				array(
+					'prefix_class'=>'am-icon-file',
+					'text'=>'成员列表',
+					'link'=>'c_privity/user_list',
+					'active'=>0
+				),
+			)
 		),
 		array(
 			'prefix_class'=>'am-icon-home',
 			'text'=>'个人资料',
 			'link'=>'c_index/index12',
+			'active'=>0,
+			'children'=>array()
+		),
+		array(
+			'prefix_class'=>'am-icon-home',
+			'text'=>'公告管理',
+			'link'=>'c_publish/publish_manager',
 			'active'=>0,
 			'children'=>array()
 		),

@@ -77,8 +77,8 @@ function get_student_manager_list_url($parames = array()) {
 	return base_url("c_student/manager?".$p);
 }
 
-function get_login_url() {
-	return base_url('c_login/index');
+function get_index_url(){
+	return base_url();
 }
 
 
@@ -89,6 +89,14 @@ function get_login_url() {
 
 function get_login_valid_url() {
 	return base_url('c_login/login_valid');
+}
+
+function get_login_url() {
+	return base_url('c_login/index');
+}
+
+function get_login_out_url() {
+	return base_url('c_login/login_out');
 }
 
 

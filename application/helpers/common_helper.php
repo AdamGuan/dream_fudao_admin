@@ -322,13 +322,95 @@ function api_curl_multi($url, $data_list, $method_list,$key){
 	return curlrequestMulti($url_list, $data_list, $method_list);
 }
 
-function check_privity($privaty){
+function check_privity($privaty,$privaty_list = array()){
 	$CI =& get_instance();
-	$privaty_list = $CI->session->userdata('privaty');
-	if(isset($privaty) && is_array($privaty_list) && in_array($privaty,$privaty_list)){
+	if(count($privaty_list) <= 0)
+	{
+		$privaty_list = $CI->session->userdata('privaty');
+	}
+	$all = 0;
+	if(is_array($privaty_list) && $privaty_list[0] == "all")
+	{
+		$all = 1;
+	}
+	if(isset($privaty) && ($all || (is_array($privaty_list) && in_array($privaty,$privaty_list)))){
 		return true;
 	}
 	return false;
+}
+
+function cmp($a, $b)
+{
+    if ($a['F_pid'] == $b['F_pid']) {
+        return 0;
+    }
+    return ($a['F_pid'] < $b['F_pid']) ? 1 : -1;
+}
+
+function build_privity_group($list){
+
+	usort($list, "cmp");
+
+	foreach($list as $key=>$item)
+	{
+		foreach($list as $k=>$it)
+		{
+			if($item['F_id'] == $it['F_pid'])
+			{
+				if(!isset($list[$key]['children']))
+				{
+					$list[$key]['children'] = array();
+				}
+				$list[$key]['children'][] = $it;
+			}
+		}
+	}
+	$result = array($list[count($list)-1]);
+
+	$return = array();
+	build_privity_group2($result,$return);
+	return $return;
+}
+
+function build_privity_group2($list,&$return,$tab = 0){
+	foreach($list as $item)
+	{
+		$item['tab'] = $tab;
+		$children = isset($item['children'])?$item['children']:null;
+		unset($item['children']);
+		$return[] = $item;
+		if(!is_null($children))
+		build_privity_group2($children,$return,($tab+1));
+	}
+}
+
+function build_privity_str($list,$privity = array('all'),$return='',$tab = 1,$id_pre='privity_check_',$id = 0){
+	if(strlen($return) == 0)
+	{
+		$return .= '<div><input id="check_all" type="checkbox" value="">全部</div>';
+	}
+	foreach($list as $item)
+	{
+		if(!isset($item['children']) || count($item['children']) <= 0)
+		{
+			if(check_privity($item['link'],$privity))
+			{
+				$eid = $id_pre.$id;
+				++$id;
+				$return .= '<div>'.str_repeat('&nbsp;',$tab*4).'<input id="'.$eid.'" type="checkbox" value="'.$item['link'].'">'.$item['text'].'</div>';
+			}
+		}
+		else{
+			if(check_privity($item['link'],$privity))
+			{
+				$eid = $id_pre.$id;
+				++$id;
+				$return .= '<div>'.str_repeat("&nbsp;",$tab*4).'<input id="'.$eid.'" type="checkbox" value="'.$item['link'].'">'.$item['text'].'</div>';
+				$return = build_privity_str($item['children'],$privity,$return,($tab+1),$eid."_");
+			}
+		}
+	}
+	return $return;
 }
 
 /**

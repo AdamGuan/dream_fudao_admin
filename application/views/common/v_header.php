@@ -36,11 +36,10 @@
 					<span class="am-icon-users"></span> <?php echo $global_role;?> <span class="am-icon-caret-down"></span>
 				</a>
 				<ul class="am-dropdown-content">
-					<li><a href="#"><span class="am-icon-user"></span> 资料</a></li>
-					<li><a href="#"><span class="am-icon-cog"></span> 设置</a></li>
+					<li><a href="#"><span class="am-icon-user"></span>个人资料</a></li>
 				</ul>
 			</li>
-			<li><a href="javascript:;" id=""><span class="am-icon-power-off"></span> 退出</a></li>
+			<li><a href="<?php echo get_login_out_url();?>" id=""><span class="am-icon-power-off"></span> 退出</a></li>
 		</ul>
 	</div>
 </header>

@@ -379,3 +379,32 @@ Array
     [teacher_header] => application/../public/images/upload/141984196364.png
     [F_teacher_id] => 7810000000403
 )
+
+
+--------------------------------------------------
+2014-12-30 14:03:56
+--------------------------------------------------
+SELECT u.F_id,u.F_login_name,pg.F_name as F_privity_group_name,pg.F_privity,pg.F_could_has_child,pg.F_level,pg.F_id as F_privity_group_id
+					FROM t_user as u,t_privity_group as pg
+					WHERE u.F_login_name="admin"AND
+					u.F_login_password= "admin" AND
+					u.F_privity_group_id = pg.F_id AND
+					pg.F_status = 1 LIMIT 1
+
+--------------------------------------------------
+2014-12-30 18:33:19
+--------------------------------------------------
+Array
+(
+    [F_id] => 1
+    [F_login_name] => admin
+    [F_privity_group_name] => 超级管理员
+    [F_privity] => Array
+        (
+            [0] => all
+        )
+
+    [F_could_has_child] => 1
+    [F_level] => 0
+    [F_privity_group_id] => 1
+)

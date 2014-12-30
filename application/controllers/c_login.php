@@ -35,30 +35,24 @@ class C_Login extends MY_Controller {
 	public function login_valid($parames = array())
 	{
 		$data = array();
+		$data['error'] = 0;
 
 		//验证登录
 		$this -> load -> model('M_login', 'mlogin');
 		$user_info = $this->mlogin->check_user_login($parames['name'],$parames['pwd']);
-		if(is_array($user_info) && isset($user_info['F_id']))
-		{
-			//设置session
-			$session_array = array(
-				'F_login_name'=>$user_info['F_login_name'],
-				'F_id'=>$user_info['F_id'],
-			);
-			$this->session->set_userdata($session_array);
-		}
-		else
+		if(!(is_array($user_info) && isset($user_info['F_id'])))
 		{
 			//用户名或密码错误
 			$data['error'] = -1;
 		}
 
 		//返回json数据
-		if(!isset($data['error']))
+		if($data['error'] == 0)
 		{
+
 			$data['redirect_url'] = get_index_url();
 		}
+
 		$this->_ajax_echo($data);
 	}
 

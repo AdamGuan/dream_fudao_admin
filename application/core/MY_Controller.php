@@ -123,31 +123,9 @@ class MY_Controller extends CI_Controller {
 		$tmp = explode("/",$class_method);
 		$data['global_js'] = implode("_",$tmp).".js";
 
-		$data['global_login_name'] = 'admin';
-		$data['global_role'] = '超级管理员';
+		$data['global_login_name'] = $this -> session -> userdata('F_login_name');
+		$data['global_role'] = $this -> session -> userdata('F_role_name');
 		$data['global_notice'] = '<p>时光静好，与君语；细水流年，与君同。—— Amaze UI</p>';
-		//set privity
-		$this->session->set_userdata('privaty',array("c_login/index",
-			"c_index/index",
-			"c_teacher/manager",
-			"c_teacher/teacher_edit",
-			"c_teacher/teacher_add",
-			"c_student/manager",
-			"c_teacher/teacher_freeze",
-			"c_teacher/teacher_delete",
-			"c_teacher/teacher_active",
-			"c_teacher/teacher_set_test",
-			"c_index/index4",
-			"c_index/index5",
-			"c_index/index6",
-			"c_index/index7",
-			"c_index/index8",
-			"c_index/index9",
-			"c_index/index10",
-			"c_index/index11",
-			"c_index/index12",
-			)
-		);
 
 		return $data;
 	}

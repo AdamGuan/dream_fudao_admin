@@ -11,6 +11,13 @@ class M_login extends MY_Model {
 	 * @parame	$username	string
 	 * @parame	$pwd		string
 	 * @return	$result	array
+	 *              F_id            int
+	 *              F_login_name    string
+	 *              F_privity_group_name    string
+	 *              F_privity    array
+	 *              F_could_has_child    int
+	 *              F_level    int
+	 *              F_privity_group_id    int
 	 */
 	public function check_user_login($username,$pwd)
 	{
@@ -18,25 +25,27 @@ class M_login extends MY_Model {
 		if(isset($username,$pwd))
 		{
 			//在管理员表里面查询
-			$this->db->select('*');
-			$this->db->from('t_user');
-			$array = array('F_login_name' => $username, 'F_login_password' => md5($pwd));
-			$this->db->where($array);
-			$this->db->limit(1);
-			$query = $this->db->get();
+			$sql = 'SELECT u.F_id,u.F_login_name,pg.F_name as F_privity_group_name,pg.F_privity,pg.F_could_has_child,pg.F_level,pg.F_id as F_privity_group_id
+					FROM t_user as u,t_privity_group as pg
+					WHERE u.F_login_name="' .$username.'"AND
+					u.F_login_password= "'.$pwd.'" AND
+					u.F_privity_group_id = pg.F_id AND
+					pg.F_status = 1 LIMIT 1';
+			$query = $this->db->query($sql);
 			if ($query->num_rows() > 0)
 			{
 				$resulttmp = $query->row_array();
 				$result["F_id"] = $resulttmp["F_id"];
 				$result["F_login_name"] = $resulttmp["F_login_name"];
+				$result["F_privity_group_name"] = $resulttmp["F_privity_group_name"];
+				$result["F_privity"] = $resulttmp["F_privity"];
+				$result["F_could_has_child"] = $resulttmp["F_could_has_child"];
+				$result["F_level"] = $resulttmp["F_level"];
+				$result["F_privity_group_id"] = $resulttmp["F_privity_group_id"];
 			}
 			else{   //查询是否为老师
-				$this->db->select('*');
-				$this->db->from('t_teacher');
-				$array = array('F_login_name' => $username);
-				$this->db->where($array);
-				$this->db->limit(1);
-				$query = $this->db->get();
+				$sql = 'SELECT * FROM t_teacher WHERE F_login_name = "'.(string)$username.'" LIMIT 1';
+				$query = $this->db->query($sql);
 				if ($query->num_rows() > 0)
 				{
 					$resulttmp = $query->row_array();
@@ -52,12 +61,57 @@ class M_login extends MY_Model {
 					$result = json_decode($result,true);
 					if(is_array($result) && isset($result['responseNo']) && $result['responseNo'] == 0)
 					{
-						$result["F_id"] = $resulttmp["F_api_uid"];
-						$result["F_login_name"] = $resulttmp["F_login_name"];
+
+						//查询老师的权限表
+						$sql = 'SELECT * FROM t_privity_group WHERE F_level = 1 AND F_status =1 LIMIT 1';
+						$query = $this->db->query($sql);
+						if ($query->num_rows() > 0)
+						{
+							$resulttmp2 = $query->row_array();
+							$result["F_id"] = $resulttmp["F_api_uid"];
+							$result["F_login_name"] = $resulttmp["F_login_name"];
+							$result["F_privity_group_name"] = $resulttmp2["F_name"];
+							$result["F_privity"] = $resulttmp2["F_privity"];
+							$result["F_could_has_child"] = $resulttmp2["F_could_has_child"];
+							$result["F_level"] = $resulttmp2["F_level"];
+							$result["F_privity_group_id"] = $resulttmp2["F_id"];
+						}
 					}
 				}
 			}
 		}
+		if(isset($result["F_privity"]))
+		{
+			$result["F_privity"] = explode(",",$result["F_privity"]);
+		}
+
+		//设置session
+		if(is_array($result) && isset($result['F_id']))
+		{
+			$is_supper_admin = false;
+			$is_teacher = false;
+			if(isset($result['F_level']) && $result['F_level'] == 0)
+			{
+				$is_supper_admin = true;
+			}
+			if(isset($result['F_level']) && $result['F_level'] == 1)
+			{
+				$is_teacher = true;
+			}
+
+			$session_array = array(
+				'F_login_name'=>$result['F_login_name'],
+				'F_id'=>$result['F_id'],
+				'F_role_name'=>$result['F_privity_group_name'],
+				'F_privity_group_id'=>$result['F_privity_group_id'],
+				'privaty'=>$result['F_privity'],
+				'F_could_has_child'=>$result['F_could_has_child'],
+				'is_super_admin'=>$is_supper_admin,
+				'is_teacher'=>$is_teacher,
+			);
+			$this->session->set_userdata($session_array);
+		}
+
 		return $result;
 	}
 
@@ -69,7 +123,7 @@ class M_login extends MY_Model {
 	public function login_page_check_login() {
 		$result = 0;
 
-		$F_user_id = $this -> session -> userdata('F_user_id');
+		$F_user_id = $this -> session -> userdata('F_id');
 		if(isset($F_user_id))
 		{
 			$result = 1;
@@ -87,7 +141,8 @@ class M_login extends MY_Model {
 		{
 			$session_array = array(
 				'F_login_name'=>'',
-				'F_id'=>''
+				'F_id'=>'',
+				'privaty'=>''
 			);
 			$this -> session -> unset_userdata($session_array);
 		}
