@@ -8,7 +8,7 @@
 			<div class="am-form-group">
 				<label for="group_name" class="am-u-sm-3 am-form-label">用户名</label>
 				<div class="am-u-sm-9">
-					<input type="text" id="user_name" value="" placeholder="输入权限组的名词,小于等于30个字符">
+					<input type="text" id="user_name" value="" placeholder="输入用户,小于等于30个字符">
 				</div>
 			</div>
 
@@ -21,7 +21,7 @@
 
 			<?php if(isset($group_list) && count($group_list) > 0){?>
 			<div class="am-form-group">
-				<label for="group_name" class="am-u-sm-3 am-form-label">用户权限组</label>
+				<label for="group_list" class="am-u-sm-3 am-form-label">用户权限组</label>
 				<div class="am-u-sm-9">
 					<select id="group_list">
 						<?php foreach($group_list as $group){

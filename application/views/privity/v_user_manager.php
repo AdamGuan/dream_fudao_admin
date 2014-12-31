@@ -104,5 +104,5 @@
 </div>
 
 <script>
-//	var group_add_url = "<?php //echo $group_add_url;?>//";
+	var user_add_url = "<?php echo $user_add_url;?>";
 </script>

@@ -5,9 +5,8 @@ $(document).ready(function(){
         //批量
         var userStatusChange_mulit = function() {
 
-            //添加权限组
-            $("#group_add").click( function() {
-                location.href = group_add_url;
+            $("#user_add").click( function() {
+                location.href = user_add_url;
                 return false;
             });
 

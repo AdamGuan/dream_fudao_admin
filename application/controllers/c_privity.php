@@ -337,6 +337,7 @@ class C_privity extends MY_Controller {
 		$data['user_list'] = $user_list_result;
 		$data['group_list'] = $group_list;
 		$data['status_list'] = $status_list;
+		$data['user_add_url'] = base_url("c_privity/user_add");
 
 		$this->_output_view("privity/v_user_manager", $data);
 	}
