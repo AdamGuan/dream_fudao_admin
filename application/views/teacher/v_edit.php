@@ -225,7 +225,4 @@
 <script>
 	var upload_url = "<?php echo $upload_url;?>";
 	var F_teacher_id = "<?php echo $F_teacher_id;?>";
-	<?php if(isset($refrence))?>
-	var refrence = "<?php echo $refrence;?>";
-	<?php ?>
 </script>

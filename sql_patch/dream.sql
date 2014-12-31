@@ -31,16 +31,17 @@ CREATE TABLE IF NOT EXISTS `t_privity_group` (
   `F_modify_time` datetime NOT NULL COMMENT '修改时间',
   `F_level` tinyint(1) NOT NULL DEFAULT '-1' COMMENT '0为超级管理员，-1为其它,1为老师',
   PRIMARY KEY (`F_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='权限组';
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='权限组';
 
--- 正在导出表  dream_fudao_admin.t_privity_group 的数据：4 rows
+-- 正在导出表  dream_fudao_admin.t_privity_group 的数据：5 rows
 DELETE FROM `t_privity_group`;
 /*!40000 ALTER TABLE `t_privity_group` DISABLE KEYS */;
 INSERT INTO `t_privity_group` (`F_id`, `F_pid`, `F_name`, `F_description`, `F_privity`, `F_status`, `F_could_has_child`, `F_create_by_uid`, `F_create_time`, `F_modify_time`, `F_level`) VALUES
 	(1, 0, '超级管理员', '', 'all', 1, 1, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
 	(2, 1, '运营管理者', '', '', 1, 1, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', -1),
 	(3, 2, '运营人员', '', '', 1, 0, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', -1),
-	(4, 1, '测试组', '', '', 1, 0, 1, '0000-00-00 00:00:00', '2014-12-30 15:12:43', -1);
+	(11, 1, '测试人员', '', 'c_teacher/manager,c_teacher/teacher_edit,c_teacher/teacher_add,c_teacher/teacher_freeze,c_teacher/teacher_delete,c_teacher/teacher_active,c_teacher/teacher_set_test,c_student/manager,c_index/index4', 1, 1, 1, '2014-12-31 13:41:24', '2014-12-31 14:36:12', -1),
+	(9, 1, '开发人员', '', 'c_login/index,c_index/index,c_teacher/manager,c_teacher/teacher_edit,c_teacher/teacher_add,c_teacher/teacher_freeze,c_teacher/teacher_delete,c_teacher/teacher_active,c_teacher/teacher_set_test,c_student/manager,c_index/index4,c_index/index5,c_index/index6,c_index/index7,c_index/index8,c_index/index10,c_privity/group_manager,c_privity/group_add,c_privity/user_list,c_index/index12,c_publish/publish_manager', 1, 0, 1, '2014-12-31 10:57:33', '2014-12-31 14:36:12', -1);
 /*!40000 ALTER TABLE `t_privity_group` ENABLE KEYS */;
 
 
@@ -66,16 +67,19 @@ CREATE TABLE IF NOT EXISTS `t_user` (
   `F_login_password` char(32) NOT NULL COMMENT '登录密码',
   `F_nick_name` varchar(50) NOT NULL COMMENT '昵称',
   `F_privity_group_id` int(10) NOT NULL COMMENT '权限组ID',
+  `F_status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '0无效,1有效',
+  `F_create_time` datetime NOT NULL COMMENT '添加时间',
+  `F_modify_time` datetime NOT NULL COMMENT '修改时间',
   PRIMARY KEY (`F_id`),
   UNIQUE KEY `F_login_name` (`F_login_name`),
   KEY `F_role_id` (`F_privity_group_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='后台用户表';
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='后台用户表';
 
--- 正在导出表  dream_fudao_admin.t_user 的数据：1 rows
+-- 正在导出表  dream_fudao_admin.t_user 的数据：2 rows
 DELETE FROM `t_user`;
 /*!40000 ALTER TABLE `t_user` DISABLE KEYS */;
-INSERT INTO `t_user` (`F_id`, `F_login_name`, `F_login_password`, `F_nick_name`, `F_privity_group_id`) VALUES
-	(1, 'admin', 'admin', 'admin', 1);
+INSERT INTO `t_user` (`F_id`, `F_login_name`, `F_login_password`, `F_nick_name`, `F_privity_group_id`, `F_status`, `F_create_time`, `F_modify_time`) VALUES
+	(1, 'admin', 'admin', 'admin', 1, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `t_user` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;

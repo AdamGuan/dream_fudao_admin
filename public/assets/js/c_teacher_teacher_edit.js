@@ -58,7 +58,8 @@ $(document).ready(function(){
 
         var teacher_back = function(){
             $("#teacher_edit_back").click(function(){
-                top.location.href  = refrence;
+                location.href = document.referrer;
+                return false;
             });
         };
 
@@ -211,13 +212,7 @@ $(document).ready(function(){
                             //success
                             if(typeof(msg.error) != "undefined" && msg.error == 0)
                             {
-                                if(typeof(refrence) != "undefined")
-                                {
-                                    top.location.href  = refrence;
-                                }else{
-                                    $("#my-alert-message").html("修改成功!");
-                                    $('#my-alert').modal('open');
-                                }
+                                location.href = document.referrer;
                             }
                             else{
                                 //show error

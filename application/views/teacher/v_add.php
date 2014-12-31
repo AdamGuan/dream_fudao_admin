@@ -178,7 +178,6 @@
 
 <script>
 	var upload_url = "<?php echo $upload_url;?>";
-	var refrence = "<?php echo $refrence;?>";
 	var manager_test_url = "<?php echo $manager_test_url;?>";
 	var manager_url = "<?php echo $manager_url;?>";
 </script>

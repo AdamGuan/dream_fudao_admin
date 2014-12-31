@@ -182,6 +182,13 @@ function curlrequest($url, $data, $method = 'post') {
 	return $document;
 }
 
+/**
+ * curl并行
+ * @param $url_list     array   请求的url list
+ * @param $data_list    array   请求的data list
+ * @param $method_list  array   method list
+ * @return array
+ */
 function curlrequestMulti($url_list, $data_list, $method_list)
 {
 	$ch_list = array();
@@ -241,6 +248,14 @@ function curlrequestMulti($url_list, $data_list, $method_list)
 	return $res;
 }
 
+/**
+ * api curl
+ * @param $url
+ * @param $data
+ * @param $method
+ * @param $key
+ * @return mixed
+ */
 function api_curl($url, $data, $method,$key){
 	$method = strtoupper($method);
 
@@ -279,6 +294,14 @@ function api_curl($url, $data, $method,$key){
 	return curlrequest($url,$data,$method);
 }
 
+/**
+ * api curl 并行
+ * @param $url
+ * @param $data_list
+ * @param $method_list
+ * @param $key
+ * @return array
+ */
 function api_curl_multi($url, $data_list, $method_list,$key){
 	$url_list = array();
 	foreach($data_list as $k=>$data)
@@ -322,6 +345,12 @@ function api_curl_multi($url, $data_list, $method_list,$key){
 	return curlrequestMulti($url_list, $data_list, $method_list);
 }
 
+/**
+ * 检查权限值是否在权限列表中
+ * @param $privaty          array   权限值
+ * @param $privaty_list     array   权限列表
+ * @return bool
+ */
 function check_privity($privaty,$privaty_list = array()){
 	$CI =& get_instance();
 	if(count($privaty_list) <= 0)
@@ -339,6 +368,7 @@ function check_privity($privaty,$privaty_list = array()){
 	return false;
 }
 
+//build_privity_group里面用的排序比较函数
 function cmp($a, $b)
 {
     if ($a['F_pid'] == $b['F_pid']) {
@@ -384,7 +414,7 @@ function build_privity_group2($list,&$return,$tab = 0){
 	}
 }
 
-function build_privity_str($list,$privity = array('all'),$return='',$tab = 1,$id_pre='privity_check_',$id = 0){
+function build_privity_str($list,$privity = array('all'),$checked_privity = array(),$return='',$tab = 1,$id_pre='privity_check_',$id = 0){
 	if(strlen($return) == 0)
 	{
 		$return .= '<div><input id="check_all" type="checkbox" value="">全部</div>';
@@ -397,7 +427,12 @@ function build_privity_str($list,$privity = array('all'),$return='',$tab = 1,$id
 			{
 				$eid = $id_pre.$id;
 				++$id;
-				$return .= '<div>'.str_repeat('&nbsp;',$tab*4).'<input id="'.$eid.'" type="checkbox" value="'.$item['link'].'">'.$item['text'].'</div>';
+				$checked = "";
+				if(in_array($item['link'],$checked_privity))
+				{
+					$checked = " checked = \"checked\"";
+				}
+				$return .= '<div>'.str_repeat('&nbsp;',$tab*4).'<input '.$checked.' id="'.$eid.'" type="checkbox" value="'.$item['link'].'">'.$item['text'].'</div>';
 			}
 		}
 		else{
@@ -405,8 +440,13 @@ function build_privity_str($list,$privity = array('all'),$return='',$tab = 1,$id
 			{
 				$eid = $id_pre.$id;
 				++$id;
-				$return .= '<div>'.str_repeat("&nbsp;",$tab*4).'<input id="'.$eid.'" type="checkbox" value="'.$item['link'].'">'.$item['text'].'</div>';
-				$return = build_privity_str($item['children'],$privity,$return,($tab+1),$eid."_");
+				$checked = "";
+				if(in_array($item['link'],$checked_privity))
+				{
+					$checked = " checked = \"checked\"";
+				}
+				$return .= '<div>'.str_repeat("&nbsp;",$tab*4).'<input '.$checked.' id="'.$eid.'" type="checkbox" value="'.$item['link'].'">'.$item['text'].'</div>';
+				$return = build_privity_str($item['children'],$privity,$checked_privity,$return,($tab+1),$eid."_");
 			}
 		}
 	}

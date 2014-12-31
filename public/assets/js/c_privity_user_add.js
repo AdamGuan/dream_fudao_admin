@@ -1,6 +1,6 @@
 $(document).ready(function(){
     //模块定义
-    var privityGroupAddModule = function($){
+    var privityUserAddModule = function($){
 
         //
         var privity_checked = function(){
@@ -159,7 +159,7 @@ $(document).ready(function(){
 
         //return obj
         var obj = {
-            init:function(){privity_checked();group_select();group_back();group_add();}
+            init:function(){privity_checked();group_select();user_back();user_add();}
         };
 
         //return
@@ -168,5 +168,5 @@ $(document).ready(function(){
     }(jQuery);
 
     //模块调用
-    privityGroupAddModule.init();
+    privityUserAddModule.init();
 });

@@ -154,7 +154,7 @@ $config['data'] = array(
 				array(
 					'prefix_class'=>'am-icon-file',
 					'text'=>'成员列表',
-					'link'=>'c_privity/user_list',
+					'link'=>'c_privity/user_manager',
 					'active'=>0
 				),
 			)

@@ -4,10 +4,26 @@
 			<div class="am-btn-toolbar am-fl">
 				<div class="am-btn-group am-btn-group-xs">
 					<button type="button" class="am-btn am-btn-default" id="group_add"><span class="am-icon-plus"></span>新增</button>
-					<button type="button" class="am-btn am-btn-default" id="groups_delete"><span class="am-icon-save"></span> 删除</button>
-					<button type="button" class="am-btn am-btn-default" id="groups_freezon"><span class="am-icon-archive"></span>冻结</button>
-					<button type="button" class="am-btn am-btn-default" id="groups_active"><span class="am-icon-archive"></span>激活</button>
+					<button type="button" class="am-btn am-btn-default" id="groups_freeze"><span class="am-icon-plus"></span>冻结</button>
+					<button type="button" class="am-btn am-btn-default" id="groups_delete"><span class="am-icon-plus"></span>删除</button>
+					<button type="button" class="am-btn am-btn-default" id="groups_active"><span class="am-icon-plus"></span>激活</button>
 				</div>
+
+				<?php if(is_array($status_list) && count($status_list) > 0){?>
+				<div class="am-form-group am-margin-left am-fl">
+					<select id="group_status_choose">
+						<?php foreach($status_list as $item){
+							$selected = '';
+							if(isset($item['active']) && $item['active'])
+							{
+								$selected = 'selected="selected"';
+							}
+							echo '<option value="'.$item['key'].'" '.$selected.'>'.$item['value'].'</option>';
+						}?>
+					</select>
+				</div>
+				<?php }?>
+
 			</div>
 		</div>
 	</div>
@@ -19,25 +35,26 @@
 <table class="am-table am-table-striped am-table-hover table-main">
 <thead>
 <tr>
-	<th>序号</th><th>组名</th><th>状态</th><th>管理</th>
+	<th class="table-check"><input type="checkbox" id="group_check_all" /></th><th>序号</th><th>组名</th><th>状态</th><th>管理</th>
 </tr>
 </thead>
 <tbody>
-<?php if(isset($group_list)) foreach($group_list as $k=>$group){
-	if(isset($group['F_status']) == 1)
+<?php if(isset($group_list)){foreach($group_list as $k=>$group){
+	if($group['F_id'] == $self_privity_id){continue;}
+	if(isset($group['F_status']) && $group['F_status'] == 1)
 	{
 		$status = "激活";
-	}
-	else{
+	} else{
 		$status = "冻结";
 	}
 	$str = '';
 	$str .= '<tr>';
-	$str .= '<td>'.($k+1).'</td>';
+	$str .= '<td><input type="checkbox" F_id="'.$group['F_id'].'" id="group_check'.$group['F_id'].'" /></td>';
+	$str .= '<td>'.($k).'</td>';
 	$str .= '<td>'.$group['F_name'].'</td>';
 	$str .= '<td>'.$status.'</td>';
 	$tmp  = "";
-	$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-secondary" F_id="'.$group['F_id'].'"  id="group_edit'.$k.'"><span class="am-icon-pencil-square-o"></span> 编辑</button>';
+	$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-secondary" url="'.get_controll_url("c_privity/group_edit",array('F_id'=>$group['F_id'])).'" F_id="'.$group['F_id'].'"  id="group_edit'.$k.'"><span class="am-icon-pencil-square-o"></span> 编辑</button>';
 	$tmp .= '<button class="am-btn am-btn-default am-btn-xs" F_id="'.$group['F_id'].'" id="group_freezon'.$k.'"><span class="am-icon-copy"></span> 冻结</button>';
 	$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-danger" F_id="'.$group['F_id'].'" id="group_delete'.$k.'><span class="am-icon-trash-o"></span>删除</button>';
 	$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-danger" F_id="'.$group['F_id'].'" id="group_active'.$k.'"><span class="am-icon-trash-o"></span>活激</button>';
@@ -47,7 +64,7 @@
 		</div>
 	</td>';
 	echo $str;
-}?>
+}}?>
 </tbody>
 </table>
 
@@ -59,6 +76,18 @@
 </div>
 
 </div>
+
+<div class="am-modal am-modal-alert" tabindex="-1" id="my-alert">
+	<div class="am-modal-dialog">
+		<div class="am-modal-bd" id="my-alert-message">
+			Hello world！
+		</div>
+		<div class="am-modal-footer">
+			<span class="am-modal-btn">确定</span>
+		</div>
+	</div>
+</div>
+
 <script>
 	var group_add_url = "<?php echo $group_add_url;?>";
 </script>

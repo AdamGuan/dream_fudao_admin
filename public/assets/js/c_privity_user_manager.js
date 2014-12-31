@@ -1,10 +1,9 @@
 $(document).ready(function(){
-    //group_check_all
     //模块定义
-    var privityGroupManagerModule = function($){
+    var privityUserManagerModule = function($){
 
         //批量
-        var groupStatusChange_mulit = function() {
+        var userStatusChange_mulit = function() {
 
             //添加权限组
             $("#group_add").click( function() {
@@ -12,14 +11,14 @@ $(document).ready(function(){
                 return false;
             });
 
-            $("#groups_active").click( function() {
+            $("#users_active").click( function() {
                 //loading start
                 var $btn = $(this);
                 $btn.button('loading');
                 $.AMUI.progress.start();
                 //get ids
                 var id_list = new Array();
-                var obj = $("input[id^='group_check']:checked");
+                var obj = $("input[id^='user_check']:checked");
                 for(var i=0;i<obj.length;++i)
                 {
                     id_list[i] = $(obj[i]).attr("F_id");
@@ -30,7 +29,7 @@ $(document).ready(function(){
 
                     $.ajax({
                         type: "GET",
-                        url: "group_active",
+                        url: "user_active",
                         data: "F_ids="+F_ids,
                         success: function(msg){
                             //loading end
@@ -57,14 +56,14 @@ $(document).ready(function(){
                 return false;
             });
 
-            $("#groups_delete").click( function() {
+            $("#users_delete").click( function() {
                 //loading start
                 var $btn = $(this);
                 $btn.button('loading');
                 $.AMUI.progress.start();
                 //get ids
                 var id_list = new Array();
-                var obj = $("input[id^='group_check']:checked");
+                var obj = $("input[id^='user_check']:checked");
                 for(var i=0;i<obj.length;++i)
                 {
                     id_list[i] = $(obj[i]).attr("F_id");
@@ -75,7 +74,7 @@ $(document).ready(function(){
 
                     $.ajax({
                         type: "GET",
-                        url: "group_delete",
+                        url: "user_delete",
                         data: "F_ids="+F_ids,
                         success: function(msg){
                             //loading end
@@ -102,14 +101,14 @@ $(document).ready(function(){
                 return false;
             });
 
-            $("#groups_freeze").click( function() {
+            $("#users_freeze").click( function() {
                 //loading start
                 var $btn = $(this);
                 $btn.button('loading');
                 $.AMUI.progress.start();
                 //get ids
                 var id_list = new Array();
-                var obj = $("input[id^='group_check']:checked");
+                var obj = $("input[id^='user_check']:checked");
                 for(var i=0;i<obj.length;++i)
                 {
                     id_list[i] = $(obj[i]).attr("F_id");
@@ -120,7 +119,7 @@ $(document).ready(function(){
 
                     $.ajax({
                         type: "GET",
-                        url: "group_freeze",
+                        url: "user_freeze",
                         data: "F_ids="+F_ids,
                         success: function(msg){
                             //loading end
@@ -149,10 +148,10 @@ $(document).ready(function(){
 
         };
 
-         //修改老师状态
-        var groupChange = function(){
+         //修改用户状态
+        var userChange = function(){
 
-            $("button[id^='group_active']").click( function() {
+            $("button[id^='user_active']").click( function() {
                 //loading start
                 var $btn = $(this);
                 $btn.button('loading');
@@ -160,7 +159,7 @@ $(document).ready(function(){
 
                 $.ajax({
                     type: "GET",
-                    url: "group_active",
+                    url: "user_active",
                     data: "F_ids="+$(this).attr("F_id"),
                     success: function(msg){
                         //loading end
@@ -181,7 +180,7 @@ $(document).ready(function(){
                 return false;
             });
 
-            $("button[id^='group_freezon']").click( function() {
+            $("button[id^='user_freezon']").click( function() {
                 //loading start
                 var $btn = $(this);
                 $btn.button('loading');
@@ -189,7 +188,7 @@ $(document).ready(function(){
 
                 $.ajax({
                     type: "GET",
-                    url: "group_freeze",
+                    url: "user_freeze",
                     data: "F_ids="+$(this).attr("F_id"),
                     success: function(msg){
                         //loading end
@@ -210,7 +209,7 @@ $(document).ready(function(){
                 return false;
             });
 
-            $("button[id^='group_delete']").click( function() {
+            $("button[id^='user_delete']").click( function() {
                 //loading start
                 var $btn = $(this);
                 $btn.button('loading');
@@ -218,7 +217,7 @@ $(document).ready(function(){
 
                 $.ajax({
                     type: "GET",
-                    url: "group_delete",
+                    url: "user_delete",
                     data: "F_ids="+$(this).attr("F_id"),
                     success: function(msg){
                         //loading end
@@ -247,33 +246,41 @@ $(document).ready(function(){
         };
 
         //
-        var group_check_all = function(){
-            $("#group_check_all").click( function () {
+        var user_check_all = function(){
+            $("#user_check_all").click( function () {
                 var num = $(this).data("num");
                 if(typeof(num) == 'undefined' || num == 0)
                 {
-                    $("input[id^='group_check']").prop("checked",true);
+                    $("input[id^='user_check']").prop("checked",true);
                     $(this).data("num",1);
                 }
                 else
                 {
-                    $("input[id^='group_check']").prop("checked",false);
+                    $("input[id^='user_check']").prop("checked",false);
                     $(this).data("num",0);
                 }
             });
         };
 
-        //老师状态选择
-        var group_status_choose = function(){
-            $("#group_status_choose").change( function() {
-                var url = $("#group_status_choose option:selected").attr("value");
+        //用户状态选择
+        var user_status_choose = function(){
+            $("#user_status_choose").change( function() {
+                var url = $("#user_status_choose option:selected").attr("value");
+                top.location.href = url;
+            });
+        };
+
+        //用户状态选择
+        var user_group_choose = function(){
+            $("#user_group_choose").change( function() {
+                var url = $("#user_group_choose option:selected").attr("value");
                 top.location.href = url;
             });
         };
 
         //return obj
         var obj = {
-            init:function(){groupStatusChange_mulit();groupChange();group_check_all();group_status_choose();}
+            init:function(){userStatusChange_mulit();userChange();user_check_all();user_status_choose();user_group_choose();}
         };
 
         //return
@@ -282,5 +289,5 @@ $(document).ready(function(){
     }(jQuery);
 
     //模块调用
-    privityGroupManagerModule.init();
+    privityUserManagerModule.init();
 });

@@ -1,6 +1,6 @@
 $(document).ready(function(){
     //模块定义
-    var privityGroupAddModule = function($){
+    var privityGroupModifyModule = function($){
 
         //
         var privity_checked = function(){
@@ -37,39 +37,15 @@ $(document).ready(function(){
         };
 
         //
-        var group_select = function(){
-
-            $("#group_list").change( function () {
-                var group_id = $("#group_list option:selected").attr("value");
-                 //loading start
-                $.AMUI.progress.start();
-                $("#privity_html").html("loading...");
-                //ajax
-                $.ajax({
-                    type: "GET",
-                    url: "get_privity_htmlstr",
-                    data: "group_id="+group_id,
-                    success: function(msg){
-                        //loading end
-                        $.AMUI.progress.done();
-                        $("#privity_html").html(msg.htmlstr);
-                        privity_checked();
-                    }
-                });
-
-            } );
-        };
-
-        //
         var group_back = function(){
-            $("#group_add_back").click(function(){
-                location.href = document.referrer;
+            $("#group_modify_back").click(function(){
+                location.href= document.referrer;
                 return false;
             });
         };
 
-        var group_add = function(){
-            $("#group_add_submit").click(function(){
+        var group_modify = function(){
+            $("#group_modify_submit").click(function(){
                 //loading start
                 var $btn = $(this);
                 $btn.button('loading');
@@ -91,8 +67,7 @@ $(document).ready(function(){
 
                 if(valid === true)
                 {
-                    //获取所父级
-                    var groupid = $("#group_list option:selected").val();
+
                     //获取选择的权限值
                     var checked_value_list = new Array();
                     var checkedlist = $("input:checked[id^='privity_check_']");
@@ -113,17 +88,15 @@ $(document).ready(function(){
                     var childcould = $("#child option:selected").val();
 
                     var senddata = new Array();
-                    if(typeof(groupid) != "undefined"){
-                        senddata[senddata.length] = "F_pid="+groupid;
-                    }
                     senddata[senddata.length] = "F_name="+group_name;
                     senddata[senddata.length] = "F_privity="+privity;
                     if(typeof(childcould) != "undefined"){
                         senddata[senddata.length] = "F_could_has_child="+childcould;
                     }
+                    senddata[senddata.length] = "F_id="+group_id;
                     $.ajax({
                         type: "POST",
-                        url: "group_add_do",
+                        url: "group_modify_do",
                         data: senddata.join("&"),
                         success: function(msg){
                             //loading end
@@ -132,7 +105,7 @@ $(document).ready(function(){
                             //success
                             if(typeof(msg.error) != "undefined" && msg.error == 0)
                             {
-                                location.href = document.referrer;
+                                location.href= document.referrer;
                             }
                             else{
                                 //show error
@@ -141,6 +114,7 @@ $(document).ready(function(){
                             }
                         }
                     });
+
 
                 }
                 else{
@@ -159,7 +133,7 @@ $(document).ready(function(){
 
         //return obj
         var obj = {
-            init:function(){privity_checked();group_select();group_back();group_add();}
+            init:function(){privity_checked();group_back();group_modify();}
         };
 
         //return
@@ -168,5 +142,5 @@ $(document).ready(function(){
     }(jQuery);
 
     //模块调用
-    privityGroupAddModule.init();
+    privityGroupModifyModule.init();
 });

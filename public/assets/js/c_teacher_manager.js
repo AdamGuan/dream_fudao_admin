@@ -6,7 +6,6 @@ $(document).ready(function(){
         var teacherStatusChoose = function(){
             $("#teacher_status_choose").change( function() {
                 var url = $("#teacher_status_choose option:selected").attr("value");
-                console.log("location");
                 top.location.href = url;
             });
         };
@@ -122,7 +121,7 @@ $(document).ready(function(){
             });
 
             $("button[id^='teacher_edit']").click( function() {
-                location.href = $(this).attr("url")+"&refrence="+encodeURI(location.href);
+                location.href = $(this).attr("url");
                 return false;
             });
 
@@ -148,7 +147,7 @@ $(document).ready(function(){
         var teacherStatusChange_mulit = function() {
 
             $("#teacher_add").click( function() {
-                location.href = $(this).attr("url")+"?refrence="+encodeURI(location.href);
+                location.href = $(this).attr("url");
                 return false;
             });
 

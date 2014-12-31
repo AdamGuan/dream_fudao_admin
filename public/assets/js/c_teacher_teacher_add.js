@@ -58,7 +58,8 @@ $(document).ready(function(){
 
         var teacher_back = function(){
             $("#teacher_add_back").click(function(){
-                top.location.href  = refrence;
+                location.href = document.referrer;
+                return false;
             });
         };
 

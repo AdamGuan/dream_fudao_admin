@@ -146,7 +146,7 @@ class C_teacher extends MY_Controller {
 	 * @param array $parames
 	 *                  F_teacher_ids   string  老师IDs,如1,2,3
 	 */
-	public function teacher_freeze($parames = array()){
+	public function teacher_w($parames = array()){
 		//检查是否有登录
 		$result = $this->_check_login();
 		if(is_array($result) && isset($result['redirect_url']))	//未登录
@@ -249,11 +249,6 @@ class C_teacher extends MY_Controller {
 		}
 		//业务
 		//get teacher info
-		if(isset($parames['refrence']))
-		{
-			$refrence = $parames['refrence'];
-			unset($parames['refrence']);
-		}
 		$this -> load -> model('M_teacher', 'mteacher');
 		$teacher_info = $this->mteacher->get_teacher_info($parames);
 
@@ -267,10 +262,6 @@ class C_teacher extends MY_Controller {
 		$data['F_teacher_id'] = isset($parames['F_teacher_id'])?$parames['F_teacher_id']:0;
 		$data['js_list'] = array(get_assets_js_url("upload/ajaxfileupload.js"));
 		$data['upload_url'] = base_url("c_teacher/teacher_upload_header");
-		if(isset($refrence))
-		{
-			$data['refrence'] = $refrence;
-		}
 
 		$this->_output_view("teacher/v_edit", $data);
 	}
@@ -399,11 +390,7 @@ class C_teacher extends MY_Controller {
 			redirect_to_no_privity_page();
 		}
 		//业务
-		if(isset($parames['refrence']))
-		{
-			$refrence = $parames['refrence'];
-			unset($parames['refrence']);
-		}
+
 		$this -> load -> model('M_teacher', 'mteacher');
 
 		//data
@@ -412,13 +399,7 @@ class C_teacher extends MY_Controller {
 		$data['subject_list'] = $this->my_config['subject_list'];
 		$data['gender_list'] = $this->my_config['gender_list'];
 		$data['upload_url'] = base_url("c_teacher/teacher_upload_header");
-		if(isset($refrence))
-		{
-			$data['refrence'] = $refrence;
-		}
-		else{
-			$data['refrence'] = base_url("c_teacher/manager");
-		}
+
 		$data['manager_test_url'] = get_controll_url("c_teacher/manager",array("type"=>4));
 		$data['manager_url'] = base_url("c_teacher/manager");
 		$data['js_list'] = array(get_assets_js_url("upload/ajaxfileupload.js"));

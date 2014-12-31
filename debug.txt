@@ -408,3 +408,584 @@ Array
     [F_level] => 0
     [F_privity_group_id] => 1
 )
+
+
+--------------------------------------------------
+2014-12-31 11:59:20
+--------------------------------------------------
+Array
+(
+    [0] => Array
+        (
+            [F_id] => 1
+            [F_pid] => 0
+            [F_name] => 超级管理员
+            [F_description] => 
+            [F_privity] => all
+            [F_status] => 1
+            [F_could_has_child] => 1
+            [F_create_by_uid] => 1
+            [F_create_time] => 0000-00-00 00:00:00
+            [F_modify_time] => 0000-00-00 00:00:00
+            [F_level] => 0
+        )
+
+    [1] => Array
+        (
+            [F_id] => 2
+            [F_pid] => 1
+            [F_name] => 运营管理者
+            [F_description] => 
+            [F_privity] => 
+            [F_status] => 1
+            [F_could_has_child] => 1
+            [F_create_by_uid] => 1
+            [F_create_time] => 0000-00-00 00:00:00
+            [F_modify_time] => 0000-00-00 00:00:00
+            [F_level] => -1
+        )
+
+    [2] => Array
+        (
+            [F_id] => 3
+            [F_pid] => 2
+            [F_name] => 运营人员
+            [F_description] => 
+            [F_privity] => 
+            [F_status] => 1
+            [F_could_has_child] => 0
+            [F_create_by_uid] => 1
+            [F_create_time] => 0000-00-00 00:00:00
+            [F_modify_time] => 0000-00-00 00:00:00
+            [F_level] => -1
+        )
+
+    [3] => Array
+        (
+            [F_id] => 10
+            [F_pid] => 1
+            [F_name] => 测试
+            [F_description] => 
+            [F_privity] => c_login/index,c_index/index,c_teacher/manager,c_teacher/teacher_edit,c_teacher/teacher_add,c_teacher/teacher_freeze,c_teacher/teacher_delete,c_teacher/teacher_active,c_teacher/teacher_set_test,c_student/manager,c_index/index4,c_index/index5,c_index/index6,c_index/index7,c_index/index8,c_index/index10,c_privity/group_manager,c_privity/group_add,c_privity/user_list,c_index/index12,c_publish/publish_manager
+            [F_status] => 0
+            [F_could_has_child] => 0
+            [F_create_by_uid] => 1
+            [F_create_time] => 2014-12-31 11:09:24
+            [F_modify_time] => 2014-12-31 11:56:31
+            [F_level] => -1
+        )
+
+    [4] => Array
+        (
+            [F_id] => 9
+            [F_pid] => 1
+            [F_name] => 开发人员
+            [F_description] => 
+            [F_privity] => c_login/index,c_index/index,c_teacher/manager,c_teacher/teacher_edit,c_teacher/teacher_add,c_teacher/teacher_freeze,c_teacher/teacher_delete,c_teacher/teacher_active,c_teacher/teacher_set_test,c_student/manager,c_index/index4,c_index/index5,c_index/index6,c_index/index7,c_index/index8,c_index/index10,c_privity/group_manager,c_privity/group_add,c_privity/user_list,c_index/index12,c_publish/publish_manager
+            [F_status] => 1
+            [F_could_has_child] => 1
+            [F_create_by_uid] => 1
+            [F_create_time] => 2014-12-31 10:57:33
+            [F_modify_time] => 2014-12-31 10:57:33
+            [F_level] => -1
+        )
+
+)
+
+
+--------------------------------------------------
+2014-12-31 12:00:34
+--------------------------------------------------
+Array
+(
+    [0] => Array
+        (
+            [F_id] => 1
+            [F_pid] => 0
+            [F_name] => 超级管理员
+            [F_description] => 
+            [F_privity] => all
+            [F_status] => 1
+            [F_could_has_child] => 1
+            [F_create_by_uid] => 1
+            [F_create_time] => 0000-00-00 00:00:00
+            [F_modify_time] => 0000-00-00 00:00:00
+            [F_level] => 0
+        )
+
+    [1] => Array
+        (
+            [F_id] => 2
+            [F_pid] => 1
+            [F_name] => 运营管理者
+            [F_description] => 
+            [F_privity] => 
+            [F_status] => 1
+            [F_could_has_child] => 1
+            [F_create_by_uid] => 1
+            [F_create_time] => 0000-00-00 00:00:00
+            [F_modify_time] => 0000-00-00 00:00:00
+            [F_level] => -1
+        )
+
+    [2] => Array
+        (
+            [F_id] => 3
+            [F_pid] => 2
+            [F_name] => 运营人员
+            [F_description] => 
+            [F_privity] => 
+            [F_status] => 1
+            [F_could_has_child] => 0
+            [F_create_by_uid] => 1
+            [F_create_time] => 0000-00-00 00:00:00
+            [F_modify_time] => 0000-00-00 00:00:00
+            [F_level] => -1
+        )
+
+    [3] => Array
+        (
+            [F_id] => 10
+            [F_pid] => 1
+            [F_name] => 测试
+            [F_description] => 
+            [F_privity] => c_login/index,c_index/index,c_teacher/manager,c_teacher/teacher_edit,c_teacher/teacher_add,c_teacher/teacher_freeze,c_teacher/teacher_delete,c_teacher/teacher_active,c_teacher/teacher_set_test,c_student/manager,c_index/index4,c_index/index5,c_index/index6,c_index/index7,c_index/index8,c_index/index10,c_privity/group_manager,c_privity/group_add,c_privity/user_list,c_index/index12,c_publish/publish_manager
+            [F_status] => 0
+            [F_could_has_child] => 0
+            [F_create_by_uid] => 1
+            [F_create_time] => 2014-12-31 11:09:24
+            [F_modify_time] => 2014-12-31 11:56:31
+            [F_level] => -1
+        )
+
+    [4] => Array
+        (
+            [F_id] => 9
+            [F_pid] => 1
+            [F_name] => 开发人员
+            [F_description] => 
+            [F_privity] => c_login/index,c_index/index,c_teacher/manager,c_teacher/teacher_edit,c_teacher/teacher_add,c_teacher/teacher_freeze,c_teacher/teacher_delete,c_teacher/teacher_active,c_teacher/teacher_set_test,c_student/manager,c_index/index4,c_index/index5,c_index/index6,c_index/index7,c_index/index8,c_index/index10,c_privity/group_manager,c_privity/group_add,c_privity/user_list,c_index/index12,c_publish/publish_manager
+            [F_status] => 1
+            [F_could_has_child] => 1
+            [F_create_by_uid] => 1
+            [F_create_time] => 2014-12-31 10:57:33
+            [F_modify_time] => 2014-12-31 10:57:33
+            [F_level] => -1
+        )
+
+)
+
+
+--------------------------------------------------
+2014-12-31 12:00:35
+--------------------------------------------------
+Array
+(
+    [0] => Array
+        (
+            [F_id] => 1
+            [F_pid] => 0
+            [F_name] => 超级管理员
+            [F_description] => 
+            [F_privity] => all
+            [F_status] => 1
+            [F_could_has_child] => 1
+            [F_create_by_uid] => 1
+            [F_create_time] => 0000-00-00 00:00:00
+            [F_modify_time] => 0000-00-00 00:00:00
+            [F_level] => 0
+        )
+
+    [1] => Array
+        (
+            [F_id] => 2
+            [F_pid] => 1
+            [F_name] => 运营管理者
+            [F_description] => 
+            [F_privity] => 
+            [F_status] => 1
+            [F_could_has_child] => 1
+            [F_create_by_uid] => 1
+            [F_create_time] => 0000-00-00 00:00:00
+            [F_modify_time] => 0000-00-00 00:00:00
+            [F_level] => -1
+        )
+
+    [2] => Array
+        (
+            [F_id] => 3
+            [F_pid] => 2
+            [F_name] => 运营人员
+            [F_description] => 
+            [F_privity] => 
+            [F_status] => 1
+            [F_could_has_child] => 0
+            [F_create_by_uid] => 1
+            [F_create_time] => 0000-00-00 00:00:00
+            [F_modify_time] => 0000-00-00 00:00:00
+            [F_level] => -1
+        )
+
+    [3] => Array
+        (
+            [F_id] => 10
+            [F_pid] => 1
+            [F_name] => 测试
+            [F_description] => 
+            [F_privity] => c_login/index,c_index/index,c_teacher/manager,c_teacher/teacher_edit,c_teacher/teacher_add,c_teacher/teacher_freeze,c_teacher/teacher_delete,c_teacher/teacher_active,c_teacher/teacher_set_test,c_student/manager,c_index/index4,c_index/index5,c_index/index6,c_index/index7,c_index/index8,c_index/index10,c_privity/group_manager,c_privity/group_add,c_privity/user_list,c_index/index12,c_publish/publish_manager
+            [F_status] => 0
+            [F_could_has_child] => 0
+            [F_create_by_uid] => 1
+            [F_create_time] => 2014-12-31 11:09:24
+            [F_modify_time] => 2014-12-31 11:56:31
+            [F_level] => -1
+        )
+
+    [4] => Array
+        (
+            [F_id] => 9
+            [F_pid] => 1
+            [F_name] => 开发人员
+            [F_description] => 
+            [F_privity] => c_login/index,c_index/index,c_teacher/manager,c_teacher/teacher_edit,c_teacher/teacher_add,c_teacher/teacher_freeze,c_teacher/teacher_delete,c_teacher/teacher_active,c_teacher/teacher_set_test,c_student/manager,c_index/index4,c_index/index5,c_index/index6,c_index/index7,c_index/index8,c_index/index10,c_privity/group_manager,c_privity/group_add,c_privity/user_list,c_index/index12,c_publish/publish_manager
+            [F_status] => 1
+            [F_could_has_child] => 1
+            [F_create_by_uid] => 1
+            [F_create_time] => 2014-12-31 10:57:33
+            [F_modify_time] => 2014-12-31 10:57:33
+            [F_level] => -1
+        )
+
+)
+
+
+--------------------------------------------------
+2014-12-31 12:01:05
+--------------------------------------------------
+Array
+(
+    [0] => Array
+        (
+            [F_id] => 1
+            [F_pid] => 0
+            [F_name] => 超级管理员
+            [F_description] => 
+            [F_privity] => all
+            [F_status] => 1
+            [F_could_has_child] => 1
+            [F_create_by_uid] => 1
+            [F_create_time] => 0000-00-00 00:00:00
+            [F_modify_time] => 0000-00-00 00:00:00
+            [F_level] => 0
+        )
+
+    [1] => Array
+        (
+            [F_id] => 2
+            [F_pid] => 1
+            [F_name] => 运营管理者
+            [F_description] => 
+            [F_privity] => 
+            [F_status] => 1
+            [F_could_has_child] => 1
+            [F_create_by_uid] => 1
+            [F_create_time] => 0000-00-00 00:00:00
+            [F_modify_time] => 0000-00-00 00:00:00
+            [F_level] => -1
+        )
+
+    [2] => Array
+        (
+            [F_id] => 3
+            [F_pid] => 2
+            [F_name] => 运营人员
+            [F_description] => 
+            [F_privity] => 
+            [F_status] => 1
+            [F_could_has_child] => 0
+            [F_create_by_uid] => 1
+            [F_create_time] => 0000-00-00 00:00:00
+            [F_modify_time] => 0000-00-00 00:00:00
+            [F_level] => -1
+        )
+
+    [3] => Array
+        (
+            [F_id] => 10
+            [F_pid] => 1
+            [F_name] => 测试
+            [F_description] => 
+            [F_privity] => c_login/index,c_index/index,c_teacher/manager,c_teacher/teacher_edit,c_teacher/teacher_add,c_teacher/teacher_freeze,c_teacher/teacher_delete,c_teacher/teacher_active,c_teacher/teacher_set_test,c_student/manager,c_index/index4,c_index/index5,c_index/index6,c_index/index7,c_index/index8,c_index/index10,c_privity/group_manager,c_privity/group_add,c_privity/user_list,c_index/index12,c_publish/publish_manager
+            [F_status] => 0
+            [F_could_has_child] => 0
+            [F_create_by_uid] => 1
+            [F_create_time] => 2014-12-31 11:09:24
+            [F_modify_time] => 2014-12-31 11:56:31
+            [F_level] => -1
+        )
+
+    [4] => Array
+        (
+            [F_id] => 9
+            [F_pid] => 1
+            [F_name] => 开发人员
+            [F_description] => 
+            [F_privity] => c_login/index,c_index/index,c_teacher/manager,c_teacher/teacher_edit,c_teacher/teacher_add,c_teacher/teacher_freeze,c_teacher/teacher_delete,c_teacher/teacher_active,c_teacher/teacher_set_test,c_student/manager,c_index/index4,c_index/index5,c_index/index6,c_index/index7,c_index/index8,c_index/index10,c_privity/group_manager,c_privity/group_add,c_privity/user_list,c_index/index12,c_publish/publish_manager
+            [F_status] => 1
+            [F_could_has_child] => 1
+            [F_create_by_uid] => 1
+            [F_create_time] => 2014-12-31 10:57:33
+            [F_modify_time] => 2014-12-31 10:57:33
+            [F_level] => -1
+        )
+
+)
+
+
+--------------------------------------------------
+2014-12-31 12:01:41
+--------------------------------------------------
+Array
+(
+    [0] => Array
+        (
+            [F_id] => 1
+            [F_pid] => 0
+            [F_name] => 超级管理员
+            [F_description] => 
+            [F_privity] => all
+            [F_status] => 1
+            [F_could_has_child] => 1
+            [F_create_by_uid] => 1
+            [F_create_time] => 0000-00-00 00:00:00
+            [F_modify_time] => 0000-00-00 00:00:00
+            [F_level] => 0
+        )
+
+    [1] => Array
+        (
+            [F_id] => 2
+            [F_pid] => 1
+            [F_name] => 运营管理者
+            [F_description] => 
+            [F_privity] => 
+            [F_status] => 1
+            [F_could_has_child] => 1
+            [F_create_by_uid] => 1
+            [F_create_time] => 0000-00-00 00:00:00
+            [F_modify_time] => 0000-00-00 00:00:00
+            [F_level] => -1
+        )
+
+    [2] => Array
+        (
+            [F_id] => 3
+            [F_pid] => 2
+            [F_name] => 运营人员
+            [F_description] => 
+            [F_privity] => 
+            [F_status] => 1
+            [F_could_has_child] => 0
+            [F_create_by_uid] => 1
+            [F_create_time] => 0000-00-00 00:00:00
+            [F_modify_time] => 0000-00-00 00:00:00
+            [F_level] => -1
+        )
+
+    [3] => Array
+        (
+            [F_id] => 10
+            [F_pid] => 1
+            [F_name] => 测试
+            [F_description] => 
+            [F_privity] => c_login/index,c_index/index,c_teacher/manager,c_teacher/teacher_edit,c_teacher/teacher_add,c_teacher/teacher_freeze,c_teacher/teacher_delete,c_teacher/teacher_active,c_teacher/teacher_set_test,c_student/manager,c_index/index4,c_index/index5,c_index/index6,c_index/index7,c_index/index8,c_index/index10,c_privity/group_manager,c_privity/group_add,c_privity/user_list,c_index/index12,c_publish/publish_manager
+            [F_status] => 0
+            [F_could_has_child] => 0
+            [F_create_by_uid] => 1
+            [F_create_time] => 2014-12-31 11:09:24
+            [F_modify_time] => 2014-12-31 11:56:31
+            [F_level] => -1
+        )
+
+    [4] => Array
+        (
+            [F_id] => 9
+            [F_pid] => 1
+            [F_name] => 开发人员
+            [F_description] => 
+            [F_privity] => c_login/index,c_index/index,c_teacher/manager,c_teacher/teacher_edit,c_teacher/teacher_add,c_teacher/teacher_freeze,c_teacher/teacher_delete,c_teacher/teacher_active,c_teacher/teacher_set_test,c_student/manager,c_index/index4,c_index/index5,c_index/index6,c_index/index7,c_index/index8,c_index/index10,c_privity/group_manager,c_privity/group_add,c_privity/user_list,c_index/index12,c_publish/publish_manager
+            [F_status] => 1
+            [F_could_has_child] => 1
+            [F_create_by_uid] => 1
+            [F_create_time] => 2014-12-31 10:57:33
+            [F_modify_time] => 2014-12-31 10:57:33
+            [F_level] => -1
+        )
+
+)
+
+
+--------------------------------------------------
+2014-12-31 12:01:49
+--------------------------------------------------
+Array
+(
+    [0] => Array
+        (
+            [F_id] => 1
+            [F_pid] => 0
+            [F_name] => 超级管理员
+            [F_description] => 
+            [F_privity] => all
+            [F_status] => 1
+            [F_could_has_child] => 1
+            [F_create_by_uid] => 1
+            [F_create_time] => 0000-00-00 00:00:00
+            [F_modify_time] => 0000-00-00 00:00:00
+            [F_level] => 0
+        )
+
+    [1] => Array
+        (
+            [F_id] => 2
+            [F_pid] => 1
+            [F_name] => 运营管理者
+            [F_description] => 
+            [F_privity] => 
+            [F_status] => 1
+            [F_could_has_child] => 1
+            [F_create_by_uid] => 1
+            [F_create_time] => 0000-00-00 00:00:00
+            [F_modify_time] => 0000-00-00 00:00:00
+            [F_level] => -1
+        )
+
+    [2] => Array
+        (
+            [F_id] => 3
+            [F_pid] => 2
+            [F_name] => 运营人员
+            [F_description] => 
+            [F_privity] => 
+            [F_status] => 1
+            [F_could_has_child] => 0
+            [F_create_by_uid] => 1
+            [F_create_time] => 0000-00-00 00:00:00
+            [F_modify_time] => 0000-00-00 00:00:00
+            [F_level] => -1
+        )
+
+    [3] => Array
+        (
+            [F_id] => 10
+            [F_pid] => 1
+            [F_name] => 测试
+            [F_description] => 
+            [F_privity] => c_login/index,c_index/index,c_teacher/manager,c_teacher/teacher_edit,c_teacher/teacher_add,c_teacher/teacher_freeze,c_teacher/teacher_delete,c_teacher/teacher_active,c_teacher/teacher_set_test,c_student/manager,c_index/index4,c_index/index5,c_index/index6,c_index/index7,c_index/index8,c_index/index10,c_privity/group_manager,c_privity/group_add,c_privity/user_list,c_index/index12,c_publish/publish_manager
+            [F_status] => 0
+            [F_could_has_child] => 0
+            [F_create_by_uid] => 1
+            [F_create_time] => 2014-12-31 11:09:24
+            [F_modify_time] => 2014-12-31 11:56:31
+            [F_level] => -1
+        )
+
+    [4] => Array
+        (
+            [F_id] => 9
+            [F_pid] => 1
+            [F_name] => 开发人员
+            [F_description] => 
+            [F_privity] => c_login/index,c_index/index,c_teacher/manager,c_teacher/teacher_edit,c_teacher/teacher_add,c_teacher/teacher_freeze,c_teacher/teacher_delete,c_teacher/teacher_active,c_teacher/teacher_set_test,c_student/manager,c_index/index4,c_index/index5,c_index/index6,c_index/index7,c_index/index8,c_index/index10,c_privity/group_manager,c_privity/group_add,c_privity/user_list,c_index/index12,c_publish/publish_manager
+            [F_status] => 1
+            [F_could_has_child] => 1
+            [F_create_by_uid] => 1
+            [F_create_time] => 2014-12-31 10:57:33
+            [F_modify_time] => 2014-12-31 10:57:33
+            [F_level] => -1
+        )
+
+)
+
+
+--------------------------------------------------
+2014-12-31 12:02:03
+--------------------------------------------------
+Array
+(
+    [0] => Array
+        (
+            [F_id] => 1
+            [F_pid] => 0
+            [F_name] => 超级管理员
+            [F_description] => 
+            [F_privity] => all
+            [F_status] => 1
+            [F_could_has_child] => 1
+            [F_create_by_uid] => 1
+            [F_create_time] => 0000-00-00 00:00:00
+            [F_modify_time] => 0000-00-00 00:00:00
+            [F_level] => 0
+        )
+
+    [1] => Array
+        (
+            [F_id] => 2
+            [F_pid] => 1
+            [F_name] => 运营管理者
+            [F_description] => 
+            [F_privity] => 
+            [F_status] => 1
+            [F_could_has_child] => 1
+            [F_create_by_uid] => 1
+            [F_create_time] => 0000-00-00 00:00:00
+            [F_modify_time] => 0000-00-00 00:00:00
+            [F_level] => -1
+        )
+
+    [2] => Array
+        (
+            [F_id] => 3
+            [F_pid] => 2
+            [F_name] => 运营人员
+            [F_description] => 
+            [F_privity] => 
+            [F_status] => 1
+            [F_could_has_child] => 0
+            [F_create_by_uid] => 1
+            [F_create_time] => 0000-00-00 00:00:00
+            [F_modify_time] => 0000-00-00 00:00:00
+            [F_level] => -1
+        )
+
+    [3] => Array
+        (
+            [F_id] => 10
+            [F_pid] => 1
+            [F_name] => 测试
+            [F_description] => 
+            [F_privity] => c_login/index,c_index/index,c_teacher/manager,c_teacher/teacher_edit,c_teacher/teacher_add,c_teacher/teacher_freeze,c_teacher/teacher_delete,c_teacher/teacher_active,c_teacher/teacher_set_test,c_student/manager,c_index/index4,c_index/index5,c_index/index6,c_index/index7,c_index/index8,c_index/index10,c_privity/group_manager,c_privity/group_add,c_privity/user_list,c_index/index12,c_publish/publish_manager
+            [F_status] => 0
+            [F_could_has_child] => 0
+            [F_create_by_uid] => 1
+            [F_create_time] => 2014-12-31 11:09:24
+            [F_modify_time] => 2014-12-31 11:56:31
+            [F_level] => -1
+        )
+
+    [4] => Array
+        (
+            [F_id] => 9
+            [F_pid] => 1
+            [F_name] => 开发人员
+            [F_description] => 
+            [F_privity] => c_login/index,c_index/index,c_teacher/manager,c_teacher/teacher_edit,c_teacher/teacher_add,c_teacher/teacher_freeze,c_teacher/teacher_delete,c_teacher/teacher_active,c_teacher/teacher_set_test,c_student/manager,c_index/index4,c_index/index5,c_index/index6,c_index/index7,c_index/index8,c_index/index10,c_privity/group_manager,c_privity/group_add,c_privity/user_list,c_index/index12,c_publish/publish_manager
+            [F_status] => 1
+            [F_could_has_child] => 1
+            [F_create_by_uid] => 1
+            [F_create_time] => 2014-12-31 10:57:33
+            [F_modify_time] => 2014-12-31 10:57:33
+            [F_level] => -1
+        )
+
+)
