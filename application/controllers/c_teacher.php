@@ -146,7 +146,7 @@ class C_teacher extends MY_Controller {
 	 * @param array $parames
 	 *                  F_teacher_ids   string  老师IDs,如1,2,3
 	 */
-	public function teacher_w($parames = array()){
+	public function teacher_freeze($parames = array()){
 		//检查是否有登录
 		$result = $this->_check_login();
 		if(is_array($result) && isset($result['redirect_url']))	//未登录
@@ -255,6 +255,7 @@ class C_teacher extends MY_Controller {
 		//data
 		$data = $this->_get_data(__CLASS__,__METHOD__);
 		$data['do'] = $this->session->flashdata('do');
+		$data['content_title'] = "编辑老师";
 		$data['teacher_info'] = $teacher_info;
 		$data['grade_list'] = $this->my_config['grade_list'];
 		$data['subject_list'] = $this->my_config['subject_list'];
@@ -395,6 +396,7 @@ class C_teacher extends MY_Controller {
 
 		//data
 		$data = $this->_get_data(__CLASS__,__METHOD__);
+		$data['content_title'] = "添加老师";
 		$data['grade_list'] = $this->my_config['grade_list'];
 		$data['subject_list'] = $this->my_config['subject_list'];
 		$data['gender_list'] = $this->my_config['gender_list'];

@@ -81,6 +81,20 @@ function get_index_url(){
 	return base_url();
 }
 
+function get_playback_manager_list_url($parames = array()) {
+	$p = http_build_query($parames);
+	return base_url("c_playback/manager?".$p);
+}
+
+function get_custom_manager_list_url($parames = array()) {
+	$p = http_build_query($parames);
+	return base_url("c_custom/manager?".$p);
+}
+
+function get_custom_edit_url($parames){
+	$p = http_build_query($parames);
+	return base_url("c_custom/custom_edit?".$p);
+}
 
 /**
  * 获取login_valid url.
@@ -98,6 +112,7 @@ function get_login_url() {
 function get_login_out_url() {
 	return base_url('c_login/login_out');
 }
+
 
 
 /**

@@ -62,10 +62,10 @@ class M_privity extends MY_Model {
 	 * @return string
 	 */
 	public function get_privity_htmlstr($parames = array()){
-		$global_left_bar = $this->my_config['data']['global_left_bar'];
+		$global_all_privity_list = $this->my_config['data']['global_all_privity_list'];
 		$privity = isset($parames['privity'])?$parames['privity']:array();
 		$checked_privity = isset($parames['checked_privity'])?$parames['checked_privity']:array();
-		return build_privity_str($global_left_bar,$privity,$checked_privity);
+		return build_privity_str($global_all_privity_list,$privity,$checked_privity);
 	}
 
 	/**
@@ -447,6 +447,63 @@ class M_privity extends MY_Model {
 					}
 				}
 
+			}
+		}
+		return $result;
+	}
+
+	public function user_add($parame = array())
+	{
+		$result = array("error"=>-1,"msg"=>"操作失败,请重试!");
+		if(isset($parame['F_login_name'],$parame['F_login_password'],$parame['F_privity_group_id']))
+		{
+			$valid = 1;
+			//检查$parame['F_login_name']的有效性
+			if(strlen($parame['F_login_name']) > 0 && strlen($parame['F_login_name']) <= 30)
+			{
+				$sql = 'SELECT F_id FROM t_user WHERE F_login_name = "'.$parame['F_login_name'].'" LIMIT 1';
+				$query = $this->db->query($sql);
+				if($query->num_rows() > 0){
+					$valid = 0;
+					$result = array("error"=>-2,"msg"=>"用户名已使用,请修用户名");
+				}
+			}
+			else{
+				$valid = 0;
+				$result = array("error"=>-1,"msg"=>"用户名无效");
+			}
+			//检查$parame['F_login_password']的有效性
+			if($valid === 1)
+			{
+				if(strlen($parame['F_login_password']) >= 6 && strlen($parame['F_login_password']) <= 9)
+				{
+					$valid = 1;
+				}
+				else{
+					$valid = 0;
+					$result = array("error"=>-3,"msg"=>"用户密码无效");
+				}
+			}
+			//检查$parame['F_privity_group_id']的有效性
+			if($valid === 1){}
+
+			//
+			if($valid === 1)
+			{
+				$parame['F_nick_name'] = isset($parame['F_nick_name'])?$parame['F_nick_name']:$parame['F_login_name'];
+				$parame['F_status'] = isset($parame['F_status'])?$parame['F_status']:1;
+				$now = date("Y-m-d H:i:s",time());
+				$parame['F_create_time'] =$now;
+				$parame['F_modify_time'] =$now;
+
+				$this->db->insert('t_user', $parame);
+				if(!($this->db->insert_id() > 0))
+				{
+					$result = array("error"=>-4,"msg"=>"操作失败,请重试!");
+				}
+				else{
+					$result = array("error"=>0,"msg"=>"成功");
+				}
 			}
 		}
 		return $result;

@@ -25,7 +25,12 @@
 				<div class="am-u-sm-9">
 					<select id="group_list">
 						<?php foreach($group_list as $group){
-							echo '<option value="'.$group['F_id'].'">'.$group['F_name'].'</option>';
+							$str = '';
+							if(isset($group['tab']) && $group['tab'] > 0)
+							{
+								$str = "|".str_repeat("----",$group['tab']);
+							}
+							echo '<option value="'.$group['F_id'].'">'.$str.$group['F_name'].'</option>';
 						}?>
 					</select>
 				</div>

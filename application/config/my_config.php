@@ -8,14 +8,6 @@ $config['data'] = array(
 	'global_left_bar'=>array(
 		array(
 			'prefix_class'=>'am-icon-home',
-			'text'=>'登录',
-			'link'=>'c_login/index',
-			'active'=>0,
-			'children'=>array(),
-			'hidden'=>1
-		),
-		array(
-			'prefix_class'=>'am-icon-home',
 			'text'=>'首页',
 			'link'=>'c_index/index',
 			'active'=>0,
@@ -32,50 +24,12 @@ $config['data'] = array(
 					'text'=>'老师管理',
 					'link'=>'c_teacher/manager',
 					'active'=>0,
-					'children'=>array(
-						array(
-							'prefix_class'=>'am-icon-file',
-							'text'=>'修改老师',
-							'link'=>'c_teacher/teacher_edit',
-							'active'=>0,
-							'hidden'=>1
-						),
-						array(
-							'prefix_class'=>'am-icon-file',
-							'text'=>'添加老师',
-							'link'=>'c_teacher/teacher_add',
-							'active'=>0,
-							'hidden'=>1
-						),
-						array(
-							'prefix_class'=>'am-icon-file',
-							'text'=>'冻结老师',
-							'link'=>'c_teacher/teacher_freeze',
-							'active'=>0,
-							'hidden'=>1
-						),
-						array(
-							'prefix_class'=>'am-icon-file',
-							'text'=>'删除老师',
-							'link'=>'c_teacher/teacher_delete',
-							'active'=>0,
-							'hidden'=>1
-						),
-						array(
-							'prefix_class'=>'am-icon-file',
-							'text'=>'激活老师',
-							'link'=>'c_teacher/teacher_active',
-							'active'=>0,
-							'hidden'=>1
-						),
-						array(
-							'prefix_class'=>'am-icon-file',
-							'text'=>'设置老师为测试帐号',
-							'link'=>'c_teacher/teacher_set_test',
-							'active'=>0,
-							'hidden'=>1
-						),
-					)
+				),
+				array(
+					'prefix_class'=>'am-icon-file',
+					'text'=>'客服管理',
+					'link'=>'c_custom/manager',
+					'active'=>0
 				),
 				array(
 					'prefix_class'=>'am-icon-file',
@@ -86,7 +40,7 @@ $config['data'] = array(
 				array(
 					'prefix_class'=>'am-icon-file',
 					'text'=>'工作人员',
-					'link'=>'c_index/index4',
+					'link'=>'c_privity/user_manager',
 					'active'=>0
 				)
 			)
@@ -126,38 +80,16 @@ $config['data'] = array(
 		array(
 			'prefix_class'=>'am-icon-home',
 			'text'=>'回放分类',
-			'link'=>'c_index/index10',
+			'link'=>'c_playback/manager',
 			'active'=>0,
 			'children'=>array()
 		),
 		array(
 			'prefix_class'=>'am-icon-file',
-			'text'=>'权限设置',
-			'link'=>'',
+			'text'=>'权限组管理',
+			'link'=>'c_privity/group_manager',
 			'active'=>0,
-			'children'=>array(
-				array(
-					'prefix_class'=>'am-icon-file',
-					'text'=>'权限组管理',
-					'link'=>'c_privity/group_manager',
-					'active'=>0,
-					'children'=>array(
-						array(
-							'prefix_class'=>'am-icon-file',
-							'text'=>'添加权限组',
-							'link'=>'c_privity/group_add',
-							'active'=>0,
-							'hidden'=>1
-						),
-					),
-				),
-				array(
-					'prefix_class'=>'am-icon-file',
-					'text'=>'成员列表',
-					'link'=>'c_privity/user_manager',
-					'active'=>0
-				),
-			)
+			'children'=>array()
 		),
 		array(
 			'prefix_class'=>'am-icon-home',
@@ -171,6 +103,134 @@ $config['data'] = array(
 			'text'=>'公告管理',
 			'link'=>'c_publish/publish_manager',
 			'active'=>0,
+			'children'=>array()
+		),
+	),
+	'global_all_privity_list'=>array(
+		array(
+			'text'=>'登录',
+			'link'=>'c_login/index',
+			'children'=>array(),
+		),
+		array(
+			'text'=>'首页',
+			'link'=>'c_index/index',
+			'children'=>array()
+		),
+		array(
+			'text'=>'角色管理',
+			'link'=>'',
+			'children'=>array(
+				array(
+					'text'=>'老师管理',
+					'link'=>'',
+					'children'=>array(
+						array(
+							'text'=>'老师列表',
+							'link'=>'c_teacher/manager',
+						),
+						array(
+							'text'=>'修改老师',
+							'link'=>'c_teacher/teacher_edit',
+						),
+						array(
+							'text'=>'添加老师',
+							'link'=>'c_teacher/teacher_add',
+						),
+						array(
+							'text'=>'冻结老师',
+							'link'=>'c_teacher/teacher_freeze',
+						),
+						array(
+							'text'=>'删除老师',
+							'link'=>'c_teacher/teacher_delete',
+						),
+						array(
+							'text'=>'激活老师',
+							'link'=>'c_teacher/teacher_active',
+						),
+						array(
+							'text'=>'设置老师为测试帐号',
+							'link'=>'c_teacher/teacher_set_test',
+						),
+					)
+				),
+				array(
+					'text'=>'客服管理',
+					'link'=>'c_custom/manager',
+				),
+				array(
+					'text'=>'学生管理',
+					'link'=>'c_student/manager',
+				),
+				array(
+					'text'=>'工作人员',
+					'link'=>'c_privity/user_manager',
+				)
+			)
+		),
+		array(
+			'text'=>'统计分析',
+			'link'=>'',
+			'children'=>array(
+				array(
+					'text'=>'实时统计',
+					'link'=>'c_index/index5',
+				),
+				array(
+					'text'=>'时段统计',
+					'link'=>'c_index/index6',
+				),
+				array(
+					'text'=>'老师统计',
+					'link'=>'c_index/index7',
+				),
+				array(
+					'text'=>'学生统计',
+					'link'=>'c_index/index8',
+				)
+			)
+		),
+		array(
+			'text'=>'回放分类',
+			'link'=>'c_playback/manager',
+			'children'=>array(
+				array(
+					'text'=>'回放列表',
+					'link'=>'c_playback/manager',
+				),
+				array(
+					'text'=>'设置精彩',
+					'link'=>'c_playback/playback_active',
+				),
+				array(
+					'text'=>'取消精彩',
+					'link'=>'c_playback/playback_deactive',
+				),
+			)
+		),
+		array(
+			'text'=>'权限',
+			'link'=>'',
+			'children'=>array(
+				array(
+					'text'=>'权限组列表',
+					'link'=>'c_privity/group_manager',
+				),
+				array(
+					'text'=>'权限组添加',
+					'link'=>'c_privity/group_add',
+				),
+			)
+		),
+		array(
+			'text'=>'个人资料',
+			'link'=>'c_index/index12',
+			'children'=>array()
+		),
+		array(
+			'text'=>'公告管理',
+			'link'=>'c_publish/publish_manager',
 			'children'=>array()
 		),
 	),
@@ -212,6 +272,11 @@ $config['status_list_view'] = array(
 	array("id"=>"1","text"=>"冻结的老师","privity"=>"c_teacher/teacher_freeze"),
 	array("id"=>"2","text"=>"删除的老师","privity"=>"c_teacher/teacher_delete"),
 	array("id"=>"4","text"=>"测试的老师","privity"=>"c_teacher/teacher_set_test"),
+);
+//客服
+$config['status_list_view_custom'] = array(
+	array("id"=>"0","text"=>"激活的客服","privity"=>"c_custom/custom_active"),
+	array("id"=>"1","text"=>"冻结的客服","privity"=>"c_custom/custom_freeze"),
 );
 //列表页面
 $config['page'] = 10;

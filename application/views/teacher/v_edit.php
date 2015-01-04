@@ -201,9 +201,7 @@
 			<div class="am-form-group">
 				<div class="am-u-sm-9 am-u-sm-push-3">
 					<button type="button" id="teacher_edit_submit" class="am-btn am-btn-primary">保存修改</button>
-					<?php if(isset($refrence))?>
 					<button type="button" id="teacher_edit_back" class="am-btn am-btn-primary">返回</button>
-					<?php ?>
 				</div>
 			</div>
 		</form>

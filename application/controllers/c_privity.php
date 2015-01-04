@@ -447,6 +447,26 @@ class C_privity extends MY_Controller {
 		$this->_output_view("privity/v_user_add", $data);
 	}
 
+	//ajax
+	public function user_add_do($parames = array()){
+		//检查是否有登录
+		$result = $this->_check_login();
+		if(is_array($result) && isset($result['redirect_url']))	//未登录
+		{
+			top_redirect($result['redirect_url']);
+		}
+		//检查是否有权限
+		if($this->_check_privity(__CLASS__,__METHOD__) === false)
+		{
+			redirect_to_no_privity_page();
+		}
+		//业务
+		$this -> load -> model('M_privity', 'mprivity');
+		$data = $this->mprivity->user_add($parames);
+
+		$this->_ajax_echo($data);
+	}
+
 }
 
 /* End of file c_privity.php */

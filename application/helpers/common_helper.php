@@ -454,6 +454,22 @@ function build_privity_str($list,$privity = array('all'),$checked_privity = arra
 }
 
 /**
+ *      把秒数转换为时分秒的格式
+ *      @param Int $times 时间，单位 秒
+ *      @return String
+ */
+function sec_to_time($times){
+        $result = '00:00:00';
+        if ($times>0) {
+                $hour = floor($times/3600);
+                $minute = floor(($times-3600 * $hour)/60);
+                $second = floor((($times-3600 * $hour) - 60 * $minute) % 60);
+                $result = $hour.'时'.$minute.'分'.$second.'秒';
+        }
+        return $result;
+}
+
+/**
  * End of file common_helper.php
  */
 /**
