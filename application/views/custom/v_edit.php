@@ -1,12 +1,6 @@
 <div class="am-g">
 
 	<div class="am-u-sm-12 am-u-md-4 am-u-md-push-8">
-		<div class="am-panel am-panel-default">
-			<div class="am-panel-bd">
-				<div class="am-g">
-				</div>
-			</div>
-		</div>
 	</div>
 
 	<div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4">
@@ -56,18 +50,6 @@
 				</div>
 			</div>
 		</form>
-	</div>
-</div>
-
-
-<div class="am-modal am-modal-alert" tabindex="-1" id="my-alert">
-	<div class="am-modal-dialog">
-		<div class="am-modal-bd" id="my-alert-message">
-			Hello world！
-		</div>
-		<div class="am-modal-footer">
-			<span class="am-modal-btn">确定</span>
-		</div>
 	</div>
 </div>
 

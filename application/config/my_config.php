@@ -14,31 +14,31 @@ $config['data'] = array(
 			'children'=>array()
 		),
 		array(
-			'prefix_class'=>'am-icon-file',
+			'prefix_class'=>'am-icon-users',
 			'text'=>'角色管理',
 			'link'=>'',
 			'active'=>0,
 			'children'=>array(
 				array(
-					'prefix_class'=>'am-icon-file',
+					'prefix_class'=>'am-icon-list',
 					'text'=>'老师管理',
 					'link'=>'c_teacher/manager',
 					'active'=>0,
 				),
 				array(
-					'prefix_class'=>'am-icon-file',
+					'prefix_class'=>'am-icon-list',
 					'text'=>'客服管理',
 					'link'=>'c_custom/manager',
 					'active'=>0
 				),
 				array(
-					'prefix_class'=>'am-icon-file',
+					'prefix_class'=>'am-icon-list',
 					'text'=>'学生管理',
 					'link'=>'c_student/manager',
 					'active'=>0
 				),
 				array(
-					'prefix_class'=>'am-icon-file',
+					'prefix_class'=>'am-icon-list',
 					'text'=>'工作人员',
 					'link'=>'c_privity/user_manager',
 					'active'=>0
@@ -46,60 +46,66 @@ $config['data'] = array(
 			)
 		),
 		array(
-			'prefix_class'=>'am-icon-file',
+			'prefix_class'=>'am-icon-bar-chart',
 			'text'=>'统计分析',
 			'link'=>'',
 			'active'=>0,
 			'children'=>array(
 				array(
-					'prefix_class'=>'am-icon-file',
+					'prefix_class'=>'am-icon-line-chart',
 					'text'=>'实时统计',
-					'link'=>'c_index/index5',
+					'link'=>'c_statistic_realtime/index',
 					'active'=>0
 				),
 				array(
-					'prefix_class'=>'am-icon-file',
+					'prefix_class'=>'am-icon-line-chart',
 					'text'=>'时段统计',
-					'link'=>'c_index/index6',
+					'link'=>'c_statistic_timesection/index',
 					'active'=>0
 				),
 				array(
-					'prefix_class'=>'am-icon-file',
+					'prefix_class'=>'am-icon-list',
 					'text'=>'老师统计',
-					'link'=>'c_index/index7',
+					'link'=>'c_statistic_teacher/index',
 					'active'=>0
 				),
 				array(
-					'prefix_class'=>'am-icon-file',
+					'prefix_class'=>'am-icon-list',
 					'text'=>'学生统计',
-					'link'=>'c_index/index8',
+					'link'=>'c_statistic_student/index',
 					'active'=>0
 				)
 			)
 		),
 		array(
-			'prefix_class'=>'am-icon-home',
+			'prefix_class'=>'am-icon-recycle',
 			'text'=>'回放分类',
 			'link'=>'c_playback/manager',
 			'active'=>0,
 			'children'=>array()
 		),
 		array(
-			'prefix_class'=>'am-icon-file',
+			'prefix_class'=>'am-icon-gear',
 			'text'=>'权限组管理',
 			'link'=>'c_privity/group_manager',
 			'active'=>0,
 			'children'=>array()
 		),
 		array(
-			'prefix_class'=>'am-icon-home',
+			'prefix_class'=>'am-icon-file',
+			'text'=>'日志',
+			'link'=>'c_log/list',
+			'children'=>array()
+		),
+		array(
+			'prefix_class'=>'am-icon-file',
 			'text'=>'个人资料',
-			'link'=>'c_index/index12',
+			'link'=>'c_person/index',
 			'active'=>0,
 			'children'=>array()
 		),
 		array(
-			'prefix_class'=>'am-icon-home',
+			'prefix_class'=>'am-icon-file',
 			'text'=>'公告管理',
 			'link'=>'c_publish/publish_manager',
 			'active'=>0,
@@ -208,6 +214,11 @@ $config['data'] = array(
 					'link'=>'c_playback/playback_deactive',
 				),
 			)
+		),
+		array(
+			'text'=>'日志',
+			'link'=>'c_log/list',
+			'children'=>array()
 		),
 		array(
 			'text'=>'权限',

@@ -1,4 +1,4 @@
-/*! Amaze UI v2.0.0 | by Amaze UI Team | (c) 2014 AllMobilize, Inc. | Licensed under MIT | 2014-12-05T02:12:50 UTC */
+/*! Amaze UI v2.1.0-beta1 | by Amaze UI Team | (c) 2015 AllMobilize, Inc. | Licensed under MIT | 2015-01-04T05:01:12 UTC */
 (function e(t, n, r) {
   function s(o, u) {
     if (!n[o]) {
@@ -102,6 +102,7 @@
         require('./ui.alert');
         require('./ui.button');
         require('./ui.collapse');
+        require('./ui.datepicker');
         require('./ui.dimmer');
         require('./ui.dropdown');
         require('./ui.flexslider');
@@ -114,13 +115,17 @@
         require('./ui.pureview');
         require('./ui.scrollspy');
         require('./ui.scrollspynav');
+        require('./ui.selected');
         require('./ui.share');
         require('./ui.smooth-scroll');
         require('./ui.sticky');
         require('./ui.tabs');
+        require('./ui.ucheck');
+        require('./ui.validator');
         require('./util.cookie');
         require('./util.fullscreen');
         require('./util.qrcode');
+        require('./util.store');
         require('./accordion');
         require('./divider');
         require('./duoshuo');
@@ -172,27 +177,32 @@
       "./ui.alert": 24,
       "./ui.button": 25,
       "./ui.collapse": 26,
-      "./ui.dimmer": 27,
-      "./ui.dropdown": 28,
-      "./ui.flexslider": 29,
-      "./ui.iscroll-lite": 30,
-      "./ui.modal": 31,
-      "./ui.offcanvas": 32,
-      "./ui.pinchzoom": 33,
-      "./ui.popover": 34,
-      "./ui.progress": 35,
-      "./ui.pureview": 36,
-      "./ui.scrollspy": 37,
-      "./ui.scrollspynav": 38,
-      "./ui.share": 39,
-      "./ui.smooth-scroll": 40,
-      "./ui.sticky": 41,
-      "./ui.tabs": 42,
-      "./util.cookie": 43,
-      "./util.fastclick": 44,
-      "./util.fullscreen": 45,
-      "./util.hammer": 46,
-      "./util.qrcode": 47
+      "./ui.datepicker": 27,
+      "./ui.dimmer": 28,
+      "./ui.dropdown": 29,
+      "./ui.flexslider": 30,
+      "./ui.iscroll-lite": 31,
+      "./ui.modal": 32,
+      "./ui.offcanvas": 33,
+      "./ui.pinchzoom": 34,
+      "./ui.popover": 35,
+      "./ui.progress": 36,
+      "./ui.pureview": 37,
+      "./ui.scrollspy": 38,
+      "./ui.scrollspynav": 39,
+      "./ui.selected": 40,
+      "./ui.share": 41,
+      "./ui.smooth-scroll": 42,
+      "./ui.sticky": 43,
+      "./ui.tabs": 44,
+      "./ui.ucheck": 45,
+      "./ui.validator": 46,
+      "./util.cookie": 47,
+      "./util.fastclick": 48,
+      "./util.fullscreen": 49,
+      "./util.hammer": 50,
+      "./util.qrcode": 51,
+      "./util.store": 52
     }
   ],
   3: [
@@ -229,16 +239,16 @@
       "./ui.alert": 24,
       "./ui.button": 25,
       "./ui.collapse": 26,
-      "./ui.dimmer": 27,
-      "./ui.dropdown": 28,
-      "./ui.flexslider": 29,
-      "./ui.modal": 31,
-      "./ui.offcanvas": 32,
-      "./ui.popover": 34,
-      "./ui.progress": 35,
-      "./ui.scrollspynav": 38,
-      "./ui.sticky": 41,
-      "./util.cookie": 43
+      "./ui.dimmer": 28,
+      "./ui.dropdown": 29,
+      "./ui.flexslider": 30,
+      "./ui.modal": 32,
+      "./ui.offcanvas": 33,
+      "./ui.popover": 35,
+      "./ui.progress": 36,
+      "./ui.scrollspynav": 39,
+      "./ui.sticky": 43,
+      "./util.cookie": 47
     }
   ],
   4: [
@@ -276,9 +286,8 @@
               OTransition: 'oTransitionEnd otransitionend',
               transition: 'transitionend'
             };
-            var name;
 
-            for (name in transEndEventNames) {
+            for (var name in transEndEventNames) {
               if (element.style[name] !== undefined) {
                 return transEndEventNames[name];
               }
@@ -299,9 +308,8 @@
               OAnimation: 'oAnimationEnd oanimationend',
               animation: 'animationend'
             };
-            var name;
 
-            for (name in animEndEventNames) {
+            for (var name in animEndEventNames) {
               if (element.style[name] !== undefined) {
                 return animEndEventNames[name];
               }
@@ -312,15 +320,6 @@
             end: animationEnd
           };
         })();
-
-        UI.support.requestAnimationFrame = window.requestAnimationFrame ||
-          window.webkitRequestAnimationFrame ||
-          window.mozRequestAnimationFrame ||
-          window.msRequestAnimationFrame ||
-          window.oRequestAnimationFrame ||
-          function(callback) {
-            window.setTimeout(callback, 1000 / 60);
-        };
 
         /* jshint -W069 */
         UI.support.touch = (
@@ -335,8 +334,11 @@
 
         // https://developer.mozilla.org/zh-CN/docs/DOM/MutationObserver
         UI.support.mutationobserver = (window.MutationObserver ||
-          window.WebKitMutationObserver || window.MozMutationObserver ||
-          null);
+          window.WebKitMutationObserver || null);
+
+        // https://github.com/Modernizr/Modernizr/blob/924c7611c170ef2dc502582e5079507aff61e388/feature-detects/forms/validation.js#L20
+        UI.support.formValidation = (typeof document.createElement('form').checkValidity ===
+          'function');
 
         UI.utils = {};
 
@@ -576,8 +578,8 @@
           function bindLoad() {
             this.one('load', loaded);
             if (/MSIE (\d+\.\d+);/.test(navigator.userAgent)) {
-              var src = this.attr('src'),
-                param = src.match(/\?/) ? '&' : '?';
+              var src = this.attr('src');
+              var param = src.match(/\?/) ? '&' : '?';
 
               param += 'random=' + (new Date()).getTime();
               this.attr('src', src + param);
@@ -669,6 +671,60 @@
           }
         };
 
+        // Dom mutation watchers
+        UI.DOMWatchers = [];
+        UI.DOMReady = false;
+        UI.ready = function(callback) {
+          UI.DOMWatchers.push(callback);
+          if (UI.DOMReady) {
+            console.log('ready call');
+            callback(document);
+          }
+        };
+
+        UI.DOMObserve = function(elements, options, callback) {
+          var Observer = UI.support.mutationobserver;
+          if (!Observer) {
+            return;
+          }
+
+          options = $.isPlainObject(options) ?
+            options : {
+              childList: true,
+              subtree: true
+          };
+
+          callback = typeof callback === 'function' && callback || function() {};
+
+          $(elements).each(function() {
+            var element = this;
+            var $element = $(element);
+
+            if ($element.data('am.observer')) {
+              return;
+            }
+
+            try {
+              var observer = new Observer(UI.utils.debounce(
+                function(mutations, instance) {
+                  callback.call(element, mutations, instance);
+                  // trigger this event manually if MutationObserver not supported
+                  $element.trigger('changed.dom.amui');
+                }, 50));
+
+              observer.observe(element, options);
+
+              $element.data('am.observer', observer);
+            } catch (e) {}
+          });
+        };
+
+        $.fn.DOMObserve = function(options, callback) {
+          return this.each(function() {
+            UI.DOMObserve(this, options, callback);
+          });
+        };
+
         // Attach FastClick on touch devices
         if (UI.support.touch) {
           $html.addClass('am-touch');
@@ -679,11 +735,31 @@
           });
         }
 
+        $(document).on('changed.dom.amui', function(e) {
+          var element = e.target;
+
+          // TODO: just call changed element's watcher
+          //       every watcher callback should have a key
+          //       use like this: <div data-am-observe='key1, key2'>
+          //       get keys via $(element).data('amObserve')
+          //       call functions store with these keys
+          $.each(UI.DOMWatchers, function(i, watcher) {
+            watcher(element);
+          });
+        });
+
         $(function() {
           var $body = $('body');
 
-          // trigger DOM ready event
-          $(document).trigger('domready.amui');
+          UI.DOMReady = true;
+
+          // Run default init
+          $.each(UI.DOMWatchers, function(i, watcher) {
+            watcher(document);
+          });
+
+          // watches DOM
+          UI.DOMObserve('[data-am-observe]');
 
           $html.removeClass('no-js').addClass('js');
 
@@ -845,7 +921,7 @@
         "undefined" ? self : typeof window !== "undefined" ? window : {})
     }, {
       "./core": 4,
-      "./ui.pureview": 36
+      "./ui.pureview": 37
     }
   ],
   8: [
@@ -855,7 +931,7 @@
 
         var $ = (typeof window !== "undefined" ? window.jQuery : typeof global !==
           "undefined" ? global.jQuery : null);
-        require('./core');
+        var UI = require('./core');
         require('./ui.modal');
         var addToHS = require('./ui.add2home');
         var cookie = require('./util.cookie');
@@ -863,10 +939,12 @@
         function footerInit() {
           // modal mode
           $('.am-footer-ysp').on('click', function() {
-            $('#am-footer-mode').modal();
+            $('#am-footer-modal').modal();
           });
 
-          !window.AMUI_NO_ADD2HS && addToHS();
+          var options = UI.utils.parseOptions($('.am-footer').data(
+            'amFooter'));
+          options.addToHS && addToHS();
 
           // switch mode
           // switch to desktop
@@ -881,12 +959,12 @@
           });
         }
 
-        $(window).on('load', function() { // make sure `window.AMPlatform` is usable
+        $(function() {
           footerInit();
         });
 
         module.exports = $.AMUI.footer = {
-          VERSION: '3.0.0',
+          VERSION: '3.1.1',
           init: footerInit
         };
 
@@ -895,8 +973,8 @@
     }, {
       "./core": 4,
       "./ui.add2home": 23,
-      "./ui.modal": 31,
-      "./util.cookie": 43
+      "./ui.modal": 32,
+      "./util.cookie": 47
     }
   ],
   9: [
@@ -963,7 +1041,7 @@
         "undefined" ? self : typeof window !== "undefined" ? window : {})
     }, {
       "./core": 4,
-      "./ui.pureview": 36
+      "./ui.pureview": 37
     }
   ],
   10: [
@@ -1002,7 +1080,7 @@
         });
 
         module.exports = $.AMUI.gotop = {
-          VERSION: '4.0.0',
+          VERSION: '4.0.1',
           init: goTopInit
         };
 
@@ -1010,7 +1088,7 @@
         "undefined" ? self : typeof window !== "undefined" ? window : {})
     }, {
       "./core": 4,
-      "./ui.smooth-scroll": 40
+      "./ui.smooth-scroll": 42
     }
   ],
   11: [
@@ -1171,6 +1249,8 @@
           var address = content.getAttribute('data-address');
           var lng = content.getAttribute('data-longitude') || defaultLng;
           var lat = content.getAttribute('data-latitude') || defaultLat;
+          var setZoom = content.getAttribute('data-setZoom') || 17;
+          var icon = content.getAttribute('data-icon');
 
           var map = new BMap.Map('bd-map');
 
@@ -1178,10 +1258,23 @@
           var point = new BMap.Point(lng, lat);
 
           // 设初始化地图, options: 3-18
-          map.centerAndZoom(point, 18);
+          map.centerAndZoom(point, setZoom);
 
           // 添加地图缩放控件
-          map.addControl(new BMap.ZoomControl());
+          if (content.getAttribute('data-zoomControl')) {
+            map.addControl(new BMap.ZoomControl());
+          }
+
+          // 添加比例尺控件
+          if (content.getAttribute('data-scaleControl')) {
+            map.addControl(new BMap.ScaleControl());
+          }
+
+          // 创建标准与自定义 icon
+          var marker = new BMap.Marker(point);
+          if (icon) {
+            marker.setIcon(new BMap.Icon(icon, new BMap.Size(40, 40)));
+          }
 
           var opts = {
             width: 200, // 信息窗口宽度
@@ -1201,8 +1294,9 @@
             // 将地址解析结果显示在地图上,并调整地图视野
             myGeo.getPoint(address, function(point) {
               if (point) {
-                map.centerAndZoom(point, 17);
-                map.addOverlay(new BMap.Marker(point));
+                map.centerAndZoom(point, setZoom);
+                marker.setPosition(point);
+                map.addOverlay(marker);
                 map.openInfoWindow(infoWindow, point); // 开启信息窗口
               }
             }, '');
@@ -1210,8 +1304,9 @@
           } else {
             // 使用经纬度来设置地图
             myGeo.getLocation(point, function(result) {
-              map.centerAndZoom(point, 17);
-              map.addOverlay(new BMap.Marker(point));
+              map.centerAndZoom(point, setZoom);
+              marker.setPosition(point);
+              map.addOverlay(marker);
               if (address) {
                 map.openInfoWindow(infoWindow, point); // 开启信息窗口
               } else {
@@ -1229,7 +1324,7 @@
         $(document).on('ready', mapInit);
 
         module.exports = $.AMUI.map = {
-          VERSION: '2.0.0',
+          VERSION: '2.0.1',
           init: mapInit
         };
 
@@ -1447,8 +1542,8 @@
     }, {
       "./core": 4,
       "./ui.collapse": 26,
-      "./ui.iscroll-lite": 30,
-      "./ui.offcanvas": 32
+      "./ui.iscroll-lite": 31,
+      "./ui.offcanvas": 33
     }
   ],
   17: [
@@ -1629,9 +1724,9 @@
         "undefined" ? self : typeof window !== "undefined" ? window : {})
     }, {
       "./core": 4,
-      "./ui.modal": 31,
-      "./ui.share": 39,
-      "./util.qrcode": 47
+      "./ui.modal": 32,
+      "./ui.share": 41,
+      "./util.qrcode": 51
     }
   ],
   18: [
@@ -1725,8 +1820,8 @@
         "undefined" ? self : typeof window !== "undefined" ? window : {})
     }, {
       "./core": 4,
-      "./ui.iscroll-lite": 30,
-      "./ui.pureview": 36
+      "./ui.iscroll-lite": 31,
+      "./ui.pureview": 37
     }
   ],
   20: [
@@ -1760,7 +1855,7 @@
         "undefined" ? self : typeof window !== "undefined" ? window : {})
     }, {
       "./core": 4,
-      "./ui.flexslider": 29
+      "./ui.flexslider": 30
     }
   ],
   21: [
@@ -1795,7 +1890,7 @@
         "undefined" ? self : typeof window !== "undefined" ? window : {})
     }, {
       "./core": 4,
-      "./ui.tabs": 42
+      "./ui.tabs": 44
     }
   ],
   22: [
@@ -2674,8 +2769,8 @@
             e.preventDefault();
           });
 
-        $(function() {
-          $('[data-am-loading]').each(function() {
+        UI.ready(function(context) {
+          $('[data-am-loading]', context).each(function() {
             $(this).button(UI.utils.parseOptions($(this).data(
               'amLoading')));
           });
@@ -2897,6 +2992,684 @@
           "undefined" ? global.jQuery : null);
         var UI = require('./core');
         var $doc = $(document);
+
+        /**
+         * bootstrap-datepicker.js
+         * @via http://www.eyecon.ro/bootstrap-datepicker
+         * @license http://www.apache.org/licenses/LICENSE-2.0
+         */
+        var Datepicker = function(element, options) {
+          this.$element = $(element);
+          this.options = $.extend({}, Datepicker.DEFAULTS, options);
+
+          this.format = DPGlobal.parseFormat(this.options.format);
+          this.$element.data('date', this.options.date);
+          this.language = this.getLocale(this.options.locale);
+          this.theme = this.options.theme;
+          this.$picker = $(DPGlobal.template)
+            .appendTo('body')
+            .on({
+              click: $.proxy(this.click, this)
+              // mousedown: $.proxy(this.mousedown, this)
+            });
+
+          this.isInput = this.$element.is('input');
+          this.component = this.$element.is('.am-datepicker-date') ?
+            this.$element.find('.am-datepicker-add-on') : false;
+          if (this.isInput) {
+            this.$element.on({
+              'click.datepicker.amui': $.proxy(this.open, this),
+              // blur: $.proxy(this.close, this),
+              'keyup.datepicker.amui': $.proxy(this.update, this)
+            });
+          } else {
+            if (this.component) {
+              this.component.on('click.datepicker.amui', $.proxy(this.open,
+                this));
+            } else {
+              this.$element.on('click.datepicker.amui', $.proxy(this.open,
+                this));
+            }
+          }
+
+          this.minViewMode = this.options.minViewMode;
+
+          if (typeof this.minViewMode === 'string') {
+            switch (this.minViewMode) {
+              case 'months':
+                this.minViewMode = 1;
+                break;
+              case 'years':
+                this.minViewMode = 2;
+                break;
+              default:
+                this.minViewMode = 0;
+                break;
+            }
+          }
+
+          this.viewMode = this.options.viewMode;
+
+          if (typeof this.viewMode === 'string') {
+            switch (this.viewMode) {
+              case 'months':
+                this.viewMode = 1;
+                break;
+              case 'years':
+                this.viewMode = 2;
+                break;
+              default:
+                this.viewMode = 0;
+                break;
+            }
+          }
+
+          this.startViewMode = this.viewMode;
+          this.weekStart = this.options.weekStart;
+          this.weekEnd = this.weekStart === 0 ? 6 : this.weekStart - 1;
+          this.onRender = this.options.onRender;
+
+          this.addTheme();
+          this.fillDow();
+          this.fillMonths();
+          this.update();
+          this.showMode();
+        };
+
+        Datepicker.prototype = {
+          constructor: Datepicker,
+
+          open: function(e) {
+            this.$picker.show();
+            this.height = this.component ?
+              this.component.outerHeight() : this.$element.outerHeight();
+
+            this.place();
+            $(window).on('resize.datepicker.amui', $.proxy(this.place, this));
+            if (e) {
+              e.stopPropagation();
+              e.preventDefault();
+            }
+            var that = this;
+            $(document).on('click.datepicker.amui', function(ev) {
+              if ($(ev.target).closest('.am-datepicker').length === 0) {
+                that.close();
+              }
+            });
+            this.$element.trigger({
+              type: 'open',
+              date: this.date
+            });
+          },
+
+          close: function() {
+            this.$picker.hide();
+            $(window).off('resize.datepicker.amui', this.place);
+            this.viewMode = this.startViewMode;
+            this.showMode();
+            if (!this.isInput) {
+              $(document).off('click.datepicker.amui', this.close);
+            }
+            // this.set();
+            this.$element.trigger({
+              type: 'close',
+              date: this.date
+            });
+          },
+
+          set: function() {
+            var formated = DPGlobal.formatDate(this.date, this.format);
+            if (!this.isInput) {
+              if (this.component) {
+                this.$element.find('input').prop('value', formated);
+              }
+              this.$element.data('date', formated);
+            } else {
+              this.$element.prop('value', formated);
+            }
+          },
+
+          setValue: function(newDate) {
+            if (typeof newDate === 'string') {
+              this.date = DPGlobal.parseDate(newDate, this.format);
+            } else {
+              this.date = new Date(newDate);
+            }
+            this.set();
+
+            this.viewDate = new Date(this.date.getFullYear(),
+              this.date.getMonth(), 1, 0, 0, 0, 0);
+
+            this.fill();
+          },
+
+          place: function() {
+            var offset = this.component ?
+              this.component.offset() : this.$element.offset();
+            var $width = this.component ?
+              this.component.width() : this.$element.width();
+            var top = offset.top + this.height;
+            var left = offset.left;
+            var right = $doc.width() - offset.left - $width;
+            var isOutView = this.isOutView();
+            this.$picker.removeClass('am-datepicker-right');
+            this.$picker.removeClass('am-datepicker-up');
+            if ($doc.width() > 640) {
+              if (isOutView.outRight) {
+                this.$picker.addClass('am-datepicker-right');
+                this.$picker.css({
+                  top: top,
+                  left: 'auto',
+                  right: right
+                });
+                return;
+              }
+              if (isOutView.outBottom) {
+                this.$picker.addClass('am-datepicker-up');
+                top = offset.top - this.$picker.outerHeight(true);
+              }
+            } else {
+              left = 0;
+            }
+            this.$picker.css({
+              top: top,
+              left: left
+            });
+          },
+
+          update: function(newDate) {
+            this.date = DPGlobal.parseDate(
+              typeof newDate === 'string' ? newDate : (this.isInput ?
+                this.$element.prop('value') : this.$element.data('date')),
+              this.format
+            );
+            this.viewDate = new Date(this.date.getFullYear(),
+              this.date.getMonth(), 1, 0, 0, 0, 0);
+            this.fill();
+          },
+
+          fillDow: function() {
+            var dowCnt = this.weekStart;
+            var html = '<tr>';
+            while (dowCnt < this.weekStart + 7) {
+              html += '<th class="am-datepicker-dow">' +
+                Datepicker.locales[this.language].daysMin[(dowCnt++) % 7] +
+                '</th>';
+            }
+            html += '</tr>';
+            this.$picker.find('.am-datepicker-days thead').append(html);
+          },
+
+          fillMonths: function() {
+            var html = '';
+            var i = 0;
+            while (i < 12) {
+              html += '<span class="am-datepicker-month">' +
+                Datepicker.locales[this.language].monthsShort[i++] +
+                '</span>';
+            }
+            this.$picker.find('.am-datepicker-months td').append(html);
+          },
+
+          fill: function() {
+            var d = new Date(this.viewDate);
+            var year = d.getFullYear();
+            var month = d.getMonth();
+            var currentDate = this.date.valueOf();
+
+            var prevMonth = new Date(year, month - 1, 28, 0, 0, 0, 0);
+            var day = DPGlobal
+              .getDaysInMonth(prevMonth.getFullYear(), prevMonth.getMonth());
+
+            var daysSelect = this.$picker
+              .find('.am-datepicker-days .am-datepicker-select');
+
+            if (this.language === 'zh_CN') {
+              daysSelect.text(year + Datepicker.locales[this.language].year[
+                  0] +
+                ' ' + Datepicker.locales[this.language].months[month]);
+            } else {
+              daysSelect.text(Datepicker.locales[this.language].months[
+                  month] +
+                ' ' + year);
+            }
+
+            prevMonth.setDate(day);
+            prevMonth.setDate(day - (prevMonth.getDay() - this.weekStart +
+              7) % 7);
+
+            var nextMonth = new Date(prevMonth);
+            nextMonth.setDate(nextMonth.getDate() + 42);
+            nextMonth = nextMonth.valueOf();
+            var html = [];
+
+            var className;
+            var prevY;
+            var prevM;
+
+            while (prevMonth.valueOf() < nextMonth) {
+              if (prevMonth.getDay() === this.weekStart) {
+                html.push('<tr>');
+              }
+              className = this.onRender(prevMonth);
+              prevY = prevMonth.getFullYear();
+              prevM = prevMonth.getMonth();
+              if ((prevM < month && prevY === year) || prevY < year) {
+                className += ' am-datepicker-old';
+              } else if ((prevM > month && prevY === year) || prevY > year) {
+                className += ' am-datepicker-new';
+              }
+              if (prevMonth.valueOf() === currentDate) {
+                className += ' am-active';
+              }
+              html.push('<td class="am-datepicker-day ' +
+                className + '">' + prevMonth.getDate() + '</td>');
+
+              if (prevMonth.getDay() === this.weekEnd) {
+                html.push('</tr>');
+              }
+              prevMonth.setDate(prevMonth.getDate() + 1);
+
+            }
+
+            this.$picker.find('.am-datepicker-days tbody')
+              .empty().append(html.join(''));
+
+            var currentYear = this.date.getFullYear();
+
+            var months = this.$picker.find('.am-datepicker-months')
+              .find('.am-datepicker-select')
+              .text(year);
+            months = months.end()
+              .find('span').removeClass('am-active');
+
+            if (currentYear === year) {
+              months.eq(this.date.getMonth()).addClass('am-active');
+            }
+
+            html = '';
+            year = parseInt(year / 10, 10) * 10;
+            var yearCont = this.$picker
+              .find('.am-datepicker-years')
+              .find('.am-datepicker-select')
+              .text(year + '-' + (year + 9))
+              .end()
+              .find('td');
+
+            year -= 1;
+            for (var i = -1; i < 11; i++) {
+              html += '<span class="' +
+                (i === -1 || i === 10 ? ' am-datepicker-old' : '') +
+                (currentYear === year ? ' am-active' : '') + '">' + year +
+                '</span>';
+              year += 1;
+            }
+            yearCont.html(html);
+
+          },
+
+          click: function(event) {
+            event.stopPropagation();
+            event.preventDefault();
+            var month;
+            var year;
+
+            var target = $(event.target).closest('span, td, th');
+            if (target.length === 1) {
+              switch (target[0].nodeName.toLowerCase()) {
+                case 'th':
+                  switch (target[0].className) {
+                    case 'am-datepicker-switch':
+                      this.showMode(1);
+                      break;
+                    case 'am-datepicker-prev':
+                    case 'am-datepicker-next':
+                      this.viewDate['set' + DPGlobal.modes[this.viewMode].navFnc]
+                        .call(
+                          this.viewDate,
+                          this.viewDate['get' + DPGlobal.modes[this.viewMode]
+                            .navFnc]
+                          .call(this.viewDate) +
+                          DPGlobal.modes[this.viewMode].navStep *
+                          (target[0].className === 'am-datepicker-prev' ? -
+                            1 : 1)
+                      );
+                      this.fill();
+                      this.set();
+                      break;
+                  }
+                  break;
+                case 'span':
+                  if (target.is('.am-datepicker-month')) {
+                    month = target.parent().find('span').index(target);
+                    this.viewDate.setMonth(month);
+                  } else {
+                    year = parseInt(target.text(), 10) || 0;
+                    this.viewDate.setFullYear(year);
+                  }
+                  if (this.viewMode !== 0) {
+                    this.date = new Date(this.viewDate);
+                    this.$element.trigger({
+                      type: 'changeDate.datepicker.amui',
+                      date: this.date,
+                      viewMode: DPGlobal.modes[this.viewMode].clsName
+                    });
+                  }
+                  this.showMode(-1);
+                  this.fill();
+                  this.set();
+                  break;
+                case 'td':
+                  if (target.is('.am-datepicker-day') && !target.is(
+                    '.am-disabled')) {
+                    var day = parseInt(target.text(), 10) || 1;
+                    month = this.viewDate.getMonth();
+                    if (target.is('.am-datepicker-old')) {
+                      month -= 1;
+                    } else if (target.is('.am-datepicker-new')) {
+                      month += 1;
+                    }
+                    year = this.viewDate.getFullYear();
+                    this.date = new Date(year, month, day, 0, 0, 0, 0);
+                    this.viewDate = new Date(year, month, Math.min(28, day),
+                      0, 0, 0, 0);
+                    this.fill();
+                    this.set();
+                    this.$element.trigger({
+                      type: 'changeDate.datepicker.amui',
+                      date: this.date,
+                      viewMode: DPGlobal.modes[this.viewMode].clsName
+                    });
+                  }
+                  break;
+              }
+            }
+          },
+
+          mousedown: function(event) {
+            event.stopPropagation();
+            event.preventDefault();
+          },
+
+          showMode: function(dir) {
+            if (dir) {
+              this.viewMode = Math.max(this.minViewMode,
+                Math.min(2, this.viewMode + dir));
+            }
+
+            this.$picker
+              .find('>div')
+              .hide()
+              .filter('.am-datepicker-' + DPGlobal.modes[this.viewMode].clsName)
+              .show();
+          },
+
+          isOutView: function() {
+            var offset = this.component ?
+              this.component.offset() : this.$element.offset();
+            var isOutView = {
+              outRight: false,
+              outBottom: false
+            };
+            var $picker = this.$picker;
+            var width = offset.left + $picker.outerWidth(true);
+            var height = offset.top + $picker.outerHeight(true) +
+              this.$element.innerHeight();
+
+            if (width > $doc.width()) {
+              isOutView.outRight = true;
+            }
+            if (height > $doc.height()) {
+              isOutView.outBottom = true;
+            }
+            return isOutView;
+          },
+
+          getLocale: function(locale) {
+            if (!locale) {
+              locale = navigator.language && navigator.language.split('-');
+              locale[1] = locale[1].toUpperCase();
+              locale = locale.join('_');
+            }
+
+            if (!Datepicker.locales[locale]) {
+              locale = 'en_US';
+            }
+            return locale;
+          },
+
+          addTheme: function() {
+            if (this.theme) {
+              this.$picker.addClass('am-datepicker-' + this.theme);
+            }
+          }
+        };
+
+        Datepicker.DEFAULTS = {
+          locale: 'zh_CN',
+          format: 'yyyy-mm-dd',
+          weekStart: 0,
+          viewMode: 0,
+          minViewMode: 0,
+          date: '',
+          theme: '',
+          onRender: function(date) {
+            return '';
+          }
+        };
+
+        // Datepicker locales
+
+        Datepicker.locales = {
+          en_US: {
+            days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
+              'Thursday', 'Friday', 'Saturday'
+            ],
+
+            daysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+            daysMin: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+
+            months: ['January', 'February', 'March', 'April', 'May', 'June',
+              'July', 'August', 'September', 'October', 'November',
+              'December'
+            ],
+
+            monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+              'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+            ]
+          },
+          zh_CN: {
+            days: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+            daysShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+            daysMin: ['日', '一', '二', '三', '四', '五', '六'],
+
+            months: ['一月', '二月', '三月', '四月', '五月', '六月', '七月',
+              '八月', '九月', '十月', '十一月', '十二月'
+            ],
+
+            monthsShort: ['一月', '二月', '三月', '四月', '五月', '六月',
+              '七月', '八月', '九月', '十月', '十一月', '十二月'
+            ],
+            year: ['年']
+          }
+        };
+
+        var DPGlobal = {
+          modes: [{
+            clsName: 'days',
+            navFnc: 'Month',
+            navStep: 1
+          }, {
+            clsName: 'months',
+            navFnc: 'FullYear',
+            navStep: 1
+          }, {
+            clsName: 'years',
+            navFnc: 'FullYear',
+            navStep: 10
+          }],
+          isLeapYear: function(year) {
+            return (((year % 4 === 0) && (year % 100 !== 0)) || (year %
+              400 === 0));
+          },
+          getDaysInMonth: function(year, month) {
+            return [31, (DPGlobal.isLeapYear(year) ? 29 : 28),
+              31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+            ][month];
+          },
+          parseFormat: function(format) {
+            var separator = format.match(/[.\/\-\s].*?/);
+            var parts = format.split(/\W+/);
+
+            if (!separator || !parts || parts.length === 0) {
+              throw new Error('Invalid date format.');
+            }
+            return {
+              separator: separator,
+              parts: parts
+            };
+          },
+          parseDate: function(date, format) {
+            var parts = date.split(format.separator);
+            var val;
+            date = new Date();
+
+            date.setHours(0);
+            date.setMinutes(0);
+            date.setSeconds(0);
+            date.setMilliseconds(0);
+
+            if (parts.length === format.parts.length) {
+              var year = date.getFullYear();
+              var day = date.getDate();
+              var month = date.getMonth();
+
+              for (var i = 0, cnt = format.parts.length; i < cnt; i++) {
+                val = parseInt(parts[i], 10) || 1;
+                switch (format.parts[i]) {
+                  case 'dd':
+                  case 'd':
+                    day = val;
+                    date.setDate(val);
+                    break;
+                  case 'mm':
+                  case 'm':
+                    month = val - 1;
+                    date.setMonth(val - 1);
+                    break;
+                  case 'yy':
+                    year = 2000 + val;
+                    date.setFullYear(2000 + val);
+                    break;
+                  case 'yyyy':
+                    year = val;
+                    date.setFullYear(val);
+                    break;
+                }
+              }
+              date = new Date(year, month, day, 0, 0, 0);
+            }
+            return date;
+          },
+          formatDate: function(date, format) {
+            var val = {
+              d: date.getDate(),
+              m: date.getMonth() + 1,
+              yy: date.getFullYear().toString().substring(2),
+              yyyy: date.getFullYear()
+            };
+            var dateArray = [];
+
+            val.dd = (val.d < 10 ? '0' : '') + val.d;
+            val.mm = (val.m < 10 ? '0' : '') + val.m;
+
+            for (var i = 0, cnt = format.parts.length; i < cnt; i++) {
+              dateArray.push(val[format.parts[i]]);
+            }
+            return dateArray.join(format.separator);
+          },
+          headTemplate: '<thead>' +
+            '<tr class="am-datepicker-header">' +
+            '<th class="am-datepicker-prev">' +
+            '<i class="am-datepicker-prev-icon"></i></th>' +
+            '<th colspan="5" class="am-datepicker-switch">' +
+            '<div class="am-datepicker-select"></div></th>' +
+            '<th class="am-datepicker-next"><i class="am-datepicker-next-icon"></i>' +
+            '</th></tr></thead>',
+          contTemplate: '<tbody><tr><td colspan="7"></td></tr></tbody>'
+        };
+
+        DPGlobal.template =
+          '<div class="am-datepicker am-datepicker-dropdown">' +
+          '<div class="am-datepicker-caret"></div>' +
+          '<div class="am-datepicker-days">' +
+          '<table class="am-datepicker-table">' +
+          DPGlobal.headTemplate +
+          '<tbody></tbody>' +
+          '</table>' +
+          '</div>' +
+          '<div class="am-datepicker-months">' +
+          '<table class="am-datepicker-table">' +
+          DPGlobal.headTemplate +
+          DPGlobal.contTemplate +
+          '</table>' +
+          '</div>' +
+          '<div class="am-datepicker-years">' +
+          '<table class="am-datepicker-table">' +
+          DPGlobal.headTemplate +
+          DPGlobal.contTemplate +
+          '</table>' +
+          '</div>' +
+          '</div>';
+
+        $.fn.datepicker = function(option, val) {
+          return this.each(function() {
+            var $this = $(this);
+            var data = $this.data('amui.datepicker');
+
+            var options = $.extend({},
+              UI.utils.options($this.data('data-am-datepicker')),
+              typeof option === 'object' && option);
+
+            if (!data) {
+              $this.data('amui.datepicker', (data = new Datepicker(this,
+                options)));
+            }
+            if (typeof option === 'string') {
+              data[option] && data[option](val);
+            }
+          });
+        };
+
+        $.fn.datepicker.Constructor = Datepicker;
+
+        // Init code
+        $(document).on('ready', function(e) {
+          $('[data-am-datepicker]').datepicker();
+        });
+
+        $.AMUI.datepicker = Datepicker;
+
+        module.exports = Datepicker;
+
+        // TODO: 1. 载入动画
+        //       2. less 优化
+
+      }).call(this, typeof global !== "undefined" ? global : typeof self !==
+        "undefined" ? self : typeof window !== "undefined" ? window : {})
+    }, {
+      "./core": 4
+    }
+  ],
+  28: [
+    function(require, module, exports) {
+      (function(global) {
+        'use strict';
+
+        var $ = (typeof window !== "undefined" ? window.jQuery : typeof global !==
+          "undefined" ? global.jQuery : null);
+        var UI = require('./core');
+        var $doc = $(document);
         var transition = UI.support.transition;
 
         var Dimmer = function() {
@@ -3008,7 +3781,7 @@
       "./core": 4
     }
   ],
-  28: [
+  29: [
     function(require, module, exports) {
       (function(global) {
         'use strict';
@@ -3155,8 +3928,9 @@
             this.$boundary.offset().left : 0;
 
           if (this.$justify) {
+            // jQuery.fn.width() is really...
             $dropdown.css({
-              'min-width': this.$justify.width()
+              'min-width': this.$justify.css('width')
             });
           }
 
@@ -3168,7 +3942,7 @@
         Dropdown.prototype.clear = function() {
           $('[data-am-dropdown]').not(this.$element).each(function() {
             var data = $(this).data('amui.dropdown');
-            data && data['close']();
+            data && data.close();
           });
         };
 
@@ -3231,8 +4005,8 @@
         $.fn.dropdown = Plugin;
 
         // Init code
-        $(function() {
-          $('[data-am-dropdown]').dropdown();
+        UI.ready(function(context) {
+          $('[data-am-dropdown]', context).dropdown();
         });
 
         $(document).on('click.dropdown.amui.data-api', '.am-dropdown form',
@@ -3254,7 +4028,7 @@
       "./core": 4
     }
   ],
-  29: [
+  30: [
     function(require, module, exports) {
       (function(global) {
         var $ = (typeof window !== "undefined" ? window.jQuery : typeof global !==
@@ -4686,8 +5460,8 @@
         };
 
         // Init code
-        $(function() {
-          $('[data-am-flexslider]').each(function(i, item) {
+        UI.ready(function(context) {
+          $('[data-am-flexslider]', context).each(function(i, item) {
             var $slider = $(item);
             var options = UI.utils.parseOptions($slider.data(
               'amFlexslider'));
@@ -4725,7 +5499,7 @@
       "./core": 4
     }
   ],
-  30: [
+  31: [
     function(require, module, exports) {
       (function(global) {
         'use strict';
@@ -5749,7 +6523,7 @@
 
         IScroll.utils = utils;
 
-        $.AMUI.IScroll = IScroll;
+        $.AMUI.iScroll = IScroll;
 
         module.exports = IScroll;
 
@@ -5762,7 +6536,7 @@
       "./core": 4
     }
   ],
-  31: [
+  32: [
     function(require, module, exports) {
       (function(global) {
         'use strict';
@@ -5782,13 +6556,15 @@
         var Modal = function(element, options) {
           this.options = $.extend({}, Modal.DEFAULTS, options || {});
           this.$element = $(element);
+          this.$dialog = this.$element.find('.am-modal-dialog');
 
           if (!this.$element.attr('id')) {
             this.$element.attr('id', UI.utils.generateGUID('am-modal'));
           }
 
           this.isPopup = this.$element.hasClass('am-popup');
-          this.active = this.transitioning = null;
+          this.isActions = this.$element.hasClass('am-modal-actions');
+          this.active = this.transitioning = this.relatedTarget = null;
 
           this.events();
         };
@@ -5802,22 +6578,28 @@
             modal: '.am-modal',
             active: '.am-modal-active'
           },
+          closeViaDimmer: true,
           cancelable: true,
           onConfirm: function() {},
           onCancel: function() {},
+          height: undefined,
+          width: undefined,
           duration: 300, // must equal the CSS transition duration
           transitionEnd: supportTransition && supportTransition.end +
             '.modal.amui'
         };
 
-        Modal.prototype.toggle = function(relatedElement) {
-          return this.active ? this.close() : this.open(relatedElement);
+        Modal.prototype.toggle = function(relatedTarget) {
+          return this.active ? this.close() : this.open(relatedTarget);
         };
 
-        Modal.prototype.open = function(relatedElement) {
+        Modal.prototype.open = function(relatedTarget) {
           var $element = this.$element;
           var options = this.options;
           var isPopup = this.isPopup;
+          var width = options.width;
+          var height = options.height;
+          var style = {};
 
           if (this.active) {
             return;
@@ -5826,6 +6608,9 @@
           if (!this.$element.length) {
             return;
           }
+
+          // callback hook
+          relatedTarget && (this.relatedTarget = relatedTarget);
 
           // 判断如果还在动画，就先触发之前的closed事件
           if (this.transitioning) {
@@ -5839,16 +6624,37 @@
           this.active = true;
 
           $element.trigger($.Event('open.modal.amui', {
-            relatedTarget: relatedElement
+            relatedTarget: relatedTarget
           }));
 
           dimmer.open($element);
 
           $element.show().redraw();
 
-          !isPopup && $element.css({
-            marginTop: -parseInt($element.height() / 2, 10) + 'px'
-          });
+          // apply Modal width/height if set
+          if (!isPopup && !this.isActions) {
+            if (width) {
+              width = parseInt(width, 10);
+              style.width = width + 'px';
+              style.marginLeft = -parseInt(width / 2) + 'px';
+            }
+
+            if (height) {
+              height = parseInt(height, 10);
+              // style.height = height + 'px';
+              style.marginTop = -parseInt(height / 2) + 'px';
+
+              // the background color is styled to $dialog
+              // so the height should set to $dialog
+              this.$dialog.css({
+                height: height + 'px'
+              });
+            } else {
+              style.marginTop = -parseInt($element.height() / 2, 10) + 'px';
+            }
+
+            $element.css(style);
+          }
 
           $element.
           removeClass(options.className.out).
@@ -5858,7 +6664,7 @@
 
           var complete = function() {
             $element.trigger($.Event('opened.modal.amui', {
-              relatedTarget: relatedElement
+              relatedTarget: relatedTarget
             }));
             this.transitioning = 0;
           };
@@ -5872,7 +6678,7 @@
           emulateTransitionEnd(options.duration);
         };
 
-        Modal.prototype.close = function(relatedElement) {
+        Modal.prototype.close = function(relatedTarget) {
           if (!this.active) {
             return;
           }
@@ -5890,7 +6696,7 @@
           }
 
           this.$element.trigger($.Event('close.modal.amui', {
-            relatedTarget: relatedElement
+            relatedTarget: relatedTarget
           }));
 
           this.transitioning = 1;
@@ -5920,58 +6726,79 @@
           var that = this;
           var $element = this.$element;
           var $ipt = $element.find('.am-modal-prompt-input');
+          var getData = function() {
+            var data = [];
+            $ipt.each(function() {
+              data.push($(this).val());
+            });
 
+            return (data.length === 0) ? undefined :
+              ((data.length === 1) ? data[0] : data);
+          };
+
+          // close via Esc key
           if (this.options.cancelable) {
-            $element.on('keyup.modal.amui',
-              $.proxy(function(e) {
-                if (this.active && e.which === 27) {
-                  this.options.onCancel();
-                  this.close();
-                }
-              }, that));
+            $element.on('keyup.modal.amui', function(e) {
+              if (that.active && e.which === 27) {
+                $element.trigger('cancel.modal.amui');
+                that.close();
+              }
+            });
+          }
 
-            dimmer.$element.on('click', function(e) {
+          // Close Modal when dimmer clicked
+          if (this.options.closeViaDimmer) {
+            dimmer.$element.on('click.dimmer.modal.amui', function(e) {
               that.close();
             });
           }
 
-          // Close button
-          $element.find('[data-am-modal-close]').on('click.modal.amui',
-            function(e) {
-              e.preventDefault();
-              that.close();
-            });
-
-          $element.find('.am-modal-btn').on('click.modal.amui', function(e) {
+          // Close Modal when button clicked
+          $element.find('[data-am-modal-close], .am-modal-btn').
+          on('click.close.modal.amui', function(e) {
+            e.preventDefault();
             that.close();
           });
 
-          $element.find('[data-am-modal-confirm]').on('click.modal.amui',
+          $element.find('[data-am-modal-confirm]').on(
+            'click.confirm.modal.amui',
             function() {
-              that.options.onConfirm($ipt.val());
+              $element.trigger($.Event('confirm.modal.amui', {
+                trigger: this
+              }));
             });
 
-          $element.find('[data-am-modal-cancel]').on('click.modal.amui',
-            function() {
-              that.options.onCancel($ipt.val());
-            });
+          $element.find('[data-am-modal-cancel]').
+          on('click.cancel.modal.amui', function() {
+            $element.trigger($.Event('cancel.modal.amui', {
+              trigger: this
+            }));
+          });
+
+          $element.on('confirm.modal.amui', function(e) {
+            e.data = getData();
+            that.options.onConfirm.call(that, e);
+          }).on('cancel.modal.amui', function(e) {
+            e.data = getData();
+            that.options.onCancel.call(that, e);
+          });
         };
 
-        function Plugin(option, relatedElement) {
+        function Plugin(option, relatedTarget) {
           return this.each(function() {
             var $this = $(this);
-            var data = $this.data('am.modal');
+            var data = $this.data('amui.modal');
             var options = $.extend({},
               Modal.DEFAULTS, typeof option == 'object' && option);
 
             if (!data) {
-              $this.data('am.modal', (data = new Modal(this, options)));
+              $this.data('amui.modal', (data = new Modal(this, options)));
             }
 
             if (typeof option == 'string') {
-              data[option](relatedElement);
+              data[option] && data[option](relatedTarget);
             } else {
-              data.toggle(option && option.relatedElement || undefined);
+              data.toggle(option && option.relatedTarget || undefined);
             }
           });
         }
@@ -5984,7 +6811,7 @@
           var options = UI.utils.parseOptions($this.attr('data-am-modal'));
           var $target = $(options.target ||
             (this.href && this.href.replace(/.*(?=#[^\s]+$)/, '')));
-          var option = $target.data('am.modal') ? 'toggle' : options;
+          var option = $target.data('amui.modal') ? 'toggle' : options;
 
           Plugin.call($target, option, this);
         });
@@ -5997,10 +6824,10 @@
         "undefined" ? self : typeof window !== "undefined" ? window : {})
     }, {
       "./core": 4,
-      "./ui.dimmer": 27
+      "./ui.dimmer": 28
     }
   ],
-  32: [
+  33: [
     function(require, module, exports) {
       (function(global) {
         'use strict';
@@ -6008,6 +6835,7 @@
         var $ = (typeof window !== "undefined" ? window.jQuery : typeof global !==
           "undefined" ? global.jQuery : null);
         var UI = require('./core');
+        var Hammer = require('./util.hammer');
         var $win = $(window);
         var $doc = $(document);
         var scrollPos;
@@ -6019,9 +6847,9 @@
 
         var OffCanvas = function(element, options) {
           this.$element = $(element);
-          this.options = options;
+          this.options = $.extend({}, OffCanvas.DEFAULTS, options);
           this.active = null;
-          this.events();
+          this.bindEvents();
         };
 
         OffCanvas.DEFAULTS = {
@@ -6030,6 +6858,7 @@
         };
 
         OffCanvas.prototype.open = function(relatedElement) {
+          var _this = this;
           var $element = this.$element;
 
           if (!$element.length || $element.hasClass('am-active')) {
@@ -6051,12 +6880,10 @@
 
           $element.addClass('am-active');
 
-          $body.
-          css({
+          $body.css({
             width: window.innerWidth,
             height: $win.height()
-          }).
-          addClass('am-offcanvas-page');
+          }).addClass('am-offcanvas-page');
 
           if (effect !== 'overlay') {
             $body.css({
@@ -6075,35 +6902,30 @@
           this.active = 1;
 
           // Close OffCanvas when none content area clicked
-          $element.off('click.offcanvas.amui').
-          on('click.offcanvas.amui', $.proxy(function(e) {
+          $element.on('click.offcanvas.amui', function(e) {
             var $target = $(e.target);
 
-            if (!e.type.match(/swipe/)) {
-              if ($target.hasClass('am-offcanvas-bar')) {
-                return;
-              }
+            if ($target.hasClass('am-offcanvas-bar')) {
+              return;
+            }
 
-              if ($target.parents('.am-offcanvas-bar').first().length) {
-                return;
-              }
+            if ($target.parents('.am-offcanvas-bar').first().length) {
+              return;
             }
 
             // https://developer.mozilla.org/zh-CN/docs/DOM/event.stopImmediatePropagation
             e.stopImmediatePropagation();
 
-            this.close();
-          }, this));
+            _this.close();
+          });
 
-          $html.on('keydown.offcanvas.amui', $.proxy(function(e) {
-            if (e.keyCode === 27) { // ESC
-              this.close();
-            }
-          }, this));
+          $html.on('keydown.offcanvas.amui', function(e) {
+            (e.keyCode === 27) && _this.close();
+          });
         };
 
         OffCanvas.prototype.close = function(relatedElement) {
-          var me = this;
+          var _this = this;
           var $html = $('html');
           var $body = $('body');
           var $element = this.$element;
@@ -6128,7 +6950,7 @@
             $html.css('margin-top', '');
             window.scrollTo(scrollPos.x, scrollPos.y);
             $element.trigger('closed.offcanvas.amui');
-            me.active = 0;
+            _this.active = 0;
           }
 
           if (UI.support.transition) {
@@ -6148,17 +6970,23 @@
           $html.off('.offcanvas.amui');
         };
 
-        OffCanvas.prototype.events = function() {
+        OffCanvas.prototype.bindEvents = function() {
+          var _this = this;
           $doc.on('click.offcanvas.amui', '[data-am-dismiss="offcanvas"]',
-            $.proxy(function(e) {
+            function(e) {
               e.preventDefault();
-              this.close();
-            }, this));
+              _this.close();
+            });
 
           $win.on('resize.offcanvas.amui orientationchange.offcanvas.amui',
-            $.proxy(function(e) {
-              this.active && this.close();
-            }, this));
+            function() {
+              _this.active && _this.close();
+            });
+
+          this.$element.hammer().on('swipeleft swipeleft', function(e) {
+            e.preventDefault();
+            _this.close();
+          });
 
           return this;
         };
@@ -6166,12 +6994,12 @@
         function Plugin(option, relatedElement) {
           return this.each(function() {
             var $this = $(this);
-            var data = $this.data('am.offcanvas');
-            var options = $.extend({}, OffCanvas.DEFAULTS,
-              typeof option == 'object' && option);
+            var data = $this.data('amui.offcanvas');
+            var options = $.extend({}, typeof option == 'object' &&
+              option);
 
             if (!data) {
-              $this.data('am.offcanvas', (data = new OffCanvas(this,
+              $this.data('amui.offcanvas', (data = new OffCanvas(this,
                 options)));
               data.open(relatedElement);
             }
@@ -6191,7 +7019,7 @@
           var options = UI.utils.parseOptions($this.data('amOffcanvas'));
           var $target = $(options.target ||
             (this.href && this.href.replace(/.*(?=#[^\s]+$)/, '')));
-          var option = $target.data('am.offcanvas') ? 'open' : options;
+          var option = $target.data('amui.offcanvas') ? 'open' : options;
 
           Plugin.call($target, option, this);
         });
@@ -6206,10 +7034,11 @@
       }).call(this, typeof global !== "undefined" ? global : typeof self !==
         "undefined" ? self : typeof window !== "undefined" ? window : {})
     }, {
-      "./core": 4
+      "./core": 4,
+      "./util.hammer": 50
     }
   ],
-  33: [
+  34: [
     function(require, module, exports) {
       (function(global) {
         'use strict';
@@ -6994,7 +7823,7 @@
       "./core": 4
     }
   ],
-  34: [
+  35: [
     function(require, module, exports) {
       (function(global) {
         'use strict';
@@ -7020,6 +7849,7 @@
         };
 
         Popover.DEFAULTS = {
+          theme: undefined,
           trigger: 'click',
           content: '',
           open: false,
@@ -7200,12 +8030,21 @@
 
         Popover.prototype.getPopover = function() {
           var uid = UI.utils.generateGUID('am-popover');
-          return $(this.options.tpl).attr('id', uid);
+          var theme = [];
+
+          if (this.options.theme) {
+            $.each(this.options.theme.split(','), function(i, item) {
+              theme.push('am-popover-' + $.trim(item));
+            });
+          }
+          return $(this.options.tpl).attr('id', uid).addClass(theme.join(
+            ' '));
         };
 
-        Popover.prototype.setContent = function() {
+        Popover.prototype.setContent = function(content) {
+          content = content || this.options.content;
           this.$popover && this.$popover.find('.am-popover-inner').empty().
-          html(this.options.content);
+          html(content);
         };
 
         Popover.prototype.events = function() {
@@ -7233,18 +8072,18 @@
         function Plugin(option) {
           return this.each(function() {
             var $this = $(this);
-            var data = $this.data('am.popover');
+            var data = $this.data('amui.popover');
             var options = $.extend({},
               UI.utils.parseOptions($this.attr('data-am-popover')),
               typeof option == 'object' && option);
 
             if (!data) {
-              $this.data('am.popover', (data = new Popover(this,
+              $this.data('amui.popover', (data = new Popover(this,
                 options)));
             }
 
             if (typeof option == 'string') {
-              data[option]();
+              data[option] && data[option]();
             }
           });
         }
@@ -7252,8 +8091,8 @@
         $.fn.popover = Plugin;
 
         // Init code
-        $(function() {
-          $('[data-am-popover]').popover();
+        UI.ready(function(context) {
+          $('[data-am-popover]', context).popover();
         });
 
         $.AMUI.popover = Popover;
@@ -7266,7 +8105,7 @@
       "./core": 4
     }
   ],
-  35: [
+  36: [
     function(require, module, exports) {
       (function(global) {
         'use strict';
@@ -7684,7 +8523,7 @@
       "./core": 4
     }
   ],
-  36: [
+  37: [
     function(require, module, exports) {
       (function(global) {
         'use strict';
@@ -7709,9 +8548,8 @@
           this.$element = $(element);
           this.$body = $(document.body);
           this.options = $.extend({}, PureView.DEFAULTS, options);
-          this.$pureview = $(this.options.tpl, {
-            id: UI.utils.generateGUID('am-pureview')
-          });
+          this.$pureview = $(this.options.tpl).attr('id',
+            UI.utils.generateGUID('am-pureview'));
 
           this.$slides = null;
           this.transitioning = null;
@@ -7729,8 +8567,8 @@
             '<ol class="am-pureview-nav"></ol>' +
             '<div class="am-pureview-bar am-active">' +
             '<span class="am-pureview-title"></span>' +
-            '<span class="am-pureview-current"></span> / ' +
-            '<span class="am-pureview-total"></span></div>' +
+            '<div class="am-pureview-counter"><span class="am-pureview-current"></span> / ' +
+            '<span class="am-pureview-total"></span></div></div>' +
             '<div class="am-pureview-actions am-active">' +
             '<a href="javascript: void(0)" class="am-icon-chevron-left" ' +
             'data-am-close="pureview"></a></div>' +
@@ -7768,130 +8606,97 @@
         };
 
         PureView.prototype.init = function() {
-          var me = this;
+          var _this = this;
           var options = this.options;
           var $element = this.$element;
           var $pureview = this.$pureview;
-          var $slider = $pureview.find(options.selector.slider);
-          var $nav = $pureview.find(options.selector.nav);
-          var $slides = $([]);
-          var $navItems = $([]);
-          var $images = $element.find(options.target);
-          var total = $images.length;
-          var imgUrls = [];
 
-          if (!total) {
-            return;
-          }
-
-          if (total === 1) {
-            $pureview.addClass(options.className.onlyOne);
-          }
-
-          $images.each(function(i, item) {
-            var src;
-            var title;
-
-            if (options.target == 'a') {
-              src = item.href; // to absolute path
-              title = item.title || '';
-            } else {
-              src = $(item).data('rel') || item.src; // <img src='' data-rel='' />
-              title = $(item).attr('alt') || '';
-            }
-
-            // hide bar: wechat_webview_type=1
-            // http://tmt.io/wechat/  not working?
-            imgUrls.push(src);
-
-            $slides = $slides.add($('<li><div class="am-pinch-zoom">' +
-              '<img src="' + src + '" alt="' + title + '"/></div></li>'
-            ));
-            $navItems = $navItems.add($('<li>' + (i + 1) + '</li>'));
-          });
-
-          $slider.append($slides);
-          $nav.append($navItems);
+          this.refreshSlides();
 
           $('body').append($pureview);
-
-          $pureview.find(options.selector.total).text(total);
 
           this.$title = $pureview.find(options.selector.title);
           this.$current = $pureview.find(options.selector.current);
           this.$bar = $pureview.find(options.selector.bar);
           this.$actions = $pureview.find(options.selector.actions);
-          this.$navItems = $nav.find('li');
-          this.$slides = $slider.find('li');
 
           if (options.shareBtn) {
             this.$actions.append('<a href="javascript: void(0)" ' +
               'class="am-icon-share-square-o" data-am-toggle="share"></a>');
           }
 
-          $slider.find(options.selector.pinchZoom).each(function() {
-            $(this).data('amui.pinchzoom', new PinchZoom($(this), {}));
-            $(this).on('pz_doubletap', function(e) {
-              //
-            });
-          });
-
-          $images.on('click.pureview.amui', function(e) {
+          this.$element.on('click.pureview.amui', options.target, function(
+            e) {
             e.preventDefault();
-            var clicked = $images.index(this);
+            var clicked = _this.$images.index(this);
 
             // Invoke WeChat ImagePreview in WeChat
             // TODO: detect WeChat before init
             if (options.weChatImagePreview && window.WeixinJSBridge) {
               window.WeixinJSBridge.invoke('imagePreview', {
-                current: imgUrls[clicked],
-                urls: imgUrls
+                current: _this.imgUrls[clicked],
+                urls: _this.imgUrls
               });
             } else {
-              me.open(clicked);
+              _this.open(clicked);
             }
           });
 
-          $pureview.find('.am-pureview-direction a').
-          on('click.direction.pureview.amui', function(e) {
+          $pureview.find('.am-pureview-direction').
+          on('click.direction.pureview.amui', 'li', function(e) {
             e.preventDefault();
-            var $clicked = $(e.target).parent('li');
 
-            if ($clicked.is('.am-pureview-prev')) {
-              me.prevSlide();
+            if ($(this).is('.am-pureview-prev')) {
+              _this.prevSlide();
             } else {
-              me.nextSlide();
+              _this.nextSlide();
             }
           });
 
           // Nav Contorl
-          this.$navItems.on('click.nav.pureview.amui', function() {
-            var index = me.$navItems.index($(this));
-            me.activate(me.$slides.eq(index));
-          });
+          $pureview.find(options.selector.nav).on('click.nav.pureview.amui',
+            'li',
+            function() {
+              var index = _this.$navItems.index($(this));
+              _this.activate(_this.$slides.eq(index));
+            });
 
           // Close Icon
           $pureview.find(options.selector.close).
           on('click.close.pureview.amui', function(e) {
             e.preventDefault();
-            me.close();
+            _this.close();
           });
 
-          $slider.hammer().on('press.pureview.amui', function(e) {
+          this.$slider.hammer().on('press.pureview.amui', function(e) {
             e.preventDefault();
-            me.toggleToolBar();
+            _this.toggleToolBar();
           }).on('swipeleft.pureview.amui', function(e) {
             e.preventDefault();
-            me.nextSlide();
+            _this.nextSlide();
           }).on('swiperight.pureview.amui', function(e) {
             e.preventDefault();
-            me.prevSlide();
+            _this.prevSlide();
           });
 
-          $slider.data('hammer').get('swipe').set({
+          this.$slider.data('hammer').get('swipe').set({
             direction: Hammer.DIRECTION_HORIZONTAL,
             velocity: 0.35
           });
+
+          // Observe DOM
+          $element.DOMObserve({
+            childList: true,
+            subtree: true
+          }, function(mutations, observer) {
+            // _this.refreshSlides();
+            // console.log('mutations[0].type);
+          });
+
+          // NOTE:
+          // trigger this event manually if MutationObserver not supported
+          //   when new images appended, or call refreshSlides()
+          $element.on('changed.dom.amui', $.proxy(this.refreshSlides, _this));
 
           $(document).on('keydown.pureview.amui', $.proxy(function(e) {
             var keyCode = e.keyCode;
@@ -7905,16 +8710,90 @@
           }, this));
         };
 
+        PureView.prototype.refreshSlides = function() {
+          // update images collections
+          this.$images = this.$element.find(this.options.target);
+          var _this = this;
+          var options = this.options;
+          var $pureview = this.$pureview;
+          var $slides = $([]);
+          var $navItems = $([]);
+          var $images = this.$images;
+          var total = $images.length;
+          this.$slider = $pureview.find(options.selector.slider);
+          this.$nav = $pureview.find(options.selector.nav);
+          this.imgUrls = []; // for WeChat Image Preview
+          var viewedFlag = 'data-am-pureviewed';
+
+          if (!total) {
+            return;
+          }
+
+          if (total === 1) {
+            $pureview.addClass(options.className.onlyOne);
+          }
+
+          $images.not('[' + viewedFlag + ']').each(function(i, item) {
+            var src;
+            var title;
+
+            // get image URI from link's href attribute
+            if (item.nodeName === 'A') {
+              src = item.href; // to absolute path
+              title = item.title || '';
+            } else {
+              src = $(item).data('rel') || item.src; // <img src='' data-rel='' />
+              title = $(item).attr('alt') || '';
+            }
+
+            // add pureviewed flag
+            item.setAttribute(viewedFlag, '1');
+
+            // hide bar: wechat_webview_type=1
+            // http://tmt.io/wechat/  not working?
+            _this.imgUrls.push(src);
+
+            $slides = $slides.add($('<li data-src="' + src +
+              '" data-title="' + title +
+              '"></li>'));
+            $navItems = $navItems.add($('<li>' + (i + 1) + '</li>'));
+          });
+
+          $pureview.find(options.selector.total).text(total);
+
+          this.$slider.append($slides);
+          this.$nav.append($navItems);
+          this.$navItems = this.$nav.find('li');
+          this.$slides = this.$slider.find('li');
+        };
+
+        PureView.prototype.loadImage = function($slide, callback) {
+          var appendedFlag = 'image-appended';
+
+          if (!$slide.data(appendedFlag)) {
+            var $img = $('<img>', {
+              src: $slide.data('src'),
+              alt: $slide.data('title')
+            });
+
+            $slide.html($img).wrapInner('<div class="am-pinch-zoom"></div>')
+              .redraw();
+
+            var $pinchWrapper = $slide.find(this.options.selector.pinchZoom);
+            $pinchWrapper.data('amui.pinchzoom', new PinchZoom(
+              $pinchWrapper[0], {}));
+            $slide.data('image-appended', true);
+          }
+
+          callback && callback.call(this);
+        };
+
         PureView.prototype.activate = function($slide) {
           var options = this.options;
           var $slides = this.$slides;
           var activeIndex = $slides.index($slide);
           var alt = $slide.find('img').attr('alt') || '';
           var active = options.className.active;
-
-          UI.utils.imageLoader($slide.find('img'), function(image) {
-            $(image).addClass('am-img-loaded');
-          });
 
           if ($slides.find('.' + active).is($slide)) {
             return;
@@ -7923,6 +8802,12 @@
           if (this.transitioning) {
             return;
           }
+
+          this.loadImage($slide, function() {
+            UI.utils.imageLoader($slide.find('img'), function(image) {
+              $(image).addClass('am-img-loaded');
+            });
+          });
 
           this.transitioning = 1;
 
@@ -7943,6 +8828,8 @@
           } else {
             this.transitioning = 0;
           }
+
+          // TODO: pre-load next image
         };
 
         PureView.prototype.nextSlide = function() {
@@ -7994,7 +8881,7 @@
           this.checkScrollbar();
           this.setScrollbar();
           this.activate(this.$slides.eq(active));
-          this.$pureview.addClass(this.options.className.active);
+          this.$pureview.show().redraw().addClass(this.options.className.active);
           this.$body.addClass(this.options.className.activeBody);
         };
 
@@ -8005,12 +8892,14 @@
           this.$slides.removeClass();
 
           function resetBody() {
+            this.$pureview.hide();
             this.$body.removeClass(options.className.activeBody);
             this.resetScrollbar();
           }
 
           if (transition) {
-            this.$pureview.one(transition.end, $.proxy(resetBody, this));
+            this.$pureview.one(transition.end, $.proxy(resetBody, this)).
+            emulateTransitionEnd(300);
           } else {
             resetBody.call(this);
           }
@@ -8035,13 +8924,13 @@
         function Plugin(option) {
           return this.each(function() {
             var $this = $(this);
-            var data = $this.data('am.pureview');
+            var data = $this.data('amui.pureview');
             var options = $.extend({},
               UI.utils.parseOptions($this.data('amPureview')),
               typeof option == 'object' && option);
 
             if (!data) {
-              $this.data('am.pureview', (data = new PureView(this,
+              $this.data('amui.pureview', (data = new PureView(this,
                 options)));
             }
 
@@ -8054,8 +8943,8 @@
         $.fn.pureview = Plugin;
 
         // Init code
-        $(function() {
-          $('[data-am-pureview]').pureview();
+        UI.ready(function(context) {
+          $('[data-am-pureview]', context).pureview();
         });
 
         $.AMUI.pureview = PureView;
@@ -8071,11 +8960,11 @@
         "undefined" ? self : typeof window !== "undefined" ? window : {})
     }, {
       "./core": 4,
-      "./ui.pinchzoom": 33,
-      "./util.hammer": 46
+      "./ui.pinchzoom": 34,
+      "./util.hammer": 50
     }
   ],
-  37: [
+  38: [
     function(require, module, exports) {
       (function(global) {
         'use strict';
@@ -8187,11 +9076,10 @@
         $.fn.scrollspy = Plugin;
 
         // Init code
-        $(function() {
-          $('[data-am-scrollspy]').each(function() {
+        UI.ready(function(context) {
+          $('[data-am-scrollspy]', context).each(function() {
             var $this = $(this);
             var options = UI.utils.options($this.data('amScrollspy'));
-
             $this.scrollspy(options);
           });
         });
@@ -8206,7 +9094,7 @@
       "./core": 4
     }
   ],
-  38: [
+  39: [
     function(require, module, exports) {
       (function(global) {
         'use strict';
@@ -8325,11 +9213,11 @@
         function Plugin(option) {
           return this.each(function() {
             var $this = $(this);
-            var data = $this.data('am.scrollspynav');
+            var data = $this.data('amui.scrollspynav');
             var options = typeof option == 'object' && option;
 
             if (!data) {
-              $this.data('am.scrollspynav', (data = new ScrollSpyNav(
+              $this.data('amui.scrollspynav', (data = new ScrollSpyNav(
                 this, options)));
             }
 
@@ -8342,8 +9230,8 @@
         $.fn.scrollspynav = Plugin;
 
         // Init code
-        $(function() {
-          $('[data-am-scrollspy-nav]').each(function() {
+        UI.ready(function(context) {
+          $('[data-am-scrollspy-nav]', context).each(function() {
             var $this = $(this);
             var options = UI.utils.options($this.attr(
               'data-am-scrollspy-nav'));
@@ -8364,10 +9252,320 @@
         "undefined" ? self : typeof window !== "undefined" ? window : {})
     }, {
       "./core": 4,
-      "./ui.smooth-scroll": 40
+      "./ui.smooth-scroll": 42
     }
   ],
-  39: [
+  40: [
+    function(require, module, exports) {
+      (function(global) {
+        'use strict';
+
+        var $ = (typeof window !== "undefined" ? window.jQuery : typeof global !==
+          "undefined" ? global.jQuery : null);
+        var UI = require('./core');
+
+        // Make jQuery :contains Case-Insensitive
+        $.expr[':'].containsNC = function(elem, i, match, array) {
+          return (elem.textContent || elem.innerText || '').toLowerCase().
+          indexOf((match[3] || '').toLowerCase()) >= 0;
+        };
+
+        /**
+         * Selected
+         * @desc HTML select replacer
+         * @via https://github.com/silviomoreto/bootstrap-select
+         * @license https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE
+         * @param element
+         * @param options
+         * @constructor
+         */
+
+        var Selected = function(element, options) {
+          this.$element = $(element);
+          this.options = $.extend({}, Selected.DEFAULTS, options);
+          this.$originalOptions = this.$element.find('option');
+          this.multiple = element.multiple;
+          this.$selector = null;
+          this.init();
+        };
+
+        Selected.DEFAULTS = {
+          btnWidth: null,
+          btnSize: null,
+          btnStyle: 'default',
+          maxHeight: null,
+          noSelectedText: '点击选择...',
+          selectedClass: 'am-checked',
+          searchBox: false,
+          tpl: '<div class="am-selected am-dropdown" id="<%= id %>" data-am-dropdown>' +
+            '  <button class="am-selected-btn am-btn am-dropdown-toggle">' +
+            '    <span class="am-selected-status am-fl"></span>' +
+            '    <i class="am-selected-icon am-icon-caret-down"></i>' +
+            '  </button>' +
+            '  <div class="am-selected-content am-dropdown-content">' +
+            '    <h2 class="am-selected-header"><span class="am-icon-chevron-left">返回</span></h2>' +
+            '   <% if (searchBox) { %>' +
+            '   <div class="am-selected-search">' +
+            '     <input type="text" autocomplete="off" class="am-form-field" />' +
+            '   </div>' +
+            '   <% } %>' +
+            '    <ul class="am-selected-list">' +
+            '      <% for (var i = 0; i < options.length; i++) { %>' +
+            '       <% var option = options[i] %>' +
+            '       <% if (option.header) { %>' +
+            '       <li data-group="<%= option.group %>" class="am-selected-list-header">' +
+            '       <%= option.text %></li>' +
+            '       <% } else { %>' +
+            '       <li class=<%= option.active %> ' +
+            '         data-index="<%= option.index %>" ' +
+            '         data-group="<%= option.group || 0 %>" ' +
+            '         data-value="<%= option.value %>" >' +
+            '         <span class="am-selected-text"><%= option.text %></span>' +
+            '         <i class="am-icon-check"></i></li>' +
+            '      <% } %>' +
+            '      <% } %>' +
+            '    </ul>' +
+            '    <div class="am-selected-hint"></div>' +
+            '  </div>' +
+            '</div>'
+        };
+
+        Selected.prototype.init = function() {
+          var $element = this.$element;
+          var options = this.options;
+          var optionItems = [];
+          var $optgroup = $element.find('optgroup');
+
+          $element.hide();
+
+          function pushOption(index, item, group) {
+            optionItems.push({
+              group: group,
+              index: index,
+              active: item.selected ? options.selectedClass : '',
+              text: item.text,
+              value: item.value
+            });
+          }
+
+          // select with option groups
+          if ($optgroup.length) {
+            $optgroup.each(function(i) {
+              // push group name
+              optionItems.push({
+                header: true,
+                group: i + 1,
+                text: this.label
+              });
+
+              $optgroup.eq(i).find('option').each(function(index, item) {
+                pushOption(index, item, i);
+              });
+            });
+          } else {
+            // without option groups
+            $element.find('option').each(function(index, item) {
+              pushOption(index, item, null);
+            });
+          }
+
+          var data = {
+            id: UI.utils.generateGUID('am-selected'),
+            multiple: $element.get(0).multiple,
+            options: optionItems,
+            searchBox: options.searchBox
+          };
+
+          this.$selector = $(this.render(data));
+          this.$searchField = this.$selector.find(
+            '.am-selected-search input');
+          this.$hint = this.$selector.find('.am-selected-hint');
+
+          // set select button styles
+          var $selectorBtn = this.$selector.find('.am-selected-btn').
+          css({
+            width: this.options.btnWidth
+          });
+          var btnClassNames = [];
+
+          options.btnSize && btnClassNames.push('am-btn-' + options.btnSize);
+          options.btnStyle && btnClassNames.push('am-btn-' + options.btnStyle);
+          $selectorBtn.addClass(btnClassNames.join(' '));
+
+          this.$selector.dropdown({
+            justify: $selectorBtn
+          });
+
+          // set list height
+          if (options.maxHeight) {
+            this.$selector.find('.am-selected-list').css({
+              'max-height': options.maxHeight,
+              'overflow-y': 'scroll'
+            });
+          }
+
+          // set hint text
+          var hint = [];
+          var min = $element.attr('minchecked');
+          var max = $element.attr('maxchecked');
+
+          if ($element[0].required) {
+            hint.push('必选');
+          }
+
+          if (min || max) {
+            min && hint.push('至少选择 ' + min + ' 项');
+            max && hint.push('至多选择 ' + max + ' 项');
+          }
+
+          this.$hint.text(hint.join('，'));
+
+          // append $selector after <select>
+          this.$element.after(this.$selector);
+          this.dropdown = this.$selector.data('amui.dropdown');
+          this.$status = this.$selector.find('.am-selected-status');
+
+          this.getShadowOptions();
+          this.syncData();
+          this.bindEvents();
+        };
+
+        Selected.prototype.render = function(data) {
+          return UI.template(this.options.tpl, data);
+        };
+
+        Selected.prototype.getShadowOptions = function() {
+          this.$shadowOptions = this.$selector.find('.am-selected-list li')
+            .
+          not('.am-selected-list-header');
+        };
+
+        Selected.prototype.setChecked = function(item) {
+          var options = this.options;
+          var $item = $(item);
+          var isChecked = $item.hasClass(options.selectedClass);
+          if (!this.multiple) {
+            if (!isChecked) {
+              this.dropdown.close();
+              this.$shadowOptions.not($item).removeClass(options.selectedClass);
+            } else {
+              return;
+            }
+          }
+
+          $item.toggleClass(options.selectedClass);
+
+          this.syncData(item);
+        };
+
+        /**
+         * syncData
+         * @desc if `item` set, only sync `item` related option
+         * @param {Object} item
+         */
+        Selected.prototype.syncData = function(item) {
+          var _this = this;
+          var options = this.options;
+          var status = [];
+          var $checked = $([]);
+          this.$shadowOptions.filter('.' + options.selectedClass).each(
+            function() {
+              var $this = $(this);
+              status.push($this.find('.am-selected-text').text());
+
+              if (!item) {
+                $checked = $checked.add(_this.$originalOptions.filter(
+                  '[value="' + $this.data('value') + '"]').prop(
+                  'selected', true));
+              }
+            });
+
+          if (item) {
+            var $item = $(item);
+            this.$originalOptions.filter('[value="' + $item.data('value') +
+              '"]').
+            prop('selected', $item.hasClass(options.selectedClass));
+          } else {
+            this.$originalOptions.not($checked).prop('selected', false);
+          }
+
+          // nothing selected
+          if (!this.$element.val()) {
+            status.push(options.noSelectedText);
+          }
+
+          this.$status.text(status.join(', '));
+          this.$element.trigger('change');
+        };
+
+        Selected.prototype.bindEvents = function() {
+          var _this = this;
+          var handleKeyup = UI.utils.debounce(function(e) {
+            _this.$shadowOptions.not('.am-selcted-list-header').hide().
+            filter(':containsNC("' + e.target.value + '")').show();
+          }, 100);
+
+          this.$shadowOptions.on('click', function(e) {
+            _this.setChecked(this);
+          });
+
+          // simple search with jQuery :contains
+          this.$searchField.on('keyup.selected.amui', handleKeyup);
+
+          // empty search keywords
+          this.$selector.on('closed.dropdown.amui', function() {
+            _this.$searchField.val('');
+            _this.$shadowOptions.css({
+              display: ''
+            });
+          });
+        };
+
+        Selected.prototype.destroy = function() {
+          this.$element.removeData('amui.selected').show();
+          this.$selector.remove();
+        };
+
+        function Plugin(option) {
+          return this.each(function() {
+            var $this = $(this);
+            var data = $this.data('amui.selected');
+            var options = $.extend({}, UI.utils.parseOptions($this.data(
+                'amSelected')),
+              typeof option === 'object' && option);
+
+            if (!data && option === 'destroy') {
+              return;
+            }
+
+            if (!data) {
+              $this.data('amui.selected', (data = new Selected(this,
+                options)));
+            }
+
+            if (typeof option == 'string') {
+              data[option] && data[option]();
+            }
+          });
+        }
+
+        $.fn.selected = Plugin;
+
+        UI.ready(function(context) {
+          $('[data-am-selected]', context).selected();
+        });
+
+        $.AMUI.selected = Selected;
+
+        module.exports = Selected;
+
+      }).call(this, typeof global !== "undefined" ? global : typeof self !==
+        "undefined" ? self : typeof window !== "undefined" ? window : {})
+    }, {
+      "./core": 4
+    }
+  ],
+  41: [
     function(require, module, exports) {
       (function(global) {
         'use strict';
@@ -8736,11 +9934,11 @@
         "undefined" ? self : typeof window !== "undefined" ? window : {})
     }, {
       "./core": 4,
-      "./ui.modal": 31,
-      "./util.qrcode": 47
+      "./ui.modal": 32,
+      "./util.qrcode": 51
     }
   ],
-  40: [
+  42: [
     function(require, module, exports) {
       (function(global) {
         'use strict';
@@ -8871,8 +10069,8 @@
           '[data-am-smooth-scroll]',
           function(e) {
             e.preventDefault();
-            var options = UI.utils.parseOptions($(this).attr(
-              'data-am-smooth-scroll'));
+            var options = UI.utils.parseOptions($(this).data(
+              'amSmoothScroll'));
 
             $(window).smoothScroll(options);
           });
@@ -8885,7 +10083,7 @@
       "./core": 4
     }
   ],
-  41: [
+  43: [
     function(require, module, exports) {
       (function(global) {
         'use strict';
@@ -9092,11 +10290,12 @@
         function Plugin(option) {
           return this.each(function() {
             var $this = $(this);
-            var data = $this.data('am.sticky');
+            var data = $this.data('amui.sticky');
             var options = typeof option == 'object' && option;
 
             if (!data) {
-              $this.data('am.sticky', (data = new Sticky(this, options)));
+              $this.data('amui.sticky', (data = new Sticky(this,
+                options)));
             }
 
             if (typeof option == 'string') {
@@ -9127,7 +10326,7 @@
       "./core": 4
     }
   ],
-  42: [
+  44: [
     function(require, module, exports) {
       (function(global) {
         'use strict';
@@ -9344,8 +10543,8 @@
         $.fn.tabs = Plugin;
 
         // Init code
-        $(document).on('ready', function(e) {
-          $('[data-am-tabs]').tabs();
+        UI.ready(function(context) {
+          $('[data-am-tabs]', context).tabs();
         });
 
         $.AMUI.tabs = Tabs;
@@ -9359,10 +10558,561 @@
         "undefined" ? self : typeof window !== "undefined" ? window : {})
     }, {
       "./core": 4,
-      "./util.hammer": 46
+      "./util.hammer": 50
     }
   ],
-  43: [
+  45: [
+    function(require, module, exports) {
+      (function(global) {
+        'use strict';
+
+        var $ = (typeof window !== "undefined" ? window.jQuery : typeof global !==
+          "undefined" ? global.jQuery : null);
+        var UI = require('./core');
+
+        /**
+         * UCheck
+         * @via https://github.com/designmodo/Flat-UI/blob/8ef98df23ba7f5033e596a9bd05b53b535a9fe99/js/radiocheck.js
+         * @license CC BY 3.0 & MIT
+         * @param element
+         * @param options
+         * @constructor
+         */
+
+        var UCheck = function(element, options) {
+          this.options = $.extend({}, UCheck.DEFAULTS, options);
+          // this.options = $.extend({}, UCheck.DEFAULTS, this.$element.data(), options);
+          this.$element = $(element);
+          this.init();
+        };
+
+        UCheck.DEFAULTS = {
+          checkboxClass: 'am-ucheck-checkbox',
+          radioClass: 'am-ucheck-radio',
+          checkboxTpl: '<span class="am-ucheck-icons">' +
+            '<i class="am-icon-unchecked"></i><i class="am-icon-checked"></i></span>',
+          radioTpl: '<span class="am-ucheck-icons">' +
+            '<i class="am-icon-unchecked"></i><i class="am-icon-checked"></i></span>'
+        };
+
+        UCheck.prototype.init = function() {
+          var $element = this.$element;
+          var element = $element[0];
+          var options = this.options;
+
+          if (element.type === 'checkbox') {
+            $element.addClass(options.checkboxClass).after(options.checkboxTpl);
+          } else if (element.type === 'radio') {
+            $element.addClass(options.radioClass).after(options.radioTpl);
+          }
+        };
+
+        UCheck.prototype.check = function() {
+          this.$element.prop('checked', true)
+            .trigger('change.ucheck.amui').trigger('checked.ucheck.amui');
+        },
+
+        UCheck.prototype.uncheck = function() {
+          this.$element.prop('checked', false)
+            .trigger('change.ucheck.amui').trigger('unchecked.ucheck.amui');
+        },
+
+        UCheck.prototype.toggle = function() {
+          this.$element.prop('checked', function(i, value) {
+            return !value;
+          }).trigger('change.ucheck.amui').trigger('toggled.ucheck.amui');
+        },
+
+        UCheck.prototype.disable = function() {
+          this.$element.prop('disabled', true).
+          trigger('change.ucheck.amui').trigger('disabled.ucheck.amui');
+        },
+
+        UCheck.prototype.enable = function() {
+          this.$element.prop('disabled', false);
+          this.$element.trigger('change.ucheck.amui').trigger(
+            'enabled.ucheck.amui');
+        },
+
+        UCheck.prototype.destroy = function() {
+          this.$element.removeData('amui.ucheck').
+          removeClass(this.options.checkboxClass + ' ' + this.options.radioClass)
+            .
+          next('.am-ucheck-icons').remove().
+          end().trigger('destroyed.ucheck.amui');
+        };
+
+        function Plugin(option) {
+          return this.each(function() {
+            var $this = $(this);
+            var data = $this.data('amui.ucheck');
+            var options = $.extend({}, UI.utils.parseOptions($this.data(
+                'amUcheck')),
+              typeof option === 'object' && option);
+
+            if (!data && option === 'destroy') {
+              return;
+            }
+
+            if (!data) {
+              $this.data('amui.ucheck', (data = new UCheck(this,
+                options)));
+            }
+
+            if (typeof option == 'string') {
+              data[option] && data[option]();
+            }
+
+            // Adding 'am-nohover' class for touch devices
+            if (UI.support.touch) {
+              $this.parent().hover(function() {
+                $this.addClass('am-nohover');
+              }, function() {
+                $this.removeClass('am-nohover');
+              });
+            }
+          });
+        }
+
+        $.fn.uCheck = Plugin;
+
+        UI.ready(function(context) {
+          $('[data-am-ucheck]', context).uCheck();
+        });
+
+        $.AMUI.uCheck = UCheck;
+
+        module.exports = UCheck;
+
+        // TODO: 与表单验证结合使用的情况
+
+      }).call(this, typeof global !== "undefined" ? global : typeof self !==
+        "undefined" ? self : typeof window !== "undefined" ? window : {})
+    }, {
+      "./core": 4
+    }
+  ],
+  46: [
+    function(require, module, exports) {
+      (function(global) {
+        'use strict';
+
+        var $ = (typeof window !== "undefined" ? window.jQuery : typeof global !==
+          "undefined" ? global.jQuery : null);
+        var UI = require('./core');
+
+        var Validator = function(element, options) {
+          this.options = $.extend({}, Validator.DEFAULTS, options);
+          this.options.patterns = $.extend({}, Validator.patterns,
+            this.options.patterns);
+          var locales = this.options.locales;
+          !Validator.validationMessages[locales] && (this.options.locales =
+            'zh_CN');
+          this.$element = $(element);
+          this.init();
+        };
+
+        Validator.DEFAULTS = {
+          debug: false,
+          locales: 'zh_CN',
+          H5validation: false,
+          H5inputType: ['email', 'url', 'number'],
+          patterns: {},
+          patternClassPrefix: 'js-pattern-',
+          activeClass: 'am-active',
+          inValidClass: 'am-field-error',
+          validClass: 'am-field-valid',
+
+          validateOnSubmit: true,
+          // Elements to validate with allValid (only validating visible elements)
+          // :input: selects all input, textarea, select and button elements.
+          allFields: ':input:visible:not(:button, :disabled, .am-novalidate)',
+
+          // Custom events
+          customEvents: 'validate',
+
+          // Keyboard events
+          keyboardFields: ':input:not(:button, :disabled,.am-novalidate)',
+          keyboardEvents: 'focusout, change', // keyup, focusin
+
+          activeKeyup: true,
+
+          // Mouse events
+          pointerFields: 'input[type="range"]:not(:disabled, .am-novalidate), ' +
+            'input[type="radio"]:not(:disabled, .am-novalidate), ' +
+            'input[type="checkbox"]:not(:disabled, .am-novalidate), ' +
+            'select:not(:disabled, .am-novalidate), ' +
+            'option:not(:disabled, .am-novalidate)',
+          pointerEvents: 'click',
+
+          onValid: function(validity) {},
+
+          onInValid: function(validity) {},
+
+          markValid: function(validity) {
+            // this is Validator instance
+            var options = this.options;
+            var $field = $(validity.field);
+            var $parent = $field.closest('.am-form-group');
+            $field.addClass(options.validClass).
+            removeClass(options.inValidClass);
+
+            $parent.addClass('am-form-success').removeClass('am-form-error');
+
+            options.onValid.call(this, validity);
+          },
+          markInValid: function(validity) {
+            var options = this.options;
+            var $field = $(validity.field);
+            var $parent = $field.closest('.am-form-group');
+            $field.addClass(options.inValidClass + ' ' + options.activeClass)
+              .
+            removeClass(options.validClass);
+
+            $parent.addClass('am-form-error').removeClass('am-form-success');
+
+            options.onInValid.call(this, validity);
+          }
+        };
+
+        /* jshint -W101 */
+        Validator.patterns = {
+          email: /^((([a-zA-Z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-zA-Z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-zA-Z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-zA-Z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-zA-Z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-zA-Z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-zA-Z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-zA-Z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-zA-Z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-zA-Z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/,
+
+          url: /^(https?|ftp):\/\/(((([a-zA-Z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-zA-Z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-zA-Z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-zA-Z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-zA-Z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-zA-Z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-zA-Z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-zA-Z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-zA-Z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-zA-Z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-zA-Z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-zA-Z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-zA-Z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/,
+
+          // Number, including positive, negative, and floating decimal
+          number: /^-?(?:\d+|\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/,
+          dateISO: /^\d{4}[\/\-]\d{1,2}[\/\-]\d{1,2}$/,
+          integer: /^-?\d+$/
+        };
+        /* jshint +W101 */
+
+        Validator.validationMessages = {
+          zh_CN: {
+            valueMissing: '请填写此字段',
+            customError: {
+              tooShort: '至少填写 %s 个字符',
+              checkedOverflow: '至多选择 %s 项',
+              checkedUnderflow: '至少选择 %s 项'
+            },
+            patternMismatch: '请按照要求的格式填写',
+            rangeOverflow: '请填写小于等于 %s 的值',
+            rangeUnderflow: '请填写大于等于 %s 的值',
+            stepMismatch: '',
+            tooLong: '至多填写 %s 个字符',
+            typeMismatch: '请按照要求的类型填写'
+          }
+        };
+
+        // TODO: 考虑表单元素不是 form 子元素的情形
+        // TODO: change/click/focusout 同时触发时处理重复
+        // TODO: 显示提示信息
+
+        Validator.prototype.init = function() {
+          var _this = this;
+          var $element = this.$element;
+          var options = this.options;
+
+          // using H5 form validation if option set and supported
+          if (options.H5validation && UI.support.formValidation) {
+            return false;
+          }
+
+          // disable HTML5 form validation
+          $element.attr('novalidate', 'novalidate');
+
+          function regexToPattern(regex) {
+            var pattern = regex.toString();
+            return pattern.substring(1, pattern.length - 1);
+          }
+
+          // add pattern to H5 input type
+          $.each(options.H5inputType, function(i, type) {
+            var $field = $element.find('input[type=' + type + ']');
+            if (!$field.attr('pattern')) {
+              $field.attr('pattern', regexToPattern(options.patterns[type]));
+            }
+          });
+
+          // add pattern to .js-pattern-xx
+          $.each(options.patterns, function(key, value) {
+            var $field = $element.find('.' + options.patternClassPrefix +
+              key);
+            !$field.attr('pattern') && $field.attr('pattern',
+              regexToPattern(value));
+          });
+
+          $element.submit(function(e) {
+            return _this.isFormValid();
+          });
+
+          function bindEvents(fields, eventFlags, debounce) {
+            var events = eventFlags.split(',');
+            var validate = function(e) {
+              // console.log(e.type);
+              _this.validate(this);
+            };
+
+            if (debounce) {
+              validate = UI.utils.debounce(validate, debounce);
+            }
+
+            $.each(events, function(i, event) {
+              $element.on(event + '.validator.amui', fields, validate);
+            });
+          }
+
+          bindEvents(':input', options.customEvents);
+          bindEvents(options.keyboardFields, options.keyboardEvents);
+          bindEvents(options.pointerFields, options.pointerEvents);
+          // active filed
+          bindEvents('.am-active', 'keyup', 50);
+          bindEvents('textarea[maxlength]', 'keyup', 50);
+        };
+
+        Validator.prototype.isValid = function(field) {
+          var $field = $(field);
+          // valid field not has been validated
+          if ($field.data('validity') === undefined) {
+            this.validate(field);
+          }
+          return $field.data('validity').valid;
+        };
+
+        Validator.prototype.validate = function(field) {
+          var _this = this;
+          var $element = this.$element;
+          var options = this.options;
+          var $field = $(field);
+          var pattern = $field.attr('pattern') || false;
+          var re = new RegExp(pattern);
+          var $radioGroup = null;
+          var $checkboxGroup = null;
+          // if checkbox, return `:chcked` length
+          var value = ($field.is('[type=checkbox]')) ?
+            ($checkboxGroup = $element.find('input[name="' + field.name +
+              '"]')).
+          filter(':checked').length: ($field.is('[type=radio]') ?
+            ($radioGroup = this.$element.find('input[name="' + field.name +
+              '"]')).filter(':checked').length > 0 : $field.val());
+
+          // if checkbox, valid the first input of checkbox group
+          $field = ($checkboxGroup && $checkboxGroup.length) ?
+            $checkboxGroup.first() : $field;
+          var required = ($field.attr('required') !== undefined) &&
+            ($field.attr('required') !== 'false');
+          var maxLength = parseInt($field.attr('maxlength'), 10);
+          var minLength = parseInt($field.attr('minlength'), 10);
+          var min = Number($field.attr('min'));
+          var max = Number($field.attr('max'));
+          var validity = this.createValidity({
+            field: $field[0],
+            valid: true
+          });
+
+          // Debug
+          if (options.debug && window.console) {
+            console.log('Validate called on "' + value + '" with regex "' +
+              re +
+              '". Required: ' + required);
+            console.log('Regex test: ' + re.test(value) + ', Pattern: ' +
+              pattern);
+          }
+
+          // check value length
+          if (!isNaN(maxLength) && value.length > maxLength) {
+            validity.valid = false;
+            validity.tooLong = true;
+          }
+
+          if (!isNaN(minLength) && value.length < minLength) {
+            validity.valid = false;
+            validity.customError = 'tooShort';
+          }
+
+          // check minimum and maximum
+          // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Input
+          // TODO: 日期验证最小值和最大值 min/max
+          if (!isNaN(min) && Number(value) < min) {
+            validity.valid = false;
+            validity.rangeUnderflow = true;
+          }
+
+          if (!isNaN(max) && Number(value) > max) {
+            validity.valid = false;
+            validity.rangeOverflow = true;
+          }
+
+          // check required
+          if (required && !value) {
+            validity.valid = false;
+            validity.valueMissing = true;
+          } else if (($checkboxGroup || $field.is(
+              'select[multiple="multiple"]')) &&
+            value) {
+            // check checkboxes / multiple select with `minchecked`/`maxchecked` attr
+            // var $multipleField = $checkboxGroup ? $checkboxGroup.first() : $field;
+
+            // if is select[multiple="multiple"], return selected length
+            value = $checkboxGroup ? value : value.length;
+
+            // at least checked
+            var minChecked = parseInt($field.attr('minchecked'), 10);
+            // at most checked
+            var maxChecked = parseInt($field.attr('maxchecked'), 10);
+
+            if (!isNaN(minChecked) && value < minChecked) {
+              // console.log('At least [%d] items checked！', maxChecked);
+              validity.valid = false;
+              validity.customError = 'checkedUnderflow';
+            }
+
+            if (!isNaN(maxChecked) && value > maxChecked) {
+              // console.log('At most [%d] items checked！', maxChecked);
+              validity.valid = false;
+              validity.customError = 'checkedOverflow';
+            }
+          } else if (pattern && !re.test(value) && value) { // check pattern
+            validity.valid = false;
+            validity.patternMismatch = true;
+          }
+
+          var markField = function(validity) {
+            var flag = 'mark' + (validity.valid ? '' : 'In') + 'Valid';
+            options[flag] && options[flag].call(_this, validity);
+          };
+
+          markField(validity);
+
+          $field.trigger('validated.field.validator.amui', validity).
+          data('validity', validity);
+
+          // validate the radios/checkboxes with the same name
+          var $fields = $radioGroup || $checkboxGroup;
+          if ($fields) {
+            $fields.not($field).data('validity', validity).each(function() {
+              validity.field = this;
+              markField(validity);
+            });
+          }
+        };
+
+        // check all fields in the form are valid
+        Validator.prototype.validateAll = function() {
+          var _this = this;
+          var $element = this.$element;
+          var options = this.options;
+          var $allFields = $element.find(options.allFields);
+          var radioNames = [];
+          var valid = true;
+          var formValidity = [];
+          var $inValidFields = $([]);
+
+          $element.trigger('validate.form.validator.amui');
+
+          // Filter radio with the same name and keep only one,
+          // since they will be checked as a group by isValid()
+          var $filteredFields = $allFields.filter(function(index) {
+            var name;
+            if (this.tagName === 'INPUT' && this.type === 'radio') {
+              name = this.name;
+              if (radioNames[name] === true) {
+                return false;
+              }
+              radioNames[name] = true;
+            }
+            return true;
+          });
+
+          $filteredFields.each(function() {
+            var fieldValid = _this.isValid(this);
+            valid = !!fieldValid && valid;
+            formValidity.push($(this).data('validity'));
+            if (!fieldValid) {
+              $inValidFields = $inValidFields.add($(this), $element);
+            }
+          });
+
+          var validity = {
+            valid: valid,
+            $invalidFields: $inValidFields,
+            validity: formValidity
+          };
+
+          $element.trigger('validated.form.validator.amui', validity);
+
+          return validity;
+        };
+
+        Validator.prototype.isFormValid = function() {
+          var formValid = this.validateAll();
+          if (!formValid.valid) {
+            formValid.$invalidFields.first().focus();
+            this.$element.trigger('invalid.validator.amui');
+            return false;
+          }
+          this.$element.trigger('valid.validator.amui');
+          return true;
+        };
+
+        // customErrors:
+        //    1. tooShort
+        //    2. checkedOverflow
+        //    3. checkedUnderflow
+        Validator.prototype.createValidity = function(validity) {
+          return $.extend({
+            customError: validity.customError || false,
+            patternMismatch: validity.patternMismatch || false,
+            rangeOverflow: validity.rangeOverflow || false, // higher than maximum
+            rangeUnderflow: validity.rangeUnderflow || false, // lower than  minimum
+            stepMismatch: validity.stepMismatch || false,
+            tooLong: validity.tooLong || false,
+            // value is not in the correct syntax
+            typeMismatch: validity.typeMismatch || false,
+            valid: validity.valid || true,
+            // Returns true if the element has no value but is a required field
+            valueMissing: validity.valueMissing || false
+          }, validity);
+        };
+
+        function Plugin(option) {
+          return this.each(function() {
+            var $this = $(this);
+            var data = $this.data('amui.validator');
+            var options = $.extend({}, UI.utils.parseOptions($this.data(
+                'amValidator')),
+              typeof option === 'object' && option);
+
+            if (!data) {
+              $this.data('amui.validator', (data = new Validator(this,
+                options)));
+            }
+
+            if (typeof option === 'string') {
+              data[option] && data[option]();
+            }
+          });
+        }
+
+        $.fn.validator = Plugin;
+
+        // init code
+        UI.ready(function(context) {
+          $('[data-am-validator]', context).validator();
+        });
+
+        $.AMUI.validator = Validator;
+
+        module.exports = Validator;
+
+      }).call(this, typeof global !== "undefined" ? global : typeof self !==
+        "undefined" ? self : typeof window !== "undefined" ? window : {})
+    }, {
+      "./core": 4
+    }
+  ],
+  47: [
     function(require, module, exports) {
       (function(global) {
         'use strict';
@@ -9429,7 +11179,7 @@
       "./core": 4
     }
   ],
-  44: [
+  48: [
     function(require, module, exports) {
       (function(global) {
         'use strict';
@@ -10263,7 +12013,7 @@
         "undefined" ? self : typeof window !== "undefined" ? window : {})
     }, {}
   ],
-  45: [
+  49: [
     function(require, module, exports) {
       (function(global) {
         'use strict';
@@ -10424,7 +12174,7 @@
       "./core": 4
     }
   ],
-  46: [
+  50: [
     function(require, module, exports) {
       (function(global) {
         /*! Hammer.JS - v2.0.4 - 2014-09-28
@@ -12996,7 +14746,7 @@
       "./core": 4
     }
   ],
-  47: [
+  51: [
     function(require, module, exports) {
       (function(global) {
         var $ = (typeof window !== "undefined" ? window.jQuery : typeof global !==
@@ -15596,6 +17346,152 @@
         $.AMUI.qrcode = qrcode;
 
         module.exports = qrcode;
+
+      }).call(this, typeof global !== "undefined" ? global : typeof self !==
+        "undefined" ? self : typeof window !== "undefined" ? window : {})
+    }, {
+      "./core": 4
+    }
+  ],
+  52: [
+    function(require, module, exports) {
+      (function(global) {
+        'use strict';
+
+        var $ = (typeof window !== "undefined" ? window.jQuery : typeof global !==
+          "undefined" ? global.jQuery : null);
+        require('./core');
+
+        /**
+         * store.js
+         * @via https://github.com/marcuswestin/store.js
+         * @license https://github.com/marcuswestin/store.js/blob/master/LICENSE
+         */
+
+        var store = {};
+        var win = window;
+        var localStorageName = 'localStorage';
+        var storage;
+
+        store.disabled = false;
+
+        store.version = '1.3.17';
+
+        store.set = function(key, value) {};
+
+        store.get = function(key, defaultVal) {};
+
+        store.has = function(key) {
+          return store.get(key) !== undefined;
+        };
+
+        store.remove = function(key) {};
+
+        store.clear = function() {};
+
+        store.transact = function(key, defaultVal, transactionFn) {
+          if (transactionFn == null) {
+            transactionFn = defaultVal;
+            defaultVal = null;
+          }
+
+          if (defaultVal == null) {
+            defaultVal = {};
+          }
+
+          var val = store.get(key, defaultVal);
+          transactionFn(val);
+          store.set(key, val);
+        };
+
+        store.getAll = function() {};
+
+        store.forEach = function() {};
+
+        store.serialize = function(value) {
+          return JSON.stringify(value);
+        };
+
+        store.deserialize = function(value) {
+          if (typeof value != 'string') {
+            return undefined;
+          }
+
+          try {
+            return JSON.parse(value);
+          } catch (e) {
+            return value || undefined;
+          }
+        };
+
+        // Functions to encapsulate questionable FireFox 3.6.13 behavior
+        // when about.config::dom.storage.enabled === false
+        // See https://github.com/marcuswestin/store.js/issues#issue/13
+        function isLocalStorageNameSupported() {
+          try {
+            return (localStorageName in win && win[localStorageName]);
+          } catch (err) {
+            return false;
+          }
+        }
+
+        if (isLocalStorageNameSupported()) {
+          storage = win[localStorageName];
+          store.set = function(key, val) {
+            if (val === undefined) {
+              return store.remove(key);
+            }
+            storage.setItem(key, store.serialize(val));
+            return val;
+          };
+
+          store.get = function(key, defaultVal) {
+            var val = store.deserialize(storage.getItem(key));
+            return (val === undefined ? defaultVal : val);
+          };
+
+          store.remove = function(key) {
+            storage.removeItem(key);
+          };
+
+          store.clear = function() {
+            storage.clear();
+          };
+
+          store.getAll = function() {
+            var ret = {};
+            store.forEach(function(key, val) {
+              ret[key] = val;
+            });
+            return ret;
+          };
+
+          store.forEach = function(callback) {
+            for (var i = 0; i < storage.length; i++) {
+              var key = storage.key(i);
+              callback(key, store.get(key));
+            }
+          };
+        }
+
+        try {
+          var testKey = '__storeJs__';
+          store.set(testKey, testKey);
+          if (store.get(testKey) != testKey) {
+            store.disabled = true;
+          }
+          store.remove(testKey);
+        } catch (e) {
+          store.disabled = true;
+        }
+
+        store.enabled = !store.disabled;
+
+        $.AMUI = $.AMUI || {};
+
+        $.AMUI.store = store;
+
+        module.exports = store;
 
       }).call(this, typeof global !== "undefined" ? global : typeof self !==
         "undefined" ? self : typeof window !== "undefined" ? window : {})

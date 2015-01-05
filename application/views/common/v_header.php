@@ -33,13 +33,13 @@
 			<li><a href="javascript:;"><span class="am-icon-at"></span> 帐号:<?php echo $global_login_name;?></a></li>
 			<li class="am-dropdown" data-am-dropdown>
 				<a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
-					<span class="am-icon-users"></span> <?php echo $global_role;?> <span class="am-icon-caret-down"></span>
+					<span class="am-icon-user"></span> <?php echo $global_role;?> <span class="am-icon-caret-down"></span>
 				</a>
 				<ul class="am-dropdown-content">
 					<li><a href="#"><span class="am-icon-user"></span>个人资料</a></li>
 				</ul>
 			</li>
-			<li><a href="<?php echo get_login_out_url();?>" id=""><span class="am-icon-power-off"></span> 退出</a></li>
+			<li><a id="exit" href="#"><span class="am-icon-power-off"></span> 退出</a></li>
 		</ul>
 	</div>
 </header>
@@ -138,6 +138,7 @@
 		<div class="am-cf am-padding">
 			<div class="am-fl am-cf"><strong class="am-text-primary am-text-lg"><?php echo isset($content_title)
 	?$content_title:"";?></strong></div>
+			<hr data-am-widget="divider" style="" class="am-divider am-divider-default"/>
 		</div>
 
 

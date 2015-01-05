@@ -4,16 +4,16 @@
 			<div class="am-btn-toolbar am-fl">
 				<div class="am-btn-group am-btn-group-xs">
 					<?php if(check_privity("c_custom/custom_add")){?>
-					<button type="button" class="am-btn am-btn-default" id="custom_add" url="<?php echo $custom_add_uri;?>"><span class="am-icon-plus"></span>新增</button>
+					<button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" id="custom_add" url="<?php echo $custom_add_uri;?>"><span class="am-icon-plus"></span>新增</button>
 					<?php }?>
 					<?php if(check_privity("c_custom/custom_delete")){?>
-					<button type="button" class="am-btn am-btn-default" id="customs_delete"><span class="am-icon-save"></span> 删除</button>
+					<button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger id="customs_delete"><span class="am-icon-remove"></span> 删除</button>
 					<?php }?>
 					<?php if(check_privity("c_custom/custom_freeze")){?>
-					<button type="button" class="am-btn am-btn-default" id="customs_freezon"><span class="am-icon-archive"></span>冻结</button>
+					<button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger" id="customs_freezon"><span class="am-icon-asterisk"></span>冻结</button>
 					<?php }?>
 					<?php if(check_privity("c_custom/custom_active")){?>
-					<button type="button" class="am-btn am-btn-default" id="customs_active"><span class="am-icon-archive"></span>激活</button>
+					<button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" id="customs_active"><span class="am-icon-check"></span>激活</button>
 					<?php }?>
 				</div>
 
@@ -61,14 +61,14 @@
 	if(check_privity("c_custom/custom_edit")){
 		$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-secondary" F_teacher_id="'.$custom['F_teacher_id'].'"  id="custom_edit'.$k.'" url="'.$edit_url.'"><span class="am-icon-pencil-square-o"></span> 编辑</button>';
 	}
-	if(check_privity("c_teacher/custom_freeze")){
-		$tmp .= '<button class="am-btn am-btn-default am-btn-xs" F_teacher_id="'.$custom['F_teacher_id'].'" id="custom_freezon'.$k.'"><span class="am-icon-copy"></span> 冻结</button>';
-	}
 	if(check_privity("c_teacher/custom_delete")){
-		$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-danger" F_teacher_id="'.$custom['F_teacher_id'].'" id="custom_delete'.$k.'><span class="am-icon-trash-o"></span>删除</button>';
+		$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-danger" F_teacher_id="'.$custom['F_teacher_id'].'" id="custom_delete'.$k.'><span class="am-icon-remove"></span>删除</button>';
+	}
+	if(check_privity("c_teacher/custom_freeze")){
+		$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-danger" F_teacher_id="'.$custom['F_teacher_id'].'" id="custom_freezon'.$k.'"><span class="am-icon-asterisk"></span>冻结</button>';
 	}
 	if(check_privity("c_teacher/custom_active")){
-		$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-danger" F_teacher_id="'.$custom['F_teacher_id'].'" id="custom_active'.$k.'"><span class="am-icon-trash-o"></span>活激</button>';
+		$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-secondary" F_teacher_id="'.$custom['F_teacher_id'].'" id="custom_active'.$k.'"><span class="am-icon-check"></span>活激</button>';
 	}
 	$str .= '<td>
 		<div class="am-btn-toolbar">
@@ -102,6 +102,7 @@
 </div>
 
 </div>
+
 
 <script>
 	var custom_freeze_uri = "<?php echo $custom_freeze_uri;?>";
