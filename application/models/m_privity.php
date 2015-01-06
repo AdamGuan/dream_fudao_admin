@@ -332,7 +332,7 @@ class M_privity extends MY_Model {
 	public function get_user_list($parame = array()){
 		$return = array();
 		$valid = 0;
-		$where = "1 AND t_user.F_privity_group_id = t_privity_group.F_id";
+		$where = " ON t_user.F_privity_group_id = t_privity_group.F_id WHERE 1 ";
 		//查询条件：
 		$is_super_admin = $this->session->userdata('is_super_admin');
 		if(!$is_super_admin)
@@ -361,7 +361,7 @@ class M_privity extends MY_Model {
 			$where .= ' AND t_user.F_status = '.(int)$parame['F_status'];
 		}
 		$where .= ' AND t_user.F_id != '.$this->session->userdata('F_id');
-		$sql = 'SELECT t_user.*,t_privity_group.F_name FROM t_user,t_privity_group WHERE '.$where;
+		$sql = 'SELECT t_user.*,t_privity_group.F_name FROM t_user LEFT JOIN t_privity_group '.$where;
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
 		{
@@ -500,6 +500,57 @@ class M_privity extends MY_Model {
 				if(!($this->db->insert_id() > 0))
 				{
 					$result = array("error"=>-4,"msg"=>"操作失败,请重试!");
+				}
+				else{
+					$result = array("error"=>0,"msg"=>"成功");
+				}
+			}
+		}
+		return $result;
+	}
+
+	public function get_user_info($parame = array()){
+		$return = array();
+		if(isset($parame['F_id']))
+		{
+			$sql = "SELECT F_id,F_login_name,F_privity_group_id FROM t_user WHERE F_id = ".(int)$parame['F_id']." LIMIT 1";
+			$query = $this->db->query($sql);
+			if($query->num_rows() > 0)
+			{
+				$return = $query->row_array();
+			}
+		}
+		return $return;
+	}
+
+	public function user_update($parame = array())
+	{
+		$result = array("error"=>-1,"msg"=>"操作失败,请重试!");
+		if(isset($parame['F_id']))
+		{
+			$valid = 1;
+			$parame['F_id'] = (int)$parame['F_id'];
+			//检查$parame['F_login_password']的有效性
+			if(isset($parame['F_login_password']) && strlen($parame['F_login_password']) > 0 && (strlen($parame['F_login_password']) > 9 || strlen($parame['F_login_password']) < 6))
+			{
+				$valid = 0;
+				$result = array("error"=>-2,"msg"=>"密码应该在6个到9个字符之间");
+			}
+			//检查$parame['F_privity_group_id']的有效性
+			if($valid === 1 && isset($parame['F_privity_group_id']))
+			{
+				$parame['F_privity_group_id'] = (int)$parame['F_privity_group_id'];
+			}
+
+			if($valid === 1)
+			{
+				$parame['F_modify_time'] =date("Y-m-d H:i:s",time());
+				$this->db->where('F_id', $parame['F_id']);
+				unset($parame['F_id']);
+				$this->db->update('t_user', $parame);
+				if(!($this->db->affected_rows() > 0))
+				{
+					$result = array("error"=>-3,"msg"=>"操作失败,请重试!");
 				}
 				else{
 					$result = array("error"=>0,"msg"=>"成功");

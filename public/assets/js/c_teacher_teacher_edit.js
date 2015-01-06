@@ -105,7 +105,6 @@ $(document).ready(function(){
                             msg = "密码必须填写,并且大于等于6个字符小于等于9个字符!";
                         }
                     }
-                    F_teacher_password = "";
                 }
                 //check teacher real name
                 var F_real_name = $("#teacher_realname").val();

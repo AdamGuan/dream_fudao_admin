@@ -231,7 +231,7 @@ class C_playback extends MY_Controller {
 			top_redirect($result['redirect_url']);
 		}
 		//检查是否有权限
-		if($this->_check_privity(__CLASS__,__METHOD__) === false)
+		if($this->_check_privity(__CLASS__,"manager") === false)
 		{
 			$this->_ajax_echo(array('msg'=>'没有权限'));
 		}
@@ -253,7 +253,7 @@ class C_playback extends MY_Controller {
 			top_redirect($result['redirect_url']);
 		}
 		//检查是否有权限
-		if($this->_check_privity(__CLASS__,__METHOD__) === false)
+		if($this->_check_privity(__CLASS__,"manager") === false)
 		{
 			$this->_ajax_echo(array('msg'=>'没有权限'));
 		}

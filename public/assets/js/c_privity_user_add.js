@@ -47,7 +47,7 @@ $(document).ready(function(){
                 var user_pwd = $("#user_pwd").val();
                 if(valid === true)
                 {
-                    if(!(typeof(user_pwd) != "undefined" && user_pwd.length >= 6 && user_pwd.length <= 30))
+                    if(!(typeof(user_pwd) != "undefined" && user_pwd.length >= 6 && user_pwd.length <= 9))
                     {
                         valid = false;
                         msg = "用户密码必须填写,并且6到9个字符!";

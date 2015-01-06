@@ -222,7 +222,7 @@ $(document).ready(function(){
                         $.ajax({
                             type: "GET",
                             url: "user_freeze",
-                            data: "F_ids="+$(this).attr("F_id"),
+                            data: "F_ids="+$btn.attr("F_id"),
                             success: function(msg){
                                 msg = eval(msg);
                                 if(typeof(msg.error) != "undefined" && msg.error == 0)
@@ -258,7 +258,7 @@ $(document).ready(function(){
                         $.ajax({
                             type: "GET",
                             url: "user_delete",
-                            data: "F_ids="+$(this).attr("F_id"),
+                            data: "F_ids="+$btn.attr("F_id"),
                             success: function(msg){
                                 msg = eval(msg);
                                 if(typeof(msg.error) != "undefined" && msg.error == 0)
@@ -282,7 +282,7 @@ $(document).ready(function(){
                 return false;
             });
             //编辑
-            $("button[id^='group_edit']").click( function() {
+            $("button[id^='user_edit']").click( function() {
                 loadingStart($(this));
 
                 location.href = $(this).attr("url");

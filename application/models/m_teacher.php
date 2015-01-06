@@ -83,7 +83,7 @@ class M_teacher extends MY_Model {
 				'version'=>$this->my_config['api_version'],
 				'c'=>'teacher',
 				'm'=>'get_a_teacher',
-				'F_teacher_id'=>(int)$parames['F_teacher_id'],
+				'F_teacher_id'=>$parames['F_teacher_id'],
 			);
 
 			$result = api_curl($this->my_config['api_uri'], $data, "GET",$this->my_config['api_key']);

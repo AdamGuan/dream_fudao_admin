@@ -61,13 +61,13 @@
 	if(check_privity("c_custom/custom_edit")){
 		$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-secondary" F_teacher_id="'.$custom['F_teacher_id'].'"  id="custom_edit'.$k.'" url="'.$edit_url.'"><span class="am-icon-pencil-square-o"></span> 编辑</button>';
 	}
-	if(check_privity("c_teacher/custom_delete")){
+	if(check_privity("c_custom/custom_delete")){
 		$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-danger" F_teacher_id="'.$custom['F_teacher_id'].'" id="custom_delete'.$k.'"><span class="am-icon-remove"></span>删除</button>';
 	}
-	if(check_privity("c_teacher/custom_freeze")){
+	if(check_privity("c_custom/custom_freeze")){
 		$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-danger" F_teacher_id="'.$custom['F_teacher_id'].'" id="custom_freezon'.$k.'"><span class="am-icon-asterisk"></span>冻结</button>';
 	}
-	if(check_privity("c_teacher/custom_active")){
+	if(check_privity("c_custom/custom_active")){
 		$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-secondary" F_teacher_id="'.$custom['F_teacher_id'].'" id="custom_active'.$k.'"><span class="am-icon-check"></span>活激</button>';
 	}
 	$str .= '<td>

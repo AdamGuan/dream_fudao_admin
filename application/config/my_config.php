@@ -170,23 +170,23 @@ $config['data'] = array(
 							'link'=>'c_custom/manager',
 						),
 						array(
-							'text'=>'修改老师',
+							'text'=>'修改客服',
 							'link'=>'c_custom/custom_edit',
 						),
 						array(
-							'text'=>'添加老师',
+							'text'=>'添加客服',
 							'link'=>'c_custom/custom_add',
 						),
 						array(
-							'text'=>'冻结老师',
+							'text'=>'冻结客服',
 							'link'=>'c_custom/custom_freeze',
 						),
 						array(
-							'text'=>'删除老师',
+							'text'=>'删除客服',
 							'link'=>'c_custom/custom_delete',
 						),
 						array(
-							'text'=>'激活老师',
+							'text'=>'激活客服',
 							'link'=>'c_custom/custom_active',
 						),
 					)
@@ -195,10 +195,6 @@ $config['data'] = array(
 					'text'=>'学生管理',
 					'link'=>'c_student/manager',
 				),
-				array(
-					'text'=>'工作人员',
-					'link'=>'c_privity/user_manager',
-				)
 			)
 		),
 		array(
@@ -225,27 +221,8 @@ $config['data'] = array(
 		),
 		array(
 			'text'=>'回放分类',
-			'link'=>'',
-			'children'=>array(
-				array(
-					'text'=>'回放列表',
-					'link'=>'c_playback/manager',
-				),
-				array(
-					'text'=>'设置精彩',
-					'link'=>'c_playback/playback_active',
-				),
-				array(
-					'text'=>'取消精彩',
-					'link'=>'c_playback/playback_deactive',
-				),
-			)
-		),
-		array(
-			'text'=>'权限组管理',
-			'link'=>'c_privity/group_manager',
-			'children'=>array(
-			)
+			'link'=>'c_playback/manager',
+			'children'=>array()
 		),
 		array(
 			'text'=>'日志',

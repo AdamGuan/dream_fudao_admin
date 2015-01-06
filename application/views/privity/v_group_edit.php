@@ -11,7 +11,7 @@
 					<input type="text" id="group_name" value="<?php echo $group_info['F_name'];?>" placeholder="输入权限组的名词,小于等于30个字符">
 				</div>
 			</div>
-
+			<!--
 			<div class="am-form-group">
 				<label for="child" class="am-u-sm-3 am-form-label">子类</label>
 				<div class="am-u-sm-9">
@@ -21,6 +21,7 @@
 					</select>
 				</div>
 			</div>
+			-->
 
 			<div class="am-form-group">
 				<label for="privity" class="am-u-sm-3 am-form-label">权限</label>
