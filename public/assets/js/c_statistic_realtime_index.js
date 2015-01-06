@@ -2,7 +2,8 @@ $(document).ready(function(){
     //模块定义
     var statisticIndexModule = function($){
 
-        var test = function(){
+        //设置图表
+        var setchar = function(){
 
             $('#chars').highcharts({
                 chart: {
@@ -30,6 +31,8 @@ $(document).ready(function(){
         //类型选择
         var type_choose = function(){
             $("#typelist").change( function() {
+                $.AMUI.progress.start();
+
                 var url = $("#typelist option:selected").attr("value");
                 top.location.href = url;
             });
@@ -37,7 +40,7 @@ $(document).ready(function(){
 
         //return obj
         var obj = {
-            init:function(){test();type_choose();}
+            init:function(){setchar();type_choose();}
         };
 
         //return

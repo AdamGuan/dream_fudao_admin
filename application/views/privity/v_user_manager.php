@@ -3,10 +3,10 @@
 		<div class="am-fl am-cf">
 			<div class="am-btn-toolbar am-fl">
 				<div class="am-btn-group am-btn-group-xs">
-					<button type="button" class="am-btn am-btn-default" id="user_add"><span class="am-icon-plus"></span>新增</button>
-					<button type="button" class="am-btn am-btn-default" id="users_freeze"><span class="am-icon-plus"></span>冻结</button>
-					<button type="button" class="am-btn am-btn-default" id="users_delete"><span class="am-icon-plus"></span>删除</button>
-					<button type="button" class="am-btn am-btn-default" id="users_active"><span class="am-icon-plus"></span>激活</button>
+					<button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" id="user_add"><span class="am-icon-plus"></span>新增</button>
+					<button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger" id="users_freeze"><span class="am-icon-asterisk"></span>冻结</button>
+					<button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger" id="users_delete"><span class="am-icon-remove"></span>删除</button>
+					<button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" id="users_active"><span class="am-icon-check"></span>激活</button>
 				</div>
 
 				<?php if(is_array($status_list) && count($status_list) > 0){?>
@@ -70,9 +70,9 @@
 	$str .= '<td>'.$user['F_name'].'</td>';
 	$tmp  = "";
 	$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-secondary" url="'.get_controll_url("c_privity/user_edit",array('F_id'=>$user['F_id'])).'" F_id="'.$user['F_id'].'"  id="user_edit'.$k.'"><span class="am-icon-pencil-square-o"></span> 编辑</button>';
-	$tmp .= '<button class="am-btn am-btn-default am-btn-xs" F_id="'.$user['F_id'].'" id="user_freezon'.$k.'"><span class="am-icon-copy"></span> 冻结</button>';
-	$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-danger" F_id="'.$user['F_id'].'" id="user_delete'.$k.'><span class="am-icon-trash-o"></span>删除</button>';
-	$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-danger" F_id="'.$user['F_id'].'" id="user_active'.$k.'"><span class="am-icon-trash-o"></span>活激</button>';
+	$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-danger" F_id="'.$user['F_id'].'" id="user_freezon'.$k.'"><span class="am-icon-asterisk"></span> 冻结</button>';
+	$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-danger" F_id="'.$user['F_id'].'" id="user_delete'.$k.'><span class="am-icon-remove"></span>删除</button>';
+	$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-secondary" F_id="'.$user['F_id'].'" id="user_active'.$k.'"><span class="am-icon-check"></span>活激</button>';
 	$str .= '<td>
 		<div class="am-btn-toolbar">
 			<div class="am-btn-group am-btn-group-xs">'.$tmp.'</div>

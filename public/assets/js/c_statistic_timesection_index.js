@@ -2,7 +2,19 @@ $(document).ready(function(){
     //模块定义
     var statisticTimesectionIndexModule = function($){
 
-        //
+        //loading start
+        var loadingStart = function(obj){
+            obj.button('loading');
+            $.AMUI.progress.start();
+        };
+
+        //loading end
+        var loadingEnd = function(obj){
+            obj.button('reset');
+            $.AMUI.progress.done();
+        };
+
+        //设置图表
         var setchars = function(){
 
             $('#chars').highcharts({
@@ -37,7 +49,7 @@ $(document).ready(function(){
             });
         };
 
-        //
+        //设置日期控件
         var  setdatepicker = function(){
             $('#datepicker0').datepicker({format: 'yyyy-mm-dd', viewMode: 'days', minViewMode: 'days'});
             $('#datepicker1').datepicker({format: 'yyyy-mm', viewMode: 'months', minViewMode: 'months'});
@@ -45,13 +57,12 @@ $(document).ready(function(){
             $('#datepicker'+datetype).show();
         };
 
-        //
+        //search
         var search = function(){
             $("#search").click(function(){
                  //loading start
                 var $btn = $(this);
-                $btn.button('loading');
-                $.AMUI.progress.start();
+                loadingStart($btn);
 
                 var url = location.href;
                 var type0 = $("#datetypelist option:selected").attr("value");
@@ -61,7 +72,6 @@ $(document).ready(function(){
                 var list = url.split("?");
                 var url_pre = list[0];
                 url = url_pre+"?type="+type1+"&datetype="+type0+"&date="+date;
-                console.log(url);
                 location.href = url;
 
                 return false;

@@ -4,7 +4,7 @@
 $config['data'] = array(
 	'global_web_title_pro'=>'一对一辅导',
 	'global_web_title_suffix'=>'控制平台',
-	'global_web_license'=>'© 2014 dream license.',
+	'global_web_license'=>'© 2015 dream license.',
 	'global_left_bar'=>array(
 		array(
 			'prefix_class'=>'am-icon-home',
@@ -163,7 +163,33 @@ $config['data'] = array(
 				),
 				array(
 					'text'=>'客服管理',
-					'link'=>'c_custom/manager',
+					'link'=>'',
+					'children'=>array(
+						array(
+							'text'=>'客服列表',
+							'link'=>'c_custom/manager',
+						),
+						array(
+							'text'=>'修改老师',
+							'link'=>'c_custom/custom_edit',
+						),
+						array(
+							'text'=>'添加老师',
+							'link'=>'c_custom/custom_add',
+						),
+						array(
+							'text'=>'冻结老师',
+							'link'=>'c_custom/custom_freeze',
+						),
+						array(
+							'text'=>'删除老师',
+							'link'=>'c_custom/custom_delete',
+						),
+						array(
+							'text'=>'激活老师',
+							'link'=>'c_custom/custom_active',
+						),
+					)
 				),
 				array(
 					'text'=>'学生管理',
@@ -181,25 +207,25 @@ $config['data'] = array(
 			'children'=>array(
 				array(
 					'text'=>'实时统计',
-					'link'=>'c_index/index5',
+					'link'=>'c_statistic_realtime/index',
 				),
 				array(
 					'text'=>'时段统计',
-					'link'=>'c_index/index6',
+					'link'=>'c_statistic_timesection/index',
 				),
 				array(
 					'text'=>'老师统计',
-					'link'=>'c_index/index7',
+					'link'=>'c_statistic_teacher/index',
 				),
 				array(
 					'text'=>'学生统计',
-					'link'=>'c_index/index8',
+					'link'=>'c_statistic_student/index',
 				)
 			)
 		),
 		array(
 			'text'=>'回放分类',
-			'link'=>'c_playback/manager',
+			'link'=>'',
 			'children'=>array(
 				array(
 					'text'=>'回放列表',
@@ -216,27 +242,19 @@ $config['data'] = array(
 			)
 		),
 		array(
+			'text'=>'权限组管理',
+			'link'=>'c_privity/group_manager',
+			'children'=>array(
+			)
+		),
+		array(
 			'text'=>'日志',
 			'link'=>'c_log/list',
 			'children'=>array()
 		),
 		array(
-			'text'=>'权限',
-			'link'=>'',
-			'children'=>array(
-				array(
-					'text'=>'权限组列表',
-					'link'=>'c_privity/group_manager',
-				),
-				array(
-					'text'=>'权限组添加',
-					'link'=>'c_privity/group_add',
-				),
-			)
-		),
-		array(
 			'text'=>'个人资料',
-			'link'=>'c_index/index12',
+			'link'=>'c_person/index',
 			'children'=>array()
 		),
 		array(

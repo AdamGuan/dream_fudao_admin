@@ -2,9 +2,23 @@ $(document).ready(function(){
     //模块定义
     var playbackManagerModule = function($){
 
+        //loading start
+        var loadingStart = function(obj){
+            obj.button('loading');
+            $.AMUI.progress.start();
+        };
+
+        //loading end
+        var loadingEnd = function(obj){
+            obj.button('reset');
+            $.AMUI.progress.done();
+        };
+
         //回放状态选择
         var playbackStatusChoose = function(){
             $("#playback_status_choose").change( function() {
+                $.AMUI.progress.start();
+
                 var url = $("#playback_status_choose option:selected").attr("value");
                 top.location.href = url;
             });
@@ -12,20 +26,17 @@ $(document).ready(function(){
 
         //修改回放状态
         var playbackStatusChange = function(){
+            //设为精彩
             $("button[id^='playback_active']").click( function() {
                 //loading start
                 var $btn = $(this);
-                $btn.button('loading');
-                $.AMUI.progress.start();
+                loadingStart($btn);
 
                 $.ajax({
                     type: "GET",
                     url: set_playback_active_uri,
                     data: "F_order_ids="+$(this).attr("F_order_id"),
                     success: function(msg){
-                        //loading end
-                        $.AMUI.progress.done();
-
                         msg = eval(msg);
                         if(typeof(msg.result) != "undefined" && msg.result)
                         {
@@ -38,21 +49,17 @@ $(document).ready(function(){
                 });
                 return false;
             });
-
+            //非精彩
              $("button[id^='playback_deactive']").click( function() {
                 //loading start
                 var $btn = $(this);
-                $btn.button('loading');
-                $.AMUI.progress.start();
+                loadingStart($btn);
 
                 $.ajax({
                     type: "GET",
                     url: set_playback_deactive_uri,
                     data: "F_order_ids="+$(this).attr("F_order_id"),
                     success: function(msg){
-                        //loading end
-                        $.AMUI.progress.done();
-
                         msg = eval(msg);
                         if(typeof(msg.result) != "undefined" && msg.result)
                         {
@@ -68,7 +75,7 @@ $(document).ready(function(){
 
         };
 
-        //
+        //checkbox
         var playback_select = function(){
             $("#playback_select").click( function () {
                 var num = $(this).data("num");
@@ -87,12 +94,11 @@ $(document).ready(function(){
 
         //批量修改老师状态
         var playbackStatusChange_mulit = function() {
-
+            //设为精彩
             $("#playbacks_active").click( function() {
                 //loading start
                 var $btn = $(this);
-                $btn.button('loading');
-                $.AMUI.progress.start();
+                loadingStart($btn);
                 //get teacher ids
                 var playback_id_list = new Array();
                 var obj = $("input[id^='playback_check']:checked");
@@ -107,9 +113,6 @@ $(document).ready(function(){
                     url: set_playback_active_uri,
                     data: "F_order_ids="+playback_ids,
                     success: function(msg){
-                        //loading end
-                        $.AMUI.progress.done();
-
                         msg = eval(msg);
                         if(typeof(msg.result) != "undefined" && msg.result)
                         {
@@ -123,12 +126,11 @@ $(document).ready(function(){
 
                 return false;
             });
-
+            //设为非精彩
             $("#playbacks_deactive").click( function() {
                 //loading start
                 var $btn = $(this);
-                $btn.button('loading');
-                $.AMUI.progress.start();
+                loadingStart($btn);
                 //get teacher ids
                 var playback_id_list = new Array();
                 var obj = $("input[id^='playback_check']:checked");
@@ -143,9 +145,6 @@ $(document).ready(function(){
                     url: set_playback_deactive_uri,
                     data: "F_order_ids="+playback_ids,
                     success: function(msg){
-                        //loading end
-                        $.AMUI.progress.done();
-
                         msg = eval(msg);
                         if(typeof(msg.result) != "undefined" && msg.result)
                         {
@@ -162,9 +161,13 @@ $(document).ready(function(){
 
         };
 
-        //
+        //search
         var playback_search = function(){
             $("#search_btn_search").click(function(){
+                //loading start
+                var $btn = $(this);
+                loadingStart($btn);
+
                 var search_type = $("#search_type_choose option:selected").attr("value");
                 var url = location.href;
                 var list = url.split("?");

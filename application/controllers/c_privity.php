@@ -80,7 +80,7 @@ class C_privity extends MY_Controller {
 			top_redirect($result['redirect_url']);
 		}
 		//检查是否有权限
-		if($this->_check_privity(__CLASS__,__METHOD__) === false)
+		if($this->_check_privity(__CLASS__,"group_manager") === false)
 		{
 			redirect_to_no_privity_page();
 		}
@@ -95,6 +95,7 @@ class C_privity extends MY_Controller {
 
 		//data
 		$data = $this->_get_data(__CLASS__,__METHOD__);
+		$data['content_title'] = "添加权限组";
 		$data['group_list'] = $group_list;
 		$data['global_privity_htmlstr'] = $global_privity_htmlstr;
 		$this->_output_view("privity/v_group_add", $data);
@@ -120,7 +121,7 @@ class C_privity extends MY_Controller {
 			top_redirect($result['redirect_url']);
 		}
 		//检查是否有权限
-		if($this->_check_privity(__CLASS__,__METHOD__) === false)
+		if($this->_check_privity(__CLASS__,"group_manager") === false)
 		{
 			redirect_to_no_privity_page();
 		}
@@ -140,7 +141,7 @@ class C_privity extends MY_Controller {
 			top_redirect($result['redirect_url']);
 		}
 		//检查是否有权限
-		if($this->_check_privity(__CLASS__,__METHOD__) === false)
+		if($this->_check_privity(__CLASS__,"group_manager") === false)
 		{
 			redirect_to_no_privity_page();
 		}
@@ -167,7 +168,7 @@ class C_privity extends MY_Controller {
 			top_redirect($result['redirect_url']);
 		}
 		//检查是否有权限
-		if($this->_check_privity(__CLASS__,__METHOD__) === false)
+		if($this->_check_privity(__CLASS__,"group_manager") === false)
 		{
 			redirect_to_no_privity_page();
 		}
@@ -194,7 +195,7 @@ class C_privity extends MY_Controller {
 			top_redirect($result['redirect_url']);
 		}
 		//检查是否有权限
-		if($this->_check_privity(__CLASS__,__METHOD__) === false)
+		if($this->_check_privity(__CLASS__,"group_manager") === false)
 		{
 			redirect_to_no_privity_page();
 		}
@@ -223,7 +224,7 @@ class C_privity extends MY_Controller {
 			top_redirect($result['redirect_url']);
 		}
 		//检查是否有权限
-		if($this->_check_privity(__CLASS__,__METHOD__) === false)
+		if($this->_check_privity(__CLASS__,"group_manager") === false)
 		{
 			redirect_to_no_privity_page();
 		}
@@ -233,6 +234,7 @@ class C_privity extends MY_Controller {
 
 		//data
 		$data = $this->_get_data(__CLASS__,__METHOD__);
+		$data['content_title'] = "编辑权限组";
 		$data['group_info'] = $group_info;
 		$this->_output_view("privity/v_group_edit", $data);
 	}
@@ -246,7 +248,7 @@ class C_privity extends MY_Controller {
 			top_redirect($result['redirect_url']);
 		}
 		//检查是否有权限
-		if($this->_check_privity(__CLASS__,__METHOD__) === false)
+		if($this->_check_privity(__CLASS__,"group_manager") === false)
 		{
 			redirect_to_no_privity_page();
 		}
@@ -351,7 +353,7 @@ class C_privity extends MY_Controller {
 			top_redirect($result['redirect_url']);
 		}
 		//检查是否有权限
-		if($this->_check_privity(__CLASS__,__METHOD__) === false)
+		if($this->_check_privity(__CLASS__,"user_manager") === false)
 		{
 			redirect_to_no_privity_page();
 		}
@@ -378,7 +380,7 @@ class C_privity extends MY_Controller {
 			top_redirect($result['redirect_url']);
 		}
 		//检查是否有权限
-		if($this->_check_privity(__CLASS__,__METHOD__) === false)
+		if($this->_check_privity(__CLASS__,"user_manager") === false)
 		{
 			redirect_to_no_privity_page();
 		}
@@ -405,7 +407,7 @@ class C_privity extends MY_Controller {
 			top_redirect($result['redirect_url']);
 		}
 		//检查是否有权限
-		if($this->_check_privity(__CLASS__,__METHOD__) === false)
+		if($this->_check_privity(__CLASS__,"user_manager") === false)
 		{
 			redirect_to_no_privity_page();
 		}
@@ -430,7 +432,7 @@ class C_privity extends MY_Controller {
 			top_redirect($result['redirect_url']);
 		}
 		//检查是否有权限
-		if($this->_check_privity(__CLASS__,__METHOD__) === false)
+		if($this->_check_privity(__CLASS__,"user_manager") === false)
 		{
 			redirect_to_no_privity_page();
 		}
@@ -443,6 +445,7 @@ class C_privity extends MY_Controller {
 
 		//data
 		$data = $this->_get_data(__CLASS__,__METHOD__);
+		$data['content_title'] = "添加工作人员";
 		$data['group_list'] = $group_list;
 		$this->_output_view("privity/v_user_add", $data);
 	}
@@ -456,7 +459,7 @@ class C_privity extends MY_Controller {
 			top_redirect($result['redirect_url']);
 		}
 		//检查是否有权限
-		if($this->_check_privity(__CLASS__,__METHOD__) === false)
+		if($this->_check_privity(__CLASS__,"user_manager") === false)
 		{
 			redirect_to_no_privity_page();
 		}

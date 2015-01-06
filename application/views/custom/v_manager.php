@@ -7,7 +7,7 @@
 					<button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" id="custom_add" url="<?php echo $custom_add_uri;?>"><span class="am-icon-plus"></span>新增</button>
 					<?php }?>
 					<?php if(check_privity("c_custom/custom_delete")){?>
-					<button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger id="customs_delete"><span class="am-icon-remove"></span> 删除</button>
+					<button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger" id="customs_delete"><span class="am-icon-remove"></span>删除</button>
 					<?php }?>
 					<?php if(check_privity("c_custom/custom_freeze")){?>
 					<button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger" id="customs_freezon"><span class="am-icon-asterisk"></span>冻结</button>
@@ -62,7 +62,7 @@
 		$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-secondary" F_teacher_id="'.$custom['F_teacher_id'].'"  id="custom_edit'.$k.'" url="'.$edit_url.'"><span class="am-icon-pencil-square-o"></span> 编辑</button>';
 	}
 	if(check_privity("c_teacher/custom_delete")){
-		$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-danger" F_teacher_id="'.$custom['F_teacher_id'].'" id="custom_delete'.$k.'><span class="am-icon-remove"></span>删除</button>';
+		$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-danger" F_teacher_id="'.$custom['F_teacher_id'].'" id="custom_delete'.$k.'"><span class="am-icon-remove"></span>删除</button>';
 	}
 	if(check_privity("c_teacher/custom_freeze")){
 		$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-danger" F_teacher_id="'.$custom['F_teacher_id'].'" id="custom_freezon'.$k.'"><span class="am-icon-asterisk"></span>冻结</button>';

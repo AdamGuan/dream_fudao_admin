@@ -61,7 +61,7 @@
 </tbody>
 </table>
 <div class="am-cf">
-	共 <?php echo count($result);?> 条记录
+	共 <?php echo count($result['list']);?> 条记录
 </div>
 </form>
 </div>

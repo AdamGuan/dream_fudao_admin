@@ -88,32 +88,24 @@ $(document).ready(function(){
             });
             //激活
             $("button[id^='custom_active']").click( function() {
+                //loading start
                 var $btn = $(this);
-                $("#my-confirm-msg").html("确定冻结?");
-                $('#my-confirm').modal({
-                    relatedTarget: this,
-                    onConfirm: function(options) {
-                        //loading start
-                        loadingStart($btn);
+                loadingStart($btn);
 
-                        $.ajax({
-                            type: "GET",
-                            url: custom_active_uri,
-                            data: "F_teacher_ids="+$btn.attr("F_teacher_id"),
-                            success: function(msg){
+                $.ajax({
+                    type: "GET",
+                    url: custom_active_uri,
+                    data: "F_teacher_ids="+$btn.attr("F_teacher_id"),
+                    success: function(msg){
 
-                                msg = eval(msg);
-                                if(typeof(msg.result) != "undefined" && msg.result)
-                                {
-                                    location.reload();
-                                }
-                                else{
-                                    location.reload();
-                                }
-                            }
-                        });
-                    },
-                    onCancel: function() {
+                        msg = eval(msg);
+                        if(typeof(msg.result) != "undefined" && msg.result)
+                        {
+                            location.reload();
+                        }
+                        else{
+                            location.reload();
+                        }
                     }
                 });
 
@@ -210,7 +202,7 @@ $(document).ready(function(){
                         loadingStart($btn);
                         //get custom ids
                         var custom_id_list = new Array();
-                        var obj = $("input[id^='teacher_check']:checked");
+                        var obj = $("input[id^='custom_check']:checked");
                         for(var i=0;i<obj.length;++i)
                         {
                             custom_id_list[i] = $(obj[i]).attr("F_teacher_id");
@@ -241,39 +233,31 @@ $(document).ready(function(){
             });
             //批量激活
             $("#customs_active").click( function() {
+                //loading start
                 var $btn = $(this);
-                $("#my-confirm-msg").html("确定激活?");
-                $('#my-confirm').modal({
-                    relatedTarget: this,
-                    onConfirm: function(options) {
-                        //loading start
-                        loadingStart($btn);
-                        //get teacher ids
-                        var custom_id_list = new Array();
-                        var obj = $("input[id^='teacher_check']:checked");
-                        for(var i=0;i<obj.length;++i)
-                        {
-                            custom_id_list[i] = $(obj[i]).attr("F_teacher_id");
-                        }
-                        var custom_ids = custom_id_list.join(",");
+                loadingStart($btn);
+                //get teacher ids
+                var custom_id_list = new Array();
+                var obj = $("input[id^='custom_check']:checked");
+                for(var i=0;i<obj.length;++i)
+                {
+                    custom_id_list[i] = $(obj[i]).attr("F_teacher_id");
+                }
+                var custom_ids = custom_id_list.join(",");
 
-                        $.ajax({
-                            type: "GET",
-                            url: custom_active_uri,
-                            data: "F_teacher_ids="+custom_ids,
-                            success: function(msg){
-                                msg = eval(msg);
-                                if(typeof(msg.result) != "undefined" && msg.result)
-                                {
-                                    location.reload();
-                                }
-                                else{
-                                    location.reload();
-                                }
-                            }
-                        });
-                    },
-                    onCancel: function() {
+                $.ajax({
+                    type: "GET",
+                    url: custom_active_uri,
+                    data: "F_teacher_ids="+custom_ids,
+                    success: function(msg){
+                        msg = eval(msg);
+                        if(typeof(msg.result) != "undefined" && msg.result)
+                        {
+                            location.reload();
+                        }
+                        else{
+                            location.reload();
+                        }
                     }
                 });
 

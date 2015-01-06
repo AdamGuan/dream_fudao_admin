@@ -247,7 +247,7 @@ class C_custom extends MY_Controller {
 			top_redirect($result['redirect_url']);
 		}
 		//检查是否有权限
-		if($this->_check_privity(__CLASS__,__METHOD__) === false)
+		if($this->_check_privity(__CLASS__,"custom_edit") === false)
 		{
 			redirect_to_no_privity_page();
 		}
@@ -316,7 +316,7 @@ class C_custom extends MY_Controller {
 			top_redirect($result['redirect_url']);
 		}
 		//检查是否有权限
-		if($this->_check_privity(__CLASS__,__METHOD__) === false)
+		if($this->_check_privity(__CLASS__,"custom_add") === false)
 		{
 			redirect_to_no_privity_page();
 		}

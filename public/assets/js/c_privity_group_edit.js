@@ -2,6 +2,18 @@ $(document).ready(function(){
     //模块定义
     var privityGroupModifyModule = function($){
 
+        //loading start
+        var loadingStart = function(obj){
+            obj.button('loading');
+            $.AMUI.progress.start();
+        };
+
+        //loading end
+        var loadingEnd = function(obj){
+            obj.button('reset');
+            $.AMUI.progress.done();
+        };
+
         //
         var privity_checked = function(){
             $("input[id^='privity_check_']").click(function(){
@@ -36,20 +48,22 @@ $(document).ready(function(){
             });
         };
 
-        //
+        //back btn
         var group_back = function(){
             $("#group_modify_back").click(function(){
+                loadingStart($(this));
+
                 location.href= document.referrer;
                 return false;
             });
         };
 
+        //修改
         var group_modify = function(){
             $("#group_modify_submit").click(function(){
                 //loading start
                 var $btn = $(this);
-                $btn.button('loading');
-                $.AMUI.progress.start();
+                loadingStart($btn);
                 //验证
                 var valid = true;
                 var msg = "";
@@ -64,10 +78,8 @@ $(document).ready(function(){
                     }
                 }
 
-
                 if(valid === true)
                 {
-
                     //获取选择的权限值
                     var checked_value_list = new Array();
                     var checkedlist = $("input:checked[id^='privity_check_']");
@@ -99,15 +111,14 @@ $(document).ready(function(){
                         url: "group_modify_do",
                         data: senddata.join("&"),
                         success: function(msg){
-                            //loading end
-                            $btn.button('reset');
-                            $.AMUI.progress.done();
                             //success
                             if(typeof(msg.error) != "undefined" && msg.error == 0)
                             {
                                 location.href= document.referrer;
                             }
                             else{
+                                //loading end
+                                loadingEnd($btn);
                                 //show error
                                 $("#my-alert-message").html(msg.msg);
                                 $('#my-alert').modal('open');
@@ -115,17 +126,14 @@ $(document).ready(function(){
                         }
                     });
 
-
                 }
                 else{
                     //loading end
-                    $btn.button('reset');
-                    $.AMUI.progress.done();
+                    loadingEnd($btn);
                     //show error
                     $("#my-alert-message").html(msg);
                     $('#my-alert').modal('open');
                 }
-
 
                 return false;
             });

@@ -72,6 +72,10 @@
 
 			return false;
 		});
+
+		$(".leftbara").click(function(){
+			$.AMUI.progress.done();
+		});
 	});
 </script>
 

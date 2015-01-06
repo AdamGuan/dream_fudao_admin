@@ -2,13 +2,24 @@ $(document).ready(function(){
     //模块定义
     var teacherAddModule = function($){
 
+        //loading start
+        var loadingStart = function(obj){
+            obj.button('loading');
+            $.AMUI.progress.start();
+        };
+
+        //loading end
+        var loadingEnd = function(obj){
+            obj.button('reset');
+            $.AMUI.progress.done();
+        };
+
         //teacher header upload
         var uploadHeader = function(){
             $("#teacher_upload_header_submit").click(function(){
                 //loading start
                 var $btn = $(this);
-                $btn.button('loading');
-                $.AMUI.progress.start();
+                loadingStart($btn);
                 //set cache data
                 $("#teacher_upload_header").data("uploadname","");
                 $.ajaxFileUpload
@@ -22,8 +33,7 @@ $(document).ready(function(){
                         success: function (data, status)
                         {
                             //loading end
-                            $btn.button('reset');
-                            $.AMUI.progress.done();
+                            loadingEnd($btn);
 
                             if(typeof(data.error) != 'undefined' && data.error == "0")
                             {
@@ -43,8 +53,7 @@ $(document).ready(function(){
                         error: function (data, status, e)
                         {
                             //loading end
-                            $btn.button('reset');
-                            $.AMUI.progress.done();
+                            loadingEnd($btn);
                             //show error
                             $("#my-alert-message").html("未知错误！请重试!");
                             $('#my-alert').modal('open');
@@ -56,19 +65,24 @@ $(document).ready(function(){
             });
         };
 
+        //back btn
         var teacher_back = function(){
             $("#teacher_add_back").click(function(){
+                //loading start
+                var $btn = $(this);
+                loadingStart($btn);
+
                 location.href = document.referrer;
                 return false;
             });
         };
 
+        //添加老师
         var teacher_add = function(){
             $("#teacher_add_submit").click(function(){
                 //loading start
                 var $btn = $(this);
-                $btn.button('loading');
-                $.AMUI.progress.start();
+                loadingStart($btn);
                 //验证
                 var valid = true;
                 var msg = "";
@@ -206,9 +220,6 @@ $(document).ready(function(){
                         url: "teacher_add_do",
                         data: senddata.join("&"),
                         success: function(msg){
-                            //loading end
-                            $btn.button('reset');
-                            $.AMUI.progress.done();
                             //success
                             if(typeof(msg.error) != "undefined" && msg.error == 0)
                             {
@@ -221,6 +232,8 @@ $(document).ready(function(){
                                 }
                             }
                             else{
+                                //loading end
+                                loadingEnd($btn);
                                 //show error
                                 $("#my-alert-message").html(msg.msg);
                                 $('#my-alert').modal('open');
@@ -230,8 +243,7 @@ $(document).ready(function(){
                 }
                 else{
                     //loading end
-                    $btn.button('reset');
-                    $.AMUI.progress.done();
+                    loadingEnd($btn);
                     //show error
                     $("#my-alert-message").html(msg);
                     $('#my-alert').modal('open');

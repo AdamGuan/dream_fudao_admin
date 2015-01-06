@@ -3,8 +3,8 @@
 		<div class="am-fl am-cf">
 			<div class="am-btn-toolbar am-fl">
 				<div class="am-btn-group am-btn-group-xs">
-					<button type="button" class="am-btn am-btn-default" id="playbacks_active"><span class="am-icon-plus"></span>设为精彩</button>
-					<button type="button" class="am-btn am-btn-default" id="playbacks_deactive"><span class="am-icon-plus"></span>设为非精彩</button>
+					<button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger" id="playbacks_active"><span class="am-icon-check"></span>设为精彩</button>
+					<button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" id="playbacks_deactive"><span class="am-icon-close"></span>设为非精彩</button>
 				</div>
 
 				<?php if(is_array($status_list) && count($status_list) > 0){?>
@@ -73,8 +73,8 @@
 	$str .= '<td>'.$playback['F_duration_time'].'</td>';
 	$str .= '<td>'.$playback['F_wonderful_text'].'</td>';
 	$tmp  = "";
-	$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-secondary" F_order_id="'.$playback['F_order_id'].'"  id="playback_active'.$k.'"><span class="am-icon-pencil-square-o"></span> 设为精彩</button>';
-	$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-secondary" F_order_id="'.$playback['F_order_id'].'"  id="playback_deactive'.$k.'"><span class="am-icon-pencil-square-o"></span> 设为非精彩</button>';
+	$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-danger" F_order_id="'.$playback['F_order_id'].'"  id="playback_active'.$k.'"><span class="am-icon-check"></span> 设为精彩</button>';
+	$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-secondary" F_order_id="'.$playback['F_order_id'].'"  id="playback_deactive'.$k.'"><span class="am-icon-close"></span> 设为非精彩</button>';
 	$str .= '<td>
 		<div class="am-btn-toolbar">
 			<div class="am-btn-group am-btn-group-xs">'.$tmp.'</div>
