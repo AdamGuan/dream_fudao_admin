@@ -375,7 +375,6 @@ class C_teacher extends MY_Controller {
 	/**
 	 * 显示添加一个老师的页面
 	 * @param array $parames
-	 *          F_teacher_id    string
 	 */
 	public function teacher_add($parames = array())
 	{
@@ -438,7 +437,7 @@ class C_teacher extends MY_Controller {
 		if(!is_array($result) || count($result) <= 0)
 		{
 			$data["error"] = -1;
-			$data["msg"] = $result['msg'];
+			$data["msg"] = "添加失败";
 		}
 		else{
 			//删除已经上传的图片

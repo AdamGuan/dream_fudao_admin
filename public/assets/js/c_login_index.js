@@ -19,15 +19,14 @@ $(document).ready(function(){
                         url: "login_valid",
                         data: "name="+name+"&pwd="+pwd,
                         success: function(data){
-                            //loading end
-                            $btn.button('reset');
-                            $.AMUI.progress.done();
-
                             if(typeof(data.error) != "undefined" && data.error == 0)
                             {
                                 top.location.href = data.redirect_url;
                             }
                             else{
+                                //loading end
+                                $btn.button('reset');
+                                $.AMUI.progress.done();
                                 $("#my-alert-message").html("用户名或密码错误!");
                                 $('#my-alert').modal('open');
                             }

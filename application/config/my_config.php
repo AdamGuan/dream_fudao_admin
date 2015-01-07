@@ -5,7 +5,7 @@ $config['data'] = array(
 	'global_web_title_pro'=>'一对一辅导',
 	'global_web_title_suffix'=>'控制平台',
 	'global_web_license'=>'© 2015 dream license.',
-	'global_left_bar'=>array(
+	'global_left_bar'=>array(   //左侧列表
 		array(
 			'prefix_class'=>'am-icon-home',
 			'text'=>'首页',
@@ -91,12 +91,12 @@ $config['data'] = array(
 			'active'=>0,
 			'children'=>array()
 		),
-		array(
-			'prefix_class'=>'am-icon-file',
-			'text'=>'日志',
-			'link'=>'c_log/list',
-			'children'=>array()
-		),
+//		array(
+//			'prefix_class'=>'am-icon-file',
+//			'text'=>'日志',
+//			'link'=>'c_log/list',
+//			'children'=>array()
+//		),
 		array(
 			'prefix_class'=>'am-icon-file',
 			'text'=>'个人资料',
@@ -104,15 +104,15 @@ $config['data'] = array(
 			'active'=>0,
 			'children'=>array()
 		),
-		array(
-			'prefix_class'=>'am-icon-file',
-			'text'=>'公告管理',
-			'link'=>'c_publish/publish_manager',
-			'active'=>0,
-			'children'=>array()
-		),
+//		array(
+//			'prefix_class'=>'am-icon-file',
+//			'text'=>'公告管理',
+//			'link'=>'c_publish/publish_manager',
+//			'active'=>0,
+//			'children'=>array()
+//		),
 	),
-	'global_all_privity_list'=>array(
+	'global_all_privity_list'=>array(   //权限列表
 		array(
 			'text'=>'登录',
 			'link'=>'c_login/index',
@@ -224,21 +224,55 @@ $config['data'] = array(
 			'link'=>'c_playback/manager',
 			'children'=>array()
 		),
-		array(
-			'text'=>'日志',
-			'link'=>'c_log/list',
-			'children'=>array()
-		),
+//		array(
+//			'text'=>'日志',
+//			'link'=>'c_log/list',
+//			'children'=>array()
+//		),
 		array(
 			'text'=>'个人资料',
 			'link'=>'c_person/index',
 			'children'=>array()
 		),
+//		array(
+//			'text'=>'公告管理',
+//			'link'=>'c_publish/publish_manager',
+//			'children'=>array()
+//		),
+	),
+	'teacher_privity'=>array(   //老师权限
+		'c_login/index',
+		'c_index/index',
+		'c_statistic_teacher/index',
+		'c_statistic_student/index',
+		'c_person/index'
+	),
+	'action_link'=>array(   //快捷操作
 		array(
-			'text'=>'公告管理',
-			'link'=>'c_publish/publish_manager',
-			'children'=>array()
+			'title'=>'角色管理',
+			'list'=>array(
+				array(
+					'title'=>'老师管理',
+					'action'=>'c_teacher/manager',
+					'parames'=>array(),
+				),
+				array(
+					'title'=>'添加老师',
+					'action'=>'c_teacher/teacher_add',
+					'parames'=>array(),
+				)
+			)
 		),
+		array(
+			'title'=>'统计分析',
+			'list'=>array(
+				array(
+					'title'=>'实时统计',
+					'action'=>'c_statistic_realtime/index',
+					'parames'=>array(),
+				),
+			)
+		)
 	),
 );
 

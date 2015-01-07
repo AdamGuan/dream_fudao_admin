@@ -8,3 +8,10 @@
 	<li><a href="#" class="am-text-warning"><span class="am-icon-btn
 	am-icon-file-text"></span><br/>在线学生<br/><?php echo $student_online_num;?></a></li>
 </ul>
+
+<?php if(isset($action_link) && is_array($action_link) && count($action_link) > 0){
+	foreach($action_link as $item)
+	{
+
+	}
+}?>

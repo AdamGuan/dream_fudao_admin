@@ -125,7 +125,7 @@ class MY_Controller extends CI_Controller {
 
 		$data['global_login_name'] = $this -> session -> userdata('F_login_name');
 		$data['global_role'] = $this -> session -> userdata('F_role_name');
-		$data['global_notice'] = '<p>时光静好，与君语；细水流年，与君同。—— Amaze UI</p>';
+		$data['global_notice'] = '';
 
 		return $data;
 	}

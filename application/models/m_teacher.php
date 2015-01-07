@@ -127,21 +127,29 @@ class M_teacher extends MY_Model {
 	 * @return array
 	 */
 	public function teacher_add($parames = array()){
-		//dd老师
-		$data = array(
-			'version'=>$this->my_config['api_version'],
-			'c'=>'teacher',
-			'm'=>'add_a_teacher',
-		);
-
-		$data = array_merge($data,$parames);
-
-		$result = api_curl($this->my_config['api_uri'], $data, "POST", $this->my_config['api_key']);
-		$result = json_decode($result,true);
-
-		if(is_array($result) && isset($result['responseNo']) && $result['responseNo'] == 0)
+		if(isset($parames['F_teacher_name']))
 		{
-			return $result;
+			//检查在用户标中是否已存在该用户名
+			$sql = 'SELECT F_id FROM t_user WHERE F_login_name = "'.$parames['F_teacher_name'].'" LIMIT 1';
+			$query = $this->db->query($sql);
+			if(!($query->num_rows() > 0)){
+				//不存在则添加
+				$data = array(
+					'version'=>$this->my_config['api_version'],
+					'c'=>'teacher',
+					'm'=>'add_a_teacher',
+				);
+
+				$data = array_merge($data,$parames);
+
+				$result = api_curl($this->my_config['api_uri'], $data, "POST", $this->my_config['api_key']);
+				$result = json_decode($result,true);
+
+				if(is_array($result) && isset($result['responseNo']) && $result['responseNo'] == 0)
+				{
+					return $result;
+				}
+			}
 		}
 		return array();
 	}

@@ -44,11 +44,8 @@ class M_login extends MY_Model {
 				$result["F_privity_group_id"] = $resulttmp["F_privity_group_id"];
 			}
 			else{   //查询是否为老师
-				$sql = 'SELECT * FROM t_teacher WHERE F_login_name = "'.(string)$username.'" LIMIT 1';
-				$query = $this->db->query($sql);
-				if ($query->num_rows() > 0)
+				if (1)
 				{
-					$resulttmp = $query->row_array();
 					//利用api检查老师是否存在
 					$data = array(
 						'version'=>$this->my_config['api_version'],
@@ -62,20 +59,14 @@ class M_login extends MY_Model {
 					if(is_array($result) && isset($result['responseNo']) && $result['responseNo'] == 0)
 					{
 
-						//查询老师的权限表
-						$sql = 'SELECT * FROM t_privity_group WHERE F_level = 1 AND F_status =1 LIMIT 1';
-						$query = $this->db->query($sql);
-						if ($query->num_rows() > 0)
-						{
-							$resulttmp2 = $query->row_array();
-							$result["F_id"] = $resulttmp["F_api_uid"];
-							$result["F_login_name"] = $resulttmp["F_login_name"];
-							$result["F_privity_group_name"] = $resulttmp2["F_name"];
-							$result["F_privity"] = $resulttmp2["F_privity"];
-							$result["F_could_has_child"] = $resulttmp2["F_could_has_child"];
-							$result["F_level"] = $resulttmp2["F_level"];
-							$result["F_privity_group_id"] = $resulttmp2["F_id"];
-						}
+						$resulttmp2 = $query->row_array();
+						$result["F_id"] = $result["F_teacher_id"];
+						$result["F_login_name"] = $username;
+						$result["F_privity_group_name"] = '老师';
+						$result["F_privity"] = implode(",",$this->my_config['data']['teacher_privity']);
+						$result["F_could_has_child"] = 0;
+						$result["F_level"] = 1;
+						$result["F_privity_group_id"] = -1;
 					}
 				}
 			}

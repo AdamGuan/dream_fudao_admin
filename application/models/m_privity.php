@@ -452,6 +452,28 @@ class M_privity extends MY_Model {
 		return $result;
 	}
 
+	private function check_teacher_name_exists($name = null){
+		$return = true;
+		if(!is_null($name) && $name && strlen($name) > 0)
+		{
+			$data = array(
+				'version'=>$this->my_config['api_version'],
+				'c'=>'teacher',
+				'm'=>'check_teacher_loginname_used',
+				'F_teacher_name'=>$name,
+			);
+
+			$result = api_curl($this->my_config['api_uri'], $data, "GET",$this->my_config['api_key']);
+			$result = json_decode($result,true);
+			//used
+			if(is_array($result) && isset($result['responseNo'],$result['used']) && $result['responseNo'] == 0 && $result['used'] === false)
+			{
+				$return = false;
+			}
+		}
+		return $return;
+	}
+
 	public function user_add($parame = array())
 	{
 		$result = array("error"=>-1,"msg"=>"操作失败,请重试!");
@@ -461,11 +483,18 @@ class M_privity extends MY_Model {
 			//检查$parame['F_login_name']的有效性
 			if(strlen($parame['F_login_name']) > 0 && strlen($parame['F_login_name']) <= 30)
 			{
-				$sql = 'SELECT F_id FROM t_user WHERE F_login_name = "'.$parame['F_login_name'].'" LIMIT 1';
-				$query = $this->db->query($sql);
-				if($query->num_rows() > 0){
+				if($this->check_teacher_name_exists($parame['F_login_name']) !== false)
+				{
 					$valid = 0;
-					$result = array("error"=>-2,"msg"=>"用户名已使用,请修用户名");
+					$result = array("error"=>-2,"msg"=>"用户名已使用,请修改用户名");
+				}
+				else{
+					$sql = 'SELECT F_id FROM t_user WHERE F_login_name = "'.$parame['F_login_name'].'" LIMIT 1';
+					$query = $this->db->query($sql);
+					if($query->num_rows() > 0){
+						$valid = 0;
+						$result = array("error"=>-2,"msg"=>"用户名已使用,请修改用户名");
+					}
 				}
 			}
 			else{

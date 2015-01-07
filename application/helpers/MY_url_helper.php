@@ -58,23 +58,39 @@ function redirect_to_no_privity_page(){
 }
 
 function get_teacher_manager_list_url($parames = array()) {
-	$p = http_build_query($parames);
-	return base_url("c_teacher/manager?".$p);
+	$p = "";
+	if(is_array($parames) && count($parames) > 0)
+	{
+		$p = "?".http_build_query($parames);
+	}
+	return base_url("c_teacher/manager".$p);
 }
 
 function get_teacher_edit_url($parames){
-	$p = http_build_query($parames);
-	return base_url("c_teacher/teacher_edit?".$p);
+	$p = "";
+	if(is_array($parames) && count($parames) > 0)
+	{
+		$p = "?".http_build_query($parames);
+	}
+	return base_url("c_teacher/teacher_edit".$p);
 }
 
 function get_controll_url($uri,$parames){
-	$p = http_build_query($parames);
-	return base_url($uri."?".$p);
+	$p = "";
+	if(is_array($parames) && count($parames) > 0)
+	{
+		$p = "?".http_build_query($parames);
+	}
+	return base_url($uri.$p);
 }
 
 function get_student_manager_list_url($parames = array()) {
-	$p = http_build_query($parames);
-	return base_url("c_student/manager?".$p);
+	$p = "";
+	if(is_array($parames) && count($parames) > 0)
+	{
+		$p = "?".http_build_query($parames);
+	}
+	return base_url("c_student/manager".$p);
 }
 
 function get_index_url(){
@@ -82,18 +98,30 @@ function get_index_url(){
 }
 
 function get_playback_manager_list_url($parames = array()) {
-	$p = http_build_query($parames);
-	return base_url("c_playback/manager?".$p);
+	$p = "";
+	if(is_array($parames) && count($parames) > 0)
+	{
+		$p = "?".http_build_query($parames);
+	}
+	return base_url("c_playback/manager".$p);
 }
 
 function get_custom_manager_list_url($parames = array()) {
-	$p = http_build_query($parames);
-	return base_url("c_custom/manager?".$p);
+	$p = "";
+	if(is_array($parames) && count($parames) > 0)
+	{
+		$p = "?".http_build_query($parames);
+	}
+	return base_url("c_custom/manager".$p);
 }
 
 function get_custom_edit_url($parames){
-	$p = http_build_query($parames);
-	return base_url("c_custom/custom_edit?".$p);
+	$p = "";
+	if(is_array($parames) && count($parames) > 0)
+	{
+		$p = "?".http_build_query($parames);
+	}
+	return base_url("c_custom/custom_edit".$p);
 }
 
 /**
