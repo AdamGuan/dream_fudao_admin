@@ -39,10 +39,10 @@ $(document).ready(function(){
                 {
 					if(typeof(user_pwd) != "undefined" && user_pwd.length != 0)
                     {
-                        if(!(user_pwd.length >= 6 && user_pwd.length <= 9))
+                        if(!(user_pwd.length >= 6 && user_pwd.length <= 10))
                         {
                             valid = false;
-                            msg = "密码必须6到9个字符!";
+                            msg = "6-10位字母、数字以及下划线!";
                         }
                     }
                 }
@@ -62,7 +62,7 @@ $(document).ready(function(){
                     }
                     $.ajax({
                         type: "POST",
-                        url: "user_modify_do",
+                        url: user_modify_do_url,
                         data: senddata.join("&"),
                         success: function(msg){
                             //success

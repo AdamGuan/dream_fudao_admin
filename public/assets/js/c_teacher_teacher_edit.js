@@ -99,10 +99,10 @@ $(document).ready(function(){
                 {
                     if(typeof(F_teacher_password) != "undefined" && F_teacher_password.length != 0)
                     {
-                        if(!(F_teacher_password.length >= 6 && F_teacher_password.length <= 9))
+                        if(!(F_teacher_password.length >= 6 && F_teacher_password.length <= 10))
                         {
                             valid = false;
-                            msg = "密码必须填写,并且大于等于6个字符小于等于9个字符!";
+                            msg = "6-10位字母、数字以及下划线!";
                         }
                     }
                 }
@@ -216,7 +216,7 @@ $(document).ready(function(){
                     senddata[senddata.length] = "F_teacher_id="+F_teacher_id;
                     $.ajax({
                         type: "POST",
-                        url: "teacher_modify",
+                        url: teacher_modify_url,
                         data: senddata.join("&"),
                         success: function(msg){
                             //success

@@ -94,4 +94,7 @@
 
 <script>
 	var user_add_url = "<?php echo $user_add_url;?>";
+	var user_active_url = "<?php echo my_site_url('c_privity/user_active');?>";
+	var user_delete_url = "<?php echo my_site_url('c_privity/user_delete');?>";
+	var user_freeze_url = "<?php echo my_site_url('c_privity/user_freeze');?>";
 </script>

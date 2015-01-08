@@ -1,6 +1,6 @@
 $(document).ready(function(){
     //模块定义
-    var privityUserAddModule = function($){
+    var publishEditModule = function($){
 
         //loading start
         var loadingStart = function(obj){
@@ -15,58 +15,56 @@ $(document).ready(function(){
         };
 
         //back btn
-        var user_back = function(){
-            $("#user_add_back").click(function(){
-                loadingStart($(this));
+        var publish_back = function(){
+            $("#publish_edit_back").click(function(){
+                //loading start
+                 var $btn = $(this);
+                loadingStart($btn);
 
                 location.href = document.referrer;
                 return false;
             });
         };
 
-        //添加
-        var user_add = function(){
-            $("#user_add_submit").click(function(){
+        //修改
+        var publish_modify = function(){
+            $("#publish_edit_submit").click(function(){
                 //loading start
-                var $btn = $(this);
+                 var $btn = $(this);
                 loadingStart($btn);
                 //验证
                 var valid = true;
                 var msg = "";
-                //check user name
-                var user_name = $("#user_name").val();
+                //check F_title
+                var F_title = $("#publish_title").val();
                 if(valid === true)
                 {
-                    if(!(typeof(user_name) != "undefined" && user_name.length > 0 && user_name.length <= 30))
+                    if(!(typeof(F_title) != "undefined" && F_title.length > 0 && F_title.length <= 250))
                     {
                         valid = false;
-                        msg = "用户名必须填写,并且小于等于30个字符!";
+                        msg = "必须填写";
                     }
                 }
-                //check user pwd
-                var user_pwd = $("#user_pwd").val();
+                //check F_title
+                var F_content = $("#publish_content").val();
                 if(valid === true)
                 {
-                    if(!(typeof(user_pwd) != "undefined" && user_pwd.length >= 6 && user_pwd.length <= 10))
+                    if(!(typeof(F_content) != "undefined" && F_content.length > 0))
                     {
                         valid = false;
-                        msg = "用户密码必须填写,6-10位字母、数字以及下划线!";
+                        msg = "必须填写";
                     }
                 }
-
-
+                //ajax send
                 if(valid === true)
                 {
-
-                    var groupid = $("#group_list option:selected").val();
-
                     var senddata = new Array();
-                    senddata[senddata.length] = "F_privity_group_id="+groupid;
-                    senddata[senddata.length] = "F_login_name="+user_name;
-                    senddata[senddata.length] = "F_login_password="+user_pwd;
+                    senddata[senddata.length] = "F_title="+F_title;
+                    senddata[senddata.length] = "F_content="+F_content;
+                    senddata[senddata.length] = "F_id="+F_id;
                     $.ajax({
                         type: "POST",
-                        url: user_add_do_url,
+                        url: modify_url,
                         data: senddata.join("&"),
                         success: function(msg){
                             //success
@@ -75,7 +73,7 @@ $(document).ready(function(){
                                 location.href = document.referrer;
                             }
                             else{
-                                //loading end
+                                 //loading end
                                 loadingEnd($btn);
                                 //show error
                                 $("#my-alert-message").html(msg.msg);
@@ -83,8 +81,6 @@ $(document).ready(function(){
                             }
                         }
                     });
-
-
                 }
                 else{
                     //loading end
@@ -100,7 +96,7 @@ $(document).ready(function(){
 
         //return obj
         var obj = {
-            init:function(){user_back();user_add();}
+            init:function(){publish_modify();publish_back();}
         };
 
         //return
@@ -109,5 +105,6 @@ $(document).ready(function(){
     }(jQuery);
 
     //模块调用
-    privityUserAddModule.init();
+    publishEditModule.init();
+
 });

@@ -15,7 +15,7 @@
 			<div class="am-form-group">
 				<label for="custom_login_pwd" class="am-u-sm-3 am-form-label">密码</label>
 				<div class="am-u-sm-9">
-					<input type="password" id="custom_login_pwd" placeholder="输入客服的密码,长度大于等于6个字符，小于等于10个字符." value="">
+					<input type="password" id="custom_login_pwd" placeholder="输入客服的密码,6-10位字母、数字以及下划线." value="">
 				</div>
 			</div>
 
@@ -49,4 +49,5 @@
 
 <script>
 	var manager_url = "<?php echo $manager_url;?>";
+	var custom_add_do_url = "<?php echo my_site_url('c_custom/custom_add_do');?>";
 </script>

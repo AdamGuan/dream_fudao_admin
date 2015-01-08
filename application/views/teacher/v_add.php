@@ -34,7 +34,7 @@
 			<div class="am-form-group">
 				<label for="teacher_login_pwd" class="am-u-sm-3 am-form-label">密码</label>
 				<div class="am-u-sm-9">
-					<input type="password" id="teacher_login_pwd" placeholder="输入老师的密码,长度大于等于6个字符，小于等于10个字符." value="">
+					<input type="password" id="teacher_login_pwd" placeholder="输入老师的密码,6-10位字母、数字以及下划线." value="">
 				</div>
 			</div>
 
@@ -156,7 +156,8 @@
 
 			<div class="am-form-group">
 				<div class="am-u-sm-9 am-u-sm-push-3">
-					<button type="button" id="teacher_add_submit" class="am-btn am-btn-primary">保存修改</button>
+					<button type="button" id="teacher_add_submit" class="am-btn am-btn-primary">提交保存</button>
+					<button type="button" id="teacher_add2_submit" class="am-btn am-btn-primary">保存并继续添加</button>
 					<button type="button" id="teacher_add_back" class="am-btn am-btn-primary">返回</button>
 				</div>
 			</div>
@@ -170,4 +171,5 @@
 	var upload_url = "<?php echo $upload_url;?>";
 	var manager_test_url = "<?php echo $manager_test_url;?>";
 	var manager_url = "<?php echo $manager_url;?>";
+	var teacher_add_do_url = "<?php echo my_site_url('c_teacher/teacher_add_do');?>";
 </script>

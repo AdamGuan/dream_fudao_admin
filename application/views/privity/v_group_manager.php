@@ -79,4 +79,7 @@
 
 <script>
 	var group_add_url = "<?php echo $group_add_url;?>";
+	var group_active_url = "<?php echo my_site_url('c_privity/group_active');?>";
+	var group_delete_url = "<?php echo my_site_url('c_privity/group_delete');?>";
+	var group_freeze_url = "<?php echo my_site_url('c_privity/group_freeze');?>";
 </script>

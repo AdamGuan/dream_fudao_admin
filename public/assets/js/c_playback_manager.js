@@ -168,7 +168,7 @@ $(document).ready(function(){
                 var $btn = $(this);
                 loadingStart($btn);
 
-                var search_type = $("#search_type_choose option:selected").attr("value");
+                //var search_type = $("#search_type_choose option:selected").attr("value");
                 var url = location.href;
                 var list = url.split("?");
                 var url_pref = list[0];
@@ -197,6 +197,30 @@ $(document).ready(function(){
 
                 if(url_parames.length > 0)
                 {
+                    if($("#search_text").val().length > 0)
+                    {
+                        url = url_pref+"?"+url_parames.join("&")+"&";
+                    }
+                    else{
+                        url = url_pref+"?"+url_parames.join("&");
+                    }
+                }
+                else{
+                    if($("#search_text").val().length > 0)
+                    {
+                        url = url_pref+"?";
+                    }else{
+                        url = url_pref;
+                    }
+                }
+                if($("#search_text").val().length > 0)
+                {
+                    url += "F_user_real_name="+$("#search_text").val()+"&";
+                    url += "F_teacher_real_name="+$("#search_text").val();
+                }
+                /*
+                if(url_parames.length > 0)
+                {
                     url = url_pref+"?"+url_parames.join("&")+"&";
                 }
                 else{
@@ -209,6 +233,7 @@ $(document).ready(function(){
                 else{
                     url += "F_teacher_real_name="+$("#search_text").val();
                 }
+                */
                 location.href= url;
                 return false;
             });

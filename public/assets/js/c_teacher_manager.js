@@ -24,6 +24,16 @@ $(document).ready(function(){
             });
         };
 
+        //浏览模式选择
+        var viewTypeStatusChoose = function(){
+            $("#view_type_choose").change( function() {
+                $.AMUI.progress.start();
+
+                var url = $("#view_type_choose option:selected").attr("value");
+                top.location.href = url;
+            });
+        };
+
         //修改老师状态
         var teacherStatusChange = function(){
             //删除
@@ -147,6 +157,16 @@ $(document).ready(function(){
 
             //编辑
             $("button[id^='teacher_edit']").click( function() {
+                //loading start
+                var $btn = $(this);
+                loadingStart($btn);
+
+                location.href = $btn.attr("url");
+                return false;
+            });
+
+            //编辑
+            $("a[id^='teacher_edit']").click( function() {
                 //loading start
                 var $btn = $(this);
                 loadingStart($btn);
@@ -325,11 +345,82 @@ $(document).ready(function(){
             });
 
 
-        }
+        };
+
+        //search
+        var search = function(){
+            $("#search_btn_search").click(function(){
+                //loading start
+                var $btn = $(this);
+                loadingStart($btn);
+
+                //var search_type = $("#search_type_choose option:selected").attr("value");
+                var url = location.href;
+                var list = url.split("?");
+                var url_pref = list[0];
+                var url_parames = new Array();
+                if(list.length == 1)
+                {
+                }
+                else if(list.length == 2)
+                {
+
+                    if(list[1].length > 0)
+                    {
+                        var tmp_list = list[1].split("&");
+                        var j = 0;
+                        for(var i=0;i<tmp_list.length;++i)
+                        {
+                            var tlist = tmp_list[i].split("=");
+                            if(tlist[0] != "F_real_name" && tlist[0] != "F_teacher_name")
+                            {
+                                url_parames[j] = tlist[0]+"="+tlist[1];
+                                ++j;
+                            }
+                        }
+                    }
+                }
+
+                if(url_parames.length > 0)
+                {
+                    if($("#search_text").val().length > 0)
+                    {
+                        url = url_pref+"?"+url_parames.join("&")+"&";
+                    }
+                    else{
+                        url = url_pref+"?"+url_parames.join("&");
+                    }
+                }
+                else{
+                    if($("#search_text").val().length > 0)
+                    {
+                        url = url_pref+"?";
+                    }else{
+                        url = url_pref;
+                    }
+                }
+                if($("#search_text").val().length > 0)
+                {
+                    url += "F_real_name="+$("#search_text").val()+"&";
+                    url += "F_teacher_name="+$("#search_text").val();
+                }
+                /*
+                if(search_type == 1)
+                {
+                    url += "F_real_name="+$("#search_text").val();
+                }
+                else{
+                    url += "F_teacher_real_name="+$("#search_text").val();
+                }
+                */
+                location.href= url;
+                return false;
+            });
+        };
 
         //return obj
         var obj = {
-            init:function(){teacherStatusChoose();teacherStatusChange();teacher_select();teacherStatusChange_mulit();}
+            init:function(){teacherStatusChoose();teacherStatusChange();teacher_select();teacherStatusChange_mulit();viewTypeStatusChoose();search();}
         };
 
         //return

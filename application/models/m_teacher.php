@@ -20,7 +20,7 @@ class M_teacher extends MY_Model {
 			'm'=>'get_teacher_list',
 			'type'=>0,
 			'offset'=>0,
-			'limit'=>10,
+			'limit'=>$this->my_config['page'],
 		);
 		if(isset($parames['type']))
 		{
@@ -30,6 +30,14 @@ class M_teacher extends MY_Model {
 		{
 			$data['offset'] = ((int)$parames['page']-1)*$this->my_config['page'];
 			$data['limit'] = $this->my_config['page'];
+		}
+		if(isset($parames['F_real_name']))
+		{
+			$data['F_real_name'] = $parames['F_real_name'];
+		}
+		if(isset($parames['F_teacher_name']))
+		{
+			$data['F_teacher_name'] = $parames['F_teacher_name'];
 		}
 
 		$result = api_curl($this->my_config['api_uri'], $data, "GET",$this->my_config['api_key']);
@@ -103,6 +111,8 @@ class M_teacher extends MY_Model {
 	 * @return array
 	 */
 	public function teacher_modify($parames = array()){
+		unset($parames['c']);
+		unset($parames['m']);
 		//修改老师信息
 		$data = array(
 			'version'=>$this->my_config['api_version'],
@@ -129,6 +139,8 @@ class M_teacher extends MY_Model {
 	public function teacher_add($parames = array()){
 		if(isset($parames['F_teacher_name']))
 		{
+			unset($parames['c']);
+			unset($parames['m']);
 			//检查在用户标中是否已存在该用户名
 			$sql = 'SELECT F_id FROM t_user WHERE F_login_name = "'.$parames['F_teacher_name'].'" LIMIT 1';
 			$query = $this->db->query($sql);

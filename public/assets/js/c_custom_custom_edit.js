@@ -42,13 +42,12 @@ $(document).ready(function(){
                         {
                             if(typeof(F_custom_password) != "undefined" && F_custom_password.length != 0)
                             {
-                                if(!(F_custom_password.length >= 6 && F_custom_password.length <= 9))
+                                if(!(F_custom_password.length >= 6 && F_custom_password.length <= 10))
                                 {
                                     valid = false;
-                                    msg = "密码必须填写,并且大于等于6个字符小于等于9个字符!";
+                                    msg = "6-10位字母、数字以及下划线!";
                                 }
                             }
-                            F_custom_password = "";
                         }
                         //check custom real name
                         var F_real_name = $("#custom_realname").val();
@@ -83,7 +82,7 @@ $(document).ready(function(){
                             senddata[senddata.length] = "F_teacher_id="+F_teacher_id;
                             $.ajax({
                                 type: "POST",
-                                url: "custom_modify",
+                                url: custom_modify_url,
                                 data: senddata.join("&"),
                                 success: function(msg){
                                     //success

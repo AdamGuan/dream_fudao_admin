@@ -1,3 +1,5 @@
+
+
 <div class="am-cf am-padding">
 	<div class="am-fl am-cf am-text-primary am-text-lg">当前状态</div>
 </div>
@@ -9,9 +11,22 @@
 	am-icon-file-text"></span><br/>在线学生<br/><?php echo $student_online_num;?></a></li>
 </ul>
 
-<?php if(isset($action_link) && is_array($action_link) && count($action_link) > 0){
+<?php if(isset($action_link) && is_array($action_link) && count($action_link) > 0){?>
+	<div class="am-cf am-padding">
+		<div class="am-fl am-cf am-text-primary am-text-lg">快捷操作</div>
+	</div>
+	<div class="am-cf am-padding">
+	<?php
 	foreach($action_link as $item)
 	{
-
-	}
-}?>
+		echo '<section class="am-panel am-panel-default">';
+		echo '<header class="am-panel-hd"><h3 class="am-panel-title">'.$item['title'].'</h3></header>';
+		echo '<div class="am-panel-bd"><ul class="am-avg-sm am-margin am-padding am-text-left admin-content-list ">';
+		foreach($item['list'] as $it)
+		{
+			echo '<li><span class="am-icon-btn am-icon-file-text"></span><a href="'.$it['url'].'">'.$it['title'].'</a></li>';
+		}
+		echo '</ul></div></section>';
+	}?>
+	</div>
+<?php }?>

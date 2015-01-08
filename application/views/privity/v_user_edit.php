@@ -15,7 +15,7 @@
 			<div class="am-form-group">
 				<label for="group_name" class="am-u-sm-3 am-form-label">用户密码</label>
 				<div class="am-u-sm-9">
-					<input type="password" id="user_pwd" value="" placeholder="输入密码,6到9个字符之间,为空则保持不变.">
+					<input type="password" id="user_pwd" value="" placeholder="输入密码,为空则保持不变,6-10位字母、数字以及下划线">
 				</div>
 			</div>
 
@@ -55,4 +55,5 @@
 
 <script>
 	var user_id = "<?php echo isset($user_info['F_id'])?$user_info['F_id']:-1;?>";
+	var user_modify_do_url = "<?php echo my_site_url('c_privity/user_modify_do');?>";
 </script>

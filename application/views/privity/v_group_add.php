@@ -58,3 +58,8 @@
 		</form>
 	</div>
 </div>
+
+<script>
+	var get_privity_htmlstr_url = "<?php echo my_site_url('c_privity/get_privity_htmlstr');?>";
+	var group_add_do_url = "<?php echo my_site_url('c_privity/group_add_do');?>";
+</script>

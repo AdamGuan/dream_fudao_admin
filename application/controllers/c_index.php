@@ -40,6 +40,11 @@ class C_index extends MY_Controller {
 					{
 						unset($item['list'][$k]);
 					}
+					else{
+						$action_link[$key]['list'][$k]['url'] = get_controll_url($it['action'],$it['parames']);
+						unset($action_link[$key]['list'][$k]['action']);
+						unset($action_link[$key]['list'][$k]['parames']);
+					}
 				}
 				if(count($item['list']) <= 0)
 				{
@@ -52,8 +57,8 @@ class C_index extends MY_Controller {
 		}
 		//data
 		$data = $this->_get_data(__CLASS__,__METHOD__);
-		$data['teacher_online_num'] = $result['teacher_online_num'];
-		$data['student_online_num'] = $result['student_online_num'];
+		$data['teacher_online_num'] = isset($result['teacher_online_num'])?$result['teacher_online_num']:0;
+		$data['student_online_num'] = isset($result['student_online_num'])?$result['student_online_num']:0;
 		$data['action_link'] = $action_link;
 		$this->_output_view("index/v_index", $data);
 	}

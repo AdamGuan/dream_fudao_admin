@@ -44,4 +44,5 @@
 
 <script>
 	var group_id = "<?php echo $group_info['F_id'];?>";
+	var group_modify_do_url = "<?php echo my_site_url('c_privity/group_modify_do');?>";
 </script>

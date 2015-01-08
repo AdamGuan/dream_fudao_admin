@@ -45,7 +45,7 @@ $(document).ready(function(){
 
                     $.ajax({
                         type: "GET",
-                        url: "group_active",
+                        url: group_active_url,
                         data: "F_ids="+F_ids,
                         success: function(msg){
                             msg = eval(msg);
@@ -94,7 +94,7 @@ $(document).ready(function(){
 
                             $.ajax({
                                 type: "GET",
-                                url: "group_delete",
+                                url: group_delete_url,
                                 data: "F_ids="+F_ids,
                                 success: function(msg){
                                     msg = eval(msg);
@@ -149,7 +149,7 @@ $(document).ready(function(){
 
                             $.ajax({
                                 type: "GET",
-                                url: "group_freeze",
+                                url: group_freeze_url,
                                 data: "F_ids="+F_ids,
                                 success: function(msg){
                                     msg = eval(msg);
@@ -194,7 +194,7 @@ $(document).ready(function(){
 
                 $.ajax({
                     type: "GET",
-                    url: "group_active",
+                    url: group_active_url,
                     data: "F_ids="+$(this).attr("F_id"),
                     success: function(msg){
                         msg = eval(msg);
@@ -225,7 +225,7 @@ $(document).ready(function(){
 
                         $.ajax({
                             type: "GET",
-                            url: "group_freeze",
+                            url: group_freeze_url,
                             data: "F_ids="+$(this).attr("F_id"),
                             success: function(msg){
                                 //loading end
@@ -264,7 +264,7 @@ $(document).ready(function(){
 
                         $.ajax({
                             type: "GET",
-                            url: "group_delete",
+                            url: group_delete_url,
                             data: "F_ids="+$(this).attr("F_id"),
                             success: function(msg){
                                 msg = eval(msg);

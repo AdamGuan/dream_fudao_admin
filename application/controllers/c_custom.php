@@ -106,10 +106,10 @@ class C_custom extends MY_Controller {
 		$data['page_pre_url'] = $page_pre_url;
 		$data['page_next_url'] = $page_next_url;
 		$data['status_list'] = $status_list;
-		$data['custom_freeze_uri'] = base_url("c_custom/custom_freeze");
-		$data['custom_delete_uri'] = base_url("c_custom/custom_delete");
-		$data['custom_active_uri'] = base_url("c_custom/custom_active");
-		$data['custom_add_uri'] = base_url("c_custom/custom_add");
+		$data['custom_freeze_uri'] = my_site_url("c_custom/custom_freeze");
+		$data['custom_delete_uri'] = my_site_url("c_custom/custom_delete");
+		$data['custom_active_uri'] = my_site_url("c_custom/custom_active");
+		$data['custom_add_uri'] = my_site_url("c_custom/custom_add");
 
 		$this->_output_view("custom/v_manager", $data);
 	}
@@ -299,7 +299,7 @@ class C_custom extends MY_Controller {
 		$data = $this->_get_data(__CLASS__,__METHOD__);
 		$data['content_title'] = "添加客服";
 		$data['gender_list'] = $this->my_config['gender_list'];
-		$data['manager_url'] = base_url("c_custom/manager");
+		$data['manager_url'] = my_site_url("c_custom/manager");
 
 		$this->_output_view("custom/v_add", $data);
 	}

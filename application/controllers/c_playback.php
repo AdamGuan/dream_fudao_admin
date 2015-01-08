@@ -152,6 +152,7 @@ class C_playback extends MY_Controller {
 		}
 
 		//set search opetional
+		/*
 		$search_type_list = array(
 			array(
 				'key'=>0,
@@ -175,6 +176,7 @@ class C_playback extends MY_Controller {
 			$search_type_list[1]['active'] = true;
 			$search_text = $parames3['F_user_real_name'];
 		}
+		*/
 
 
 		//data
@@ -189,10 +191,10 @@ class C_playback extends MY_Controller {
 		$data['page_pre_url'] = $page_pre_url;
 		$data['page_next_url'] = $page_next_url;
 		$data['status_list'] = $status_list;
-		$data['search_type_list'] = $search_type_list;
-		$data['search_text'] = $search_text;
-		$data['set_playback_active_uri'] = base_url("c_playback/playback_active");
-		$data['set_playback_deactive_uri'] = base_url("c_playback/playback_deactive");
+//		$data['search_type_list'] = $search_type_list;
+		$data['search_text'] = isset($parames3['F_user_real_name'])?$parames3['F_user_real_name']:"";
+		$data['set_playback_active_uri'] = my_site_url("c_playback/playback_active");
+		$data['set_playback_deactive_uri'] = my_site_url("c_playback/playback_deactive");
 
 		$this->_output_view("playback/v_manager", $data);
 	}

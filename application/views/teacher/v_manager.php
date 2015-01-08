@@ -34,15 +34,44 @@
 					</select>
 				</div>
 				<?php }?>
+
+				<?php if(is_array($view_model_list) && count($view_model_list) > 0){?>
+				<div class="am-form-group am-margin-left am-fl">
+					<select id="view_type_choose">
+						<?php foreach($view_model_list as $item){
+							$selected = '';
+							if(isset($item['active']) && $item['active'])
+							{
+								$selected = 'selected="selected"';
+							}
+							echo '<option value="'.$item['key'].'" '.$selected.'>'.$item['value'].'</option>';
+						}?>
+					</select>
+				</div>
+				<?php }?>
+
 			</div>
 		</div>
 	</div>
+
+	<div class="am-u-md-3 am-cf">
+		<div class="am-fr">
+			<div class="am-input-group am-input-group-sm">
+				<input type="text" class="am-form-field" id="search_text" placeholder="输入账号或名字搜索" value="<?php echo isset($search_text)?$search_text:'';?>">
+                <span class="am-input-group-btn">
+                  <button class="am-btn am-btn-default" type="button" id="search_btn_search"><i class="am-icon-search"></i>搜索</button>
+                </span>
+			</div>
+		</div>
+	</div>
+
 </div>
 
 
 <div class="am-g">
 <div class="am-u-sm-12">
 <form class="am-form">
+	<?php if(!(isset($is_view_model) && $is_view_model)){?>
 <table class="am-table am-table-striped am-table-hover table-main">
 <thead>
 <tr>
@@ -88,6 +117,35 @@
 }?>
 </tbody>
 </table>
+
+<?php }else{?>
+
+<ul class="am-avg-sm-2 am-avg-md-4 am-avg-lg-6 gallery-list">
+    <?php foreach($teacher_list as $k=>$teacher){
+	$edit_url = get_teacher_edit_url(array("F_teacher_id"=>$teacher["F_teacher_id"]));
+	$style = '';
+	if(is_int((int)$k/6))
+	{
+		$style = ' style="padding-left:0px;"';
+	}
+	$str = '';
+	$str .= '<li'.$style.'>';
+	$str .= '<a href="#" F_teacher_id="'.$teacher['F_teacher_id'].'" id="teacher_edit'.$k.'" url="'.$edit_url.'">';
+	$str .= '<img class="am-img-thumbnail am-img-bdrs" src="'.$teacher['F_teacher_header_img_url'].'" alt=""/></a>';
+	$str .= '<div>ID: '.$teacher['F_teacher_id'].'</div>';
+	$str .= '<div>姓名: '.$teacher['F_real_name'].'</div>';
+	$str .= '<div>帐号: '.$teacher['F_teacher_name'].'</div>';
+	$str .= '<div>科目: '.$teacher['F_subject_text'].'</div>';
+	$str .= '<div>年级: '.$teacher['F_grade_text'].'</div>';
+	$str .= '<div>状态: '.$teacher['F_status_text'].'</div>';
+	$str .= '<div style="padding-right: 30px;">金币: '.$teacher['F_coin'].'<input style="float:right;" type="checkbox" F_teacher_id="'.$teacher['F_teacher_id'].'" id="teacher_check'.$teacher['F_teacher_id'].'" /></div>';
+	$str .= '</li>';
+	echo $str;
+}?>
+</ul>
+
+<?php }?>
+
 <div class="am-cf">
 	共 <?php echo $teacher_total;?> 条记录
 	<div class="am-fr">
@@ -111,6 +169,8 @@
 </div>
 
 </div>
+
+
 
 <script>
 	var teacher_freeze_uri = "<?php echo $teacher_freeze_uri;?>";

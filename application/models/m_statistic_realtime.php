@@ -14,6 +14,8 @@ class M_statistic_realtime extends MY_Model {
 	public function get_online_data($parames = array()){
 		if(isset($parames['type']))
 		{
+			unset($parames['c']);
+			unset($parames['m']);
 			$type = (int)$parames['type'];
 			$data_list = array();
 			$data_list[] = array(

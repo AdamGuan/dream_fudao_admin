@@ -36,6 +36,25 @@ class C_teacher extends MY_Controller {
 		{
 			$parames['page'] = 1;
 		}
+		if(!isset($parames['is_view_model']))
+		{
+			$tmp = $this -> session -> userdata('is_view_model');
+			if(isset($tmp) && $tmp == 1)
+			{
+				$parames['is_view_model'] = 1;
+			}
+			else{
+				$parames['is_view_model'] = 0;
+			}
+		}
+		else{
+			if(!($parames['is_view_model'] == 1))
+			{
+				$parames['is_view_model'] = 0;
+			}
+		}
+		$this->session->set_userdata('is_view_model', $parames['is_view_model']);
+
 		$this -> load -> model('M_teacher', 'mteacher');
 		$teacher_list_result = $this->mteacher->get_teacher_list($parames);
 		if(is_array($teacher_list_result) && count($teacher_list_result) > 0)
@@ -62,14 +81,19 @@ class C_teacher extends MY_Controller {
 		{
 			$item = array();
 			$item['active'] = 0;
-			$item['url'] = get_teacher_manager_list_url(array('page'=>$i,'type'=>(int)$parames['type']));
+			$tmp = $parames;
+			$tmp['page'] = $i;
+			$item['url'] = get_teacher_manager_list_url($tmp);
 			$item['page'] = $i;
 			if($i == (int)$parames['page'])
 			{
 				$item['url'] = "#";
 				$item['active'] = 1;
-				$page_pre_url = get_teacher_manager_list_url(array('page'=>$i-1,'type'=>(int)$parames['type']));
-				$page_next_url = get_teacher_manager_list_url(array('page'=>$i+1, 'type'=>(int)$parames['type']));
+				$tmp = $parames;
+				$tmp['page'] = $i-1;
+				$page_pre_url = get_teacher_manager_list_url($tmp);
+				$tmp['page'] = $i+1;
+				$page_next_url = get_teacher_manager_list_url($tmp);
 				if($i == 1)
 				{
 					$page_pre_active = false;
@@ -98,6 +122,28 @@ class C_teacher extends MY_Controller {
 				$status_list[] = $it;
 			}
 		}
+		//set view mode list
+		$view_model_list = array(
+			array(
+				'value'=>'列表式浏览',
+				'key'=>"",
+				'active'=>false
+			),
+			array(
+				'value'=>'平铺式浏览',
+				'key'=>"",
+				'active'=>false
+			)
+		);
+		$tmp = $parames;
+		$tmp['is_view_model'] = 0;
+		$view_model_list[0]['key'] = get_teacher_manager_list_url($tmp);
+		$tmp['is_view_model'] = 1;
+		$view_model_list[1]['key'] = get_teacher_manager_list_url($tmp);
+		if($parames['is_view_model'])
+		{
+			$view_model_list[1]['active'] = true;
+		}
 
 		//data
 		$data = $this->_get_data(__CLASS__,__METHOD__);
@@ -111,11 +157,14 @@ class C_teacher extends MY_Controller {
 		$data['page_pre_url'] = $page_pre_url;
 		$data['page_next_url'] = $page_next_url;
 		$data['status_list'] = $status_list;
-		$data['teacher_freeze_uri'] = base_url("c_teacher/teacher_freeze");
-		$data['teacher_delete_uri'] = base_url("c_teacher/teacher_delete");
-		$data['teacher_active_uri'] = base_url("c_teacher/teacher_active");
-		$data['teacher_set_test_uri'] = base_url("c_teacher/teacher_set_test");
-		$data['teacher_add_uri'] = base_url("c_teacher/teacher_add");
+		$data['teacher_freeze_uri'] = my_site_url("c_teacher/teacher_freeze");
+		$data['teacher_delete_uri'] = my_site_url("c_teacher/teacher_delete");
+		$data['teacher_active_uri'] = my_site_url("c_teacher/teacher_active");
+		$data['teacher_set_test_uri'] = my_site_url("c_teacher/teacher_set_test");
+		$data['teacher_add_uri'] = my_site_url("c_teacher/teacher_add");
+		$data['is_view_model'] = ($parames['is_view_model'])?true:false;
+		$data['view_model_list'] = $view_model_list;
+		$data['search_text'] = isset($parames['F_teacher_name'])?$parames['F_teacher_name']:'';
 
 		$this->_output_view("teacher/v_manager", $data);
 	}
@@ -262,7 +311,7 @@ class C_teacher extends MY_Controller {
 		$data['gender_list'] = $this->my_config['gender_list'];
 		$data['F_teacher_id'] = isset($parames['F_teacher_id'])?$parames['F_teacher_id']:0;
 		$data['js_list'] = array(get_assets_js_url("upload/ajaxfileupload.js"));
-		$data['upload_url'] = base_url("c_teacher/teacher_upload_header");
+		$data['upload_url'] = my_site_url("c_teacher/teacher_upload_header");
 
 		$this->_output_view("teacher/v_edit", $data);
 	}
@@ -315,7 +364,7 @@ class C_teacher extends MY_Controller {
 				$file .= $name;
 				rename($_FILES[$fileElementName]['tmp_name'],$file);
 				$data['name'] = $name;
-				$data['url'] = base_url("public/images/upload/".$name);
+				$data['url'] = my_site_url("public/images/upload/".$name);
 			}
 		}
 		else{
@@ -399,10 +448,10 @@ class C_teacher extends MY_Controller {
 		$data['grade_list'] = $this->my_config['grade_list'];
 		$data['subject_list'] = $this->my_config['subject_list'];
 		$data['gender_list'] = $this->my_config['gender_list'];
-		$data['upload_url'] = base_url("c_teacher/teacher_upload_header");
+		$data['upload_url'] = my_site_url("c_teacher/teacher_upload_header");
 
 		$data['manager_test_url'] = get_controll_url("c_teacher/manager",array("type"=>4));
-		$data['manager_url'] = base_url("c_teacher/manager");
+		$data['manager_url'] = my_site_url("c_teacher/manager");
 		$data['js_list'] = array(get_assets_js_url("upload/ajaxfileupload.js"));
 
 		$this->_output_view("teacher/v_add", $data);

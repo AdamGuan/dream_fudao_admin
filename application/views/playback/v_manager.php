@@ -25,7 +25,7 @@
 		</div>
 	</div>
 
-
+<!--
 	<select id="search_type_choose" class="am-u-md-1 am-fr">
 		<?php foreach($search_type_list as $item){
 			$selected = '';
@@ -36,12 +36,13 @@
 			echo '<option value="'.$item['key'].'" '.$selected.'>'.$item['value'].'</option>';
 		}?>
 	</select>
+	-->
 	<div class="am-u-md-3 am-cf">
 		<div class="am-fr">
 			<div class="am-input-group am-input-group-sm">
-				<input type="text" class="am-form-field" id="search_text" value="<?php echo $search_text;?>">
+				<input type="text" class="am-form-field" placeholder="输入老师账号或学生搜索" id="search_text" value="<?php echo $search_text;?>">
                 <span class="am-input-group-btn">
-                  <button class="am-btn am-btn-default" type="button" id="search_btn_search">搜索</button>
+                  <button class="am-btn am-btn-default" type="button" id="search_btn_search"><i class="am-icon-search"></i>搜索</button>
                 </span>
 			</div>
 		</div>

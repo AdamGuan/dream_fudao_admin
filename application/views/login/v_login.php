@@ -46,11 +46,17 @@
 		<br>
 
 		<form method="post" class="am-form" id="loginform">
-			<label for="name">用户名:</label>
-			<input type="text" name="" id="name" value="">
+<!--			<label for="name">用户名:</label>-->
+			<div class="am-form-group am-form-icon">
+				<i class="am-icon-user"></i>
+				<input type="text" name="" class="am-form-field" id="name" value="" placeholder="用户名">
+			</div>
 			<br>
-			<label for="password">密码:</label>
-			<input type="password" name="" id="password" value="">
+<!--			<label for="password">密码:</label>-->
+			<div class="am-form-group am-form-icon">
+				<i class="am-icon-lock"></i>
+				<input type="password" name="" class="am-form-field" id="password" value="" placeholder="密码">
+			</div>
 			<br>
 			<!--
 			<label for="remember-me">
@@ -58,7 +64,6 @@
 				记住密码
 			</label>
 			-->
-			<br />
 			<div class="am-cf">
 				<input type="submit" id="loginformbtn" name="" value="登 录" class="am-btn am-btn-primary am-btn-sm
 				am-fl">
@@ -82,6 +87,10 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	var login_valid_url = "<?php echo my_site_url('c_login/login_valid');?>";
+</script>
 
 <!--[if lt IE 9]>
 <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>

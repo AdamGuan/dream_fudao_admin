@@ -59,7 +59,7 @@ $(document).ready(function(){
                 //ajax
                 $.ajax({
                     type: "GET",
-                    url: "get_privity_htmlstr",
+                    url: get_privity_htmlstr_url,
                     data: "group_id="+group_id,
                     success: function(msg){
                         //loading end
@@ -135,7 +135,7 @@ $(document).ready(function(){
                     }
                     $.ajax({
                         type: "POST",
-                        url: "group_add_do",
+                        url: group_add_do_url,
                         data: senddata.join("&"),
                         success: function(msg){
                             //success

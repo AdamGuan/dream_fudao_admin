@@ -104,6 +104,8 @@ class M_custom extends MY_Model {
 	public function custom_modify($parames = array()){
 		if(isset($parames['F_teacher_id']))
 		{
+			unset($parames['c']);
+			unset($parames['m']);
 			$data = array(
 				'version'=>$this->my_config['api_version'],
 				'c'=>'custom',
@@ -131,6 +133,8 @@ class M_custom extends MY_Model {
 	public function custom_add($parames = array()){
 		if(isset($parames['F_real_name'],$parames['F_teacher_name'],$parames['F_teacher_password'],$parames['F_gender']))
 		{
+			unset($parames['c']);
+			unset($parames['m']);
 			$data = array(
 				'version'=>$this->my_config['api_version'],
 				'c'=>'custom',

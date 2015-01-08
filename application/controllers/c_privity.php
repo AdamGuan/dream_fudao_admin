@@ -61,7 +61,7 @@ class C_privity extends MY_Controller {
 		$data = $this->_get_data(__CLASS__,__METHOD__);
 		$data['do'] = $this->session->flashdata('do');
 		$data['group_list'] = $group_list_result;
-		$data['group_add_url'] = base_url("c_privity/group_add");
+		$data['group_add_url'] = my_site_url("c_privity/group_add");
 		$data['self_privity_id'] = $this->session->userdata('F_privity_group_id');
 		$data['status_list'] = $status_list;
 
@@ -339,7 +339,7 @@ class C_privity extends MY_Controller {
 		$data['user_list'] = $user_list_result;
 		$data['group_list'] = $group_list;
 		$data['status_list'] = $status_list;
-		$data['user_add_url'] = base_url("c_privity/user_add");
+		$data['user_add_url'] = my_site_url("c_privity/user_add");
 
 		$this->_output_view("privity/v_user_manager", $data);
 	}

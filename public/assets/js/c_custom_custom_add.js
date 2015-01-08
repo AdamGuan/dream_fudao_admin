@@ -50,10 +50,10 @@ $(document).ready(function(){
                         var F_teacher_password = $("#custom_login_pwd").val();
                         if(valid === true)
                         {
-                            if(!(typeof(F_teacher_password) != "undefined" && F_teacher_password.length >= 6 && F_teacher_password.length <= 9))
+                            if(!(typeof(F_teacher_password) != "undefined" && F_teacher_password.length >= 6 && F_teacher_password.length <= 10))
                             {
                                 valid = false;
-                                msg = "密码必须填写,并且大于等于6个字符小于等于9个字符!";
+                                msg = "密码必须填写,6-10位字母、数字以及下划线!";
                             }
                         }
                         //check teacher real name
@@ -86,7 +86,7 @@ $(document).ready(function(){
                             senddata[senddata.length] = "F_gender="+F_gender;
                             $.ajax({
                                 type: "POST",
-                                url: "custom_add_do",
+                                url: custom_add_do_url,
                                 data: senddata.join("&"),
                                 success: function(msg){
                                     //success

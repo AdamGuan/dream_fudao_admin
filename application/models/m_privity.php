@@ -23,6 +23,8 @@ class M_privity extends MY_Model {
 	 *              F_level             int
 	 */
 	public function get_group_list($parames = array()){
+		unset($parames['c']);
+		unset($parames['m']);
 		$result = array();
 		$F_privity_group_id = $this->session->userdata('F_privity_group_id');
 		$is_super_admin = $this->session->userdata('is_super_admin');
@@ -102,6 +104,8 @@ class M_privity extends MY_Model {
 	 */
 	public function group_add($parame = array())
 	{
+		unset($parame['c']);
+		unset($parame['m']);
 		$result = array("error"=>-1,"msg"=>"操作失败,请重试!");
 		if(isset($parame['F_name'],$parame['F_privity']))
 		{
@@ -282,6 +286,8 @@ class M_privity extends MY_Model {
 
 	public function group_update($parame = array())
 	{
+		unset($parame['c']);
+		unset($parame['m']);
 		$result = array("error"=>-1,"msg"=>"操作失败,请重试!");
 		if(isset($parame['F_id'],$parame['F_name'],$parame['F_privity']))
 		{
@@ -476,6 +482,8 @@ class M_privity extends MY_Model {
 
 	public function user_add($parame = array())
 	{
+		unset($parame['c']);
+		unset($parame['m']);
 		$result = array("error"=>-1,"msg"=>"操作失败,请重试!");
 		if(isset($parame['F_login_name'],$parame['F_login_password'],$parame['F_privity_group_id']))
 		{
@@ -554,6 +562,8 @@ class M_privity extends MY_Model {
 
 	public function user_update($parame = array())
 	{
+		unset($parame['c']);
+		unset($parame['m']);
 		$result = array("error"=>-1,"msg"=>"操作失败,请重试!");
 		if(isset($parame['F_id']))
 		{

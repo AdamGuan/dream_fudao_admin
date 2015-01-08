@@ -98,19 +98,19 @@ $config['data'] = array(
 //			'children'=>array()
 //		),
 		array(
+			'prefix_class'=>'am-icon-volume-up',
+			'text'=>'公告管理',
+			'link'=>'c_publish/manager',
+			'active'=>0,
+			'children'=>array()
+		),
+		array(
 			'prefix_class'=>'am-icon-file',
 			'text'=>'个人资料',
 			'link'=>'c_person/index',
 			'active'=>0,
 			'children'=>array()
 		),
-//		array(
-//			'prefix_class'=>'am-icon-file',
-//			'text'=>'公告管理',
-//			'link'=>'c_publish/publish_manager',
-//			'active'=>0,
-//			'children'=>array()
-//		),
 	),
 	'global_all_privity_list'=>array(   //权限列表
 		array(
@@ -193,7 +193,29 @@ $config['data'] = array(
 				),
 				array(
 					'text'=>'学生管理',
-					'link'=>'c_student/manager',
+					'link'=>'',
+					'children'=>array(
+						array(
+							'text'=>'学生列表',
+							'link'=>'c_student/manager',
+						),
+						array(
+							'text'=>'学生老师',
+							'link'=>'c_student/student_freeze',
+						),
+						array(
+							'text'=>'学生老师',
+							'link'=>'c_student/student_delete',
+						),
+						array(
+							'text'=>'学生老师',
+							'link'=>'c_student/student_active',
+						),
+						array(
+							'text'=>'设置学生为测试帐号',
+							'link'=>'c_student/student_set_test',
+						),
+					)
 				),
 			)
 		),
@@ -224,21 +246,11 @@ $config['data'] = array(
 			'link'=>'c_playback/manager',
 			'children'=>array()
 		),
-//		array(
-//			'text'=>'日志',
-//			'link'=>'c_log/list',
-//			'children'=>array()
-//		),
 		array(
 			'text'=>'个人资料',
 			'link'=>'c_person/index',
 			'children'=>array()
 		),
-//		array(
-//			'text'=>'公告管理',
-//			'link'=>'c_publish/publish_manager',
-//			'children'=>array()
-//		),
 	),
 	'teacher_privity'=>array(   //老师权限
 		'c_login/index',
@@ -313,13 +325,19 @@ $config['status_list_view'] = array(
 	array("id"=>"2","text"=>"删除的老师","privity"=>"c_teacher/teacher_delete"),
 	array("id"=>"4","text"=>"测试的老师","privity"=>"c_teacher/teacher_set_test"),
 );
+$config['status_list_view_student'] = array(
+	array("id"=>"0","text"=>"激活的学生","privity"=>"c_student/student_active"),
+	array("id"=>"1","text"=>"冻结的学生","privity"=>"c_student/student_freeze"),
+	array("id"=>"2","text"=>"删除的学生","privity"=>"c_student/student_delete"),
+	array("id"=>"4","text"=>"测试的学生","privity"=>"c_student/student_set_test"),
+);
 //客服
 $config['status_list_view_custom'] = array(
 	array("id"=>"0","text"=>"激活的客服","privity"=>"c_custom/custom_active"),
 	array("id"=>"1","text"=>"冻结的客服","privity"=>"c_custom/custom_freeze"),
 );
 //列表页面
-$config['page'] = 10;
+$config['page'] = 12;
 
 //年级
 $config['class_list'] = array(

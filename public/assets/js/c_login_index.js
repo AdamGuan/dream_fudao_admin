@@ -16,7 +16,7 @@ $(document).ready(function(){
                     //ajax
                     $.ajax({
                         type: "GET",
-                        url: "login_valid",
+                        url: login_valid_url,
                         data: "name="+name+"&pwd="+pwd,
                         success: function(data){
                             if(typeof(data.error) != "undefined" && data.error == 0)

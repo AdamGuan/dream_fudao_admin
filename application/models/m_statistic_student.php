@@ -17,6 +17,8 @@ class M_statistic_student extends MY_Model {
 		$return = array();
 		if(isset($parames['datetype'],$parames['date']))
 		{
+			unset($parames['c']);
+			unset($parames['m']);
 			$return['datetype'] = (int)$parames['datetype'];
 			$data = array('version'=>$this->my_config['api_version'],'c'=>'statistics_student');
 			switch((int)$parames['datetype']){

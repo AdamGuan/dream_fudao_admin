@@ -42,7 +42,7 @@ $(document).ready(function(){
 
                     $.ajax({
                         type: "GET",
-                        url: "user_active",
+                        url: user_active_url,
                         data: "F_ids="+F_ids,
                         success: function(msg){
                             msg = eval(msg);
@@ -91,7 +91,7 @@ $(document).ready(function(){
 
                             $.ajax({
                                 type: "GET",
-                                url: "user_delete",
+                                url: user_delete_url,
                                 data: "F_ids="+F_ids,
                                 success: function(msg){
                                     msg = eval(msg);
@@ -145,7 +145,7 @@ $(document).ready(function(){
 
                             $.ajax({
                                 type: "GET",
-                                url: "user_freeze",
+                                url: user_freeze_url,
                                 data: "F_ids="+F_ids,
                                 success: function(msg){
                                     msg = eval(msg);
@@ -190,7 +190,7 @@ $(document).ready(function(){
 
                 $.ajax({
                     type: "GET",
-                    url: "user_active",
+                    url: user_active_url,
                     data: "F_ids="+$(this).attr("F_id"),
                     success: function(msg){
                         msg = eval(msg);
@@ -221,7 +221,7 @@ $(document).ready(function(){
 
                         $.ajax({
                             type: "GET",
-                            url: "user_freeze",
+                            url: user_freeze_url,
                             data: "F_ids="+$btn.attr("F_id"),
                             success: function(msg){
                                 msg = eval(msg);
@@ -257,7 +257,7 @@ $(document).ready(function(){
 
                         $.ajax({
                             type: "GET",
-                            url: "user_delete",
+                            url: user_delete_url,
                             data: "F_ids="+$btn.attr("F_id"),
                             success: function(msg){
                                 msg = eval(msg);

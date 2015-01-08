@@ -108,7 +108,7 @@ $(document).ready(function(){
                     senddata[senddata.length] = "F_id="+group_id;
                     $.ajax({
                         type: "POST",
-                        url: "group_modify_do",
+                        url: group_modify_do_url,
                         data: senddata.join("&"),
                         success: function(msg){
                             //success

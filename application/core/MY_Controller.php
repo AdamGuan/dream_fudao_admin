@@ -125,7 +125,9 @@ class MY_Controller extends CI_Controller {
 
 		$data['global_login_name'] = $this -> session -> userdata('F_login_name');
 		$data['global_role'] = $this -> session -> userdata('F_role_name');
-		$data['global_notice'] = '';
+
+		$this -> load -> model('M_publish', 'mpublish');
+		$data['global_notice'] = $this->mpublish->get_last_publish_content();
 
 		return $data;
 	}

@@ -17,6 +17,8 @@ class M_statistic_timesection extends MY_Model {
 		$return = array();
 		if(isset($parames['type'],$parames['datetype'],$parames['date']))
 		{
+			unset($parames['c']);
+			unset($parames['m']);
 			$return['type'] = (int)$parames['type'];
 			$return['datetype'] = (int)$parames['datetype'];
 			$data = array('version'=>$this->my_config['api_version'],'c'=>'statistics_timesection');

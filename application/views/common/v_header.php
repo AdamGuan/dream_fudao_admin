@@ -31,14 +31,7 @@
 
 		<ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
 			<li><a href="javascript:;"><span class="am-icon-at"></span> 帐号:<?php echo $global_login_name;?></a></li>
-			<li class="am-dropdown" data-am-dropdown>
-				<a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
-					<span class="am-icon-user"></span> <?php echo $global_role;?> <span class="am-icon-caret-down"></span>
-				</a>
-				<ul class="am-dropdown-content">
-					<li><a href="#"><span class="am-icon-user"></span>个人资料</a></li>
-				</ul>
-			</li>
+			<li><a href="javascript:;"><span class="am-icon-user"></span> <?php echo $global_role;?></a></li>
 			<li><a id="exit" href="#"><span class="am-icon-power-off"></span> 退出</a></li>
 		</ul>
 	</div>
@@ -72,10 +65,10 @@
 								{
 									$active = 1;
 									$content_title = $subitem['text'];
-									$output_str_tmp .= '<li><a class="leftbara" href="'.base_url($subitem['link']).'"><span class="'.$subitem['prefix_class'].'"></span> '.$subitem['text'].'<span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span></a></li>';
+									$output_str_tmp .= '<li><a class="leftbara" href="'.my_site_url($subitem['link']).'"><span class="'.$subitem['prefix_class'].'"></span> '.$subitem['text'].'<span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span></a></li>';
 								}
 								else{
-									$output_str_tmp .= '<li><a class="leftbara" href="'.base_url($subitem['link']).'"><span class="'.$subitem['prefix_class'].'"></span> '.$subitem['text'].'</a></li>';
+									$output_str_tmp .= '<li><a class="leftbara" href="'.my_site_url($subitem['link']).'"><span class="'.$subitem['prefix_class'].'"></span> '.$subitem['text'].'</a></li>';
 								}
 							}
 						}
@@ -109,7 +102,7 @@
 						}
 						else
 						{
-							$output_str .= '<li><a class="leftbara" href="'.base_url($item['link']).'"><span class="'.$item['prefix_class'] .'"></span> ' .$item['text'];
+							$output_str .= '<li><a class="leftbara" href="'.my_site_url($item['link']).'"><span class="'.$item['prefix_class'] .'"></span> ' .$item['text'];
 							if($item['link'] == $global_active)
 							{
 								$output_str .= '<span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span>';

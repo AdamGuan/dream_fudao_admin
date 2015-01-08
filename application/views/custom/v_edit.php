@@ -15,7 +15,7 @@
 			<div class="am-form-group">
 				<label for="custom_login_pwd" class="am-u-sm-3 am-form-label">密码</label>
 				<div class="am-u-sm-9">
-					<input type="password" id="custom_login_pwd" placeholder="输入客服的密码,为空则保持不变." value="">
+					<input type="password" id="custom_login_pwd" placeholder="密码,为空则保持不变,6-10位字母、数字以及下划线" value="">
 				</div>
 			</div>
 
@@ -55,4 +55,5 @@
 
 <script>
 	var F_teacher_id = "<?php echo $F_teacher_id;?>";
+	var custom_modify_url = "<?php echo my_site_url('c_custom/custom_modify');?>";
 </script>
