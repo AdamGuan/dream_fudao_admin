@@ -31,18 +31,35 @@ CREATE TABLE IF NOT EXISTS `t_privity_group` (
   `F_modify_time` datetime NOT NULL COMMENT '修改时间',
   `F_level` tinyint(1) NOT NULL DEFAULT '-1' COMMENT '0为超级管理员，-1为其它,1为老师',
   PRIMARY KEY (`F_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='权限组';
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='权限组';
 
--- 正在导出表  dream_fudao_admin.t_privity_group 的数据：5 rows
+-- 正在导出表  dream_fudao_admin.t_privity_group 的数据：2 rows
 DELETE FROM `t_privity_group`;
 /*!40000 ALTER TABLE `t_privity_group` DISABLE KEYS */;
 INSERT INTO `t_privity_group` (`F_id`, `F_pid`, `F_name`, `F_description`, `F_privity`, `F_status`, `F_could_has_child`, `F_create_by_uid`, `F_create_time`, `F_modify_time`, `F_level`) VALUES
 	(1, 0, '超级管理员', '', 'all', 1, 1, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
-	(2, 1, '运营管理者', '', '', 1, 1, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', -1),
-	(3, 2, '运营人员', '', '', 1, 0, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', -1),
-	(11, 1, '测试人员', '', 'c_teacher/manager,c_teacher/teacher_edit,c_teacher/teacher_add,c_teacher/teacher_freeze,c_teacher/teacher_delete,c_teacher/teacher_active,c_teacher/teacher_set_test,c_student/manager,c_index/index4', 1, 1, 1, '2014-12-31 13:41:24', '2014-12-31 14:36:12', -1),
-	(9, 1, '开发人员', '', 'c_login/index,c_index/index,c_teacher/manager,c_teacher/teacher_edit,c_teacher/teacher_add,c_teacher/teacher_freeze,c_teacher/teacher_delete,c_teacher/teacher_active,c_teacher/teacher_set_test,c_student/manager,c_index/index4,c_index/index5,c_index/index6,c_index/index7,c_index/index8,c_index/index10,c_privity/group_manager,c_privity/group_add,c_privity/user_list,c_index/index12,c_publish/publish_manager', 1, 0, 1, '2014-12-31 10:57:33', '2014-12-31 14:36:12', -1);
+	(12, 1, '运营人员1', '', 'c_login/index,c_index/index,c_teacher/manager,c_teacher/teacher_edit,c_teacher/teacher_add,c_teacher/teacher_freeze,c_teacher/teacher_delete,c_teacher/teacher_active,c_custom/manager,c_custom/custom_edit,c_custom/custom_add,c_custom/custom_freeze,c_custom/custom_delete,c_custom/custom_active,c_student/manager,c_statistic_realtime/index,c_statistic_timesection/index,c_statistic_teacher/index,c_statistic_student/index,c_playback/manager,c_person/index', 1, 0, 1, '2015-01-07 08:58:54', '2015-01-08 18:20:23', -1);
 /*!40000 ALTER TABLE `t_privity_group` ENABLE KEYS */;
+
+
+-- 导出  表 dream_fudao_admin.t_publish 结构
+DROP TABLE IF EXISTS `t_publish`;
+CREATE TABLE IF NOT EXISTS `t_publish` (
+  `F_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `F_title` varchar(250) NOT NULL COMMENT '标题',
+  `F_content` text NOT NULL COMMENT '内容',
+  `F_status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态(1:有效,0无效)',
+  `F_create_time` datetime NOT NULL COMMENT '创建时间',
+  `F_modify_time` datetime NOT NULL COMMENT '修改时间',
+  PRIMARY KEY (`F_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COMMENT='公告';
+
+-- 正在导出表  dream_fudao_admin.t_publish 的数据：1 rows
+DELETE FROM `t_publish`;
+/*!40000 ALTER TABLE `t_publish` DISABLE KEYS */;
+INSERT INTO `t_publish` (`F_id`, `F_title`, `F_content`, `F_status`, `F_create_time`, `F_modify_time`) VALUES
+	(15, '新版', '新版本上线了，请修改自己的密码', 1, '2015-01-08 16:09:02', '2015-01-08 16:09:02');
+/*!40000 ALTER TABLE `t_publish` ENABLE KEYS */;
 
 
 -- 导出  表 dream_fudao_admin.t_teacher 结构
@@ -73,13 +90,13 @@ CREATE TABLE IF NOT EXISTS `t_user` (
   PRIMARY KEY (`F_id`),
   UNIQUE KEY `F_login_name` (`F_login_name`),
   KEY `F_role_id` (`F_privity_group_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='后台用户表';
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='后台用户表';
 
--- 正在导出表  dream_fudao_admin.t_user 的数据：2 rows
+-- 正在导出表  dream_fudao_admin.t_user 的数据：1 rows
 DELETE FROM `t_user`;
 /*!40000 ALTER TABLE `t_user` DISABLE KEYS */;
 INSERT INTO `t_user` (`F_id`, `F_login_name`, `F_login_password`, `F_nick_name`, `F_privity_group_id`, `F_status`, `F_create_time`, `F_modify_time`) VALUES
-	(1, 'admin', 'admin', 'admin', 1, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+	(1, 'admin', '111111', 'admin', 1, 1, '0000-00-00 00:00:00', '2015-01-08 10:17:26');
 /*!40000 ALTER TABLE `t_user` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
