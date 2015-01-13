@@ -27,7 +27,7 @@ class M_login extends MY_Model {
 			//在管理员表里面查询
 			$sql = 'SELECT u.F_id,u.F_login_name,pg.F_name as F_privity_group_name,pg.F_privity,pg.F_could_has_child,pg.F_level,pg.F_id as F_privity_group_id
 					FROM t_user as u,t_privity_group as pg
-					WHERE u.F_login_name="' .$username.'"AND
+					WHERE u.F_login_name="' .$username.'" AND
 					u.F_login_password= "'.$pwd.'" AND
 					u.F_privity_group_id = pg.F_id AND
 					pg.F_status = 1 LIMIT 1';

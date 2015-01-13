@@ -267,12 +267,20 @@ $config['data'] = array(
 					'title'=>'老师管理',
 					'action'=>'c_teacher/manager',
 					'parames'=>array(),
+					'prefix_class'=>'am-icon-list',
 				),
 				array(
 					'title'=>'添加老师',
 					'action'=>'c_teacher/teacher_add',
 					'parames'=>array(),
-				)
+					'prefix_class'=>'am-icon-plus-square',
+				),
+				array(
+					'title'=>'客服管理',
+					'action'=>'c_custom/manager',
+					'parames'=>array(),
+					'prefix_class'=>'am-icon-list',
+				),
 			)
 		),
 		array(
@@ -282,6 +290,7 @@ $config['data'] = array(
 					'title'=>'实时统计',
 					'action'=>'c_statistic_realtime/index',
 					'parames'=>array(),
+					'prefix_class'=>'am-icon-line-chart',
 				),
 			)
 		)

@@ -5,10 +5,8 @@
 </div>
 
 <ul class="am-avg-sm-1 am-avg-md-2 am-margin am-padding am-text-center admin-content-list ">
-	<li><a href="#" class="am-text-success"><span class="am-icon-btn
-	am-icon-file-text"></span><br/>在线老师<br/><?php echo $teacher_online_num;?></a></li>
-	<li><a href="#" class="am-text-warning"><span class="am-icon-btn
-	am-icon-file-text"></span><br/>在线学生<br/><?php echo $student_online_num;?></a></li>
+	<li><br/>在线老师<a class="am-badge am-badge-primary am-round am-text-default am-badge-secondary"><?php echo $teacher_online_num;?></a></li>
+	<li><br/>在线学生<a class="am-badge am-badge-success am-round am-text-default am-badge-secondary"><?php echo $student_online_num;?></a></li>
 </ul>
 
 <?php if(isset($action_link) && is_array($action_link) && count($action_link) > 0){?>
@@ -24,7 +22,7 @@
 		echo '<div class="am-panel-bd"><ul class="am-avg-sm am-margin am-padding am-text-left admin-content-list ">';
 		foreach($item['list'] as $it)
 		{
-			echo '<li><span class="am-icon-btn am-icon-file-text"></span><a href="'.$it['url'].'">'.$it['title'].'</a></li>';
+			echo '<li style="margin-left: 10px;border: none;"><a href="'.$it['url'].'"><span class="am-icon-btn '.$it['prefix_class'].'"></span>'.$it['title'].'</a></li>';
 		}
 		echo '</ul></div></section>';
 	}?>

@@ -65,7 +65,7 @@
 								{
 									$active = 1;
 									$content_title = $subitem['text'];
-									$output_str_tmp .= '<li><a class="leftbara" href="'.my_site_url($subitem['link']).'"><span class="'.$subitem['prefix_class'].'"></span> '.$subitem['text'].'<span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span></a></li>';
+									$output_str_tmp .= '<li style="background-color:#ddd"><a class="leftbara" href="'.my_site_url($subitem['link']).'"><span class="'.$subitem['prefix_class'].'"></span> '.$subitem['text'].'<span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span></a></li>';
 								}
 								else{
 									$output_str_tmp .= '<li><a class="leftbara" href="'.my_site_url($subitem['link']).'"><span class="'.$subitem['prefix_class'].'"></span> '.$subitem['text'].'</a></li>';
@@ -102,13 +102,17 @@
 						}
 						else
 						{
-							$output_str .= '<li><a class="leftbara" href="'.my_site_url($item['link']).'"><span class="'.$item['prefix_class'] .'"></span> ' .$item['text'];
 							if($item['link'] == $global_active)
 							{
+								$output_str .= '<li style="background-color:#ddd"><a class="leftbara" href="'.my_site_url($item['link']).'"><span class="'.$item['prefix_class'] .'"></span> ' .$item['text'];
 								$output_str .= '<span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span>';
+								$output_str .= '</a></li>';
 								$content_title = $item['text'];
 							}
-							$output_str .= '</a></li>';
+							else{
+								$output_str .= '<li><a class="leftbara" href="'.my_site_url($item['link']).'"><span class="'.$item['prefix_class'] .'"></span> ' .$item['text'];
+								$output_str .= '</a></li>';
+							}
 						}
 					}
 				}
