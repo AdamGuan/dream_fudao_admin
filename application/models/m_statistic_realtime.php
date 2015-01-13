@@ -19,47 +19,47 @@ class M_statistic_realtime extends MY_Model {
 			$type = (int)$parames['type'];
 			$data_list = array();
 			$data_list[] = array(
-				'version'=>'server_v1',
+				'version'=>$this->my_config['api_version'],
 				'c'=>'statistics_realtime',
 				'm'=>'get_teacher_statistics_realtime',
 			);
 			$data_list[] = array(
-				'version'=>'server_v1',
+				'version'=>$this->my_config['api_version'],
 				'c'=>'statistics_realtime',
 				'm'=>'get_user_statistics_realtime',
 			);
 			switch($type){
 				case 0:
 					$data_list[] = array(
-						'version'=>'server_v1',
+						'version'=>$this->my_config['api_version'],
 						'c'=>'statistics_realtime',
 						'm'=>'get_ask_times_today_timesection',
 					);
 					break;
 				case 1:
 					$data_list[] = array(
-						'version'=>'server_v1',
+						'version'=>$this->my_config['api_version'],
 						'c'=>'statistics_realtime',
 						'm'=>'get_ask_people_number_today_timesection',
 					);
 					break;
 				case 2:
 					$data_list[] = array(
-						'version'=>'server_v1',
+						'version'=>$this->my_config['api_version'],
 						'c'=>'statistics_realtime',
 						'm'=>'get_teaching_times_today_timesection',
 					);
 					break;
 				case 3:
 					$data_list[] = array(
-						'version'=>'server_v1',
+						'version'=>$this->my_config['api_version'],
 						'c'=>'statistics_realtime',
 						'm'=>'get_online_people_number_today_timesection',
 					);
 					break;
 				default:
 					$data_list[] = array(
-						'version'=>'server_v1',
+						'version'=>$this->my_config['api_version'],
 						'c'=>'statistics_realtime',
 						'm'=>'get_ask_times_today_timesection',
 					);

@@ -57,11 +57,16 @@
 <table class="am-table am-table-striped am-table-hover table-main">
 <thead>
 <tr>
-	<th class="table-check"><input type="checkbox" id="playback_select" /></th><th>序号</th><th>教师姓名</th><th>学生姓名</th><th>ID</th><th>封面图</th><th>开始时间</th><th>回放时长</th><th>精彩回放</th><th>管理</th>
+	<th class="table-check"><input type="checkbox" id="playback_select" /></th><th>序号</th><th>教师姓名</th><th>学生姓名</th><th>ID</th><th>封面图</th><th>开始时间</th><th>回放时长</th><th>精彩回放</th><th>异常</th><th>管理</th>
 </tr>
 </thead>
 <tbody>
 <?php foreach($playback_list as $k=>$playback){
+	$exception_desc = "否";
+	if(isset($playback['F_relation_type']))
+	{
+		$exception_desc = "<span style='color: red;'>是</span>";
+	}
 	$str = '';
 	$str .= '<tr>';
 	$str .= '<td><input type="checkbox" F_order_id="'.$playback['F_order_id'].'" id="playback_check'.$playback['F_order_id'].'" /></td>';
@@ -73,6 +78,7 @@
 	$str .= '<td>'.$playback['F_start_time'].'</td>';
 	$str .= '<td>'.$playback['F_duration_time'].'</td>';
 	$str .= '<td>'.$playback['F_wonderful_text'].'</td>';
+	$str .= '<td>'.$exception_desc.'</td>';
 	$tmp  = "";
 	$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-danger" F_order_id="'.$playback['F_order_id'].'"  id="playback_active'.$k.'"><span class="am-icon-check"></span> 设为精彩</button>';
 	$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-secondary" F_order_id="'.$playback['F_order_id'].'"  id="playback_deactive'.$k.'"><span class="am-icon-close"></span> 设为非精彩</button>';

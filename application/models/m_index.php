@@ -10,7 +10,7 @@ class M_index extends MY_Model {
 
 	public function get_online_teacher_num(){
 		$data = array(
-			'version'=>'server_v1',
+			'version'=>$this->my_config['api_version'],
 			'c'=>'statistics_realtime',
 			'm'=>'get_teacher_statistics_realtime',
 		);
@@ -25,7 +25,7 @@ class M_index extends MY_Model {
 
 	public function get_online_student_num(){
 		$data = array(
-			'version'=>'server_v1',
+			'version'=>$this->my_config['api_version'],
 			'c'=>'statistics_realtime',
 			'm'=>'get_user_statistics_realtime',
 		);
@@ -41,12 +41,12 @@ class M_index extends MY_Model {
 	public function get_online_num(){
 		$data_list = array();
 		$data_list[] = array(
-			'version'=>'server_v1',
+			'version'=>$this->my_config['api_version'],
 			'c'=>'statistics_realtime',
 			'm'=>'get_teacher_statistics_realtime',
 		);
 		$data_list[] = array(
-			'version'=>'server_v1',
+			'version'=>$this->my_config['api_version'],
 			'c'=>'statistics_realtime',
 			'm'=>'get_user_statistics_realtime',
 		);

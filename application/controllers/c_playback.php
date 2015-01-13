@@ -9,7 +9,7 @@ class C_playback extends MY_Controller {
 	/**
 	 * 回放管理
 	 * @param array $parames
-	 *          type    int 0所有，1精彩,2非精彩
+	 *          type    int 0所有，1精彩,2非精彩,3异常
 	 *          page    int 列表页面
 	 */
 	public function manager($parames = array())
@@ -134,6 +134,13 @@ class C_playback extends MY_Controller {
 			'value'=>'非精彩',
 			'active'=>false
 		);
+		$parames2tmp['type'] = 3;
+		$url = get_controll_url("c_playback/manager",$parames2tmp);
+		$status_list[] = array(
+			'key'=>$url,
+			'value'=>'异常',
+			'active'=>false
+		);
 		unset($parames2tmp);
 		switch((int)$parames3['type'])
 		{
@@ -145,6 +152,9 @@ class C_playback extends MY_Controller {
 				break;
 			case 2:
 				$status_list[2]['active'] = true;
+				break;
+			case 3:
+				$status_list[3]['active'] = true;
 				break;
 			default:
 				$status_list[0]['active'] = true;

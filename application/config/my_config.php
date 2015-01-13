@@ -85,6 +85,13 @@ $config['data'] = array(
 			'children'=>array()
 		),
 		array(
+			'prefix_class'=>'am-icon-bug',
+			'text'=>'异常',
+			'link'=>'c_exception/manager',
+			'active'=>0,
+			'children'=>array()
+		),
+		array(
 			'prefix_class'=>'am-icon-gear',
 			'text'=>'权限组管理',
 			'link'=>'c_privity/group_manager',
@@ -247,6 +254,11 @@ $config['data'] = array(
 			'children'=>array()
 		),
 		array(
+			'text'=>'异常',
+			'link'=>'c_exception/manager',
+			'children'=>array()
+		),
+		array(
 			'text'=>'个人资料',
 			'link'=>'c_person/index',
 			'children'=>array()
@@ -300,7 +312,7 @@ $config['data'] = array(
 //api
 $config['api_uri'] = 'http://yunfudao.strongwind.cn/api/index.php';
 $config['api_key'] = '731222260492(readboy)25489884364';
-$config['api_version'] = 'server_v1';
+$config['api_version'] = 'server_v2';
 
 //1：小学，2：初中，3：高中
 $config['grade_list'] = array(
