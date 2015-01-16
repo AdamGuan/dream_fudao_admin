@@ -273,6 +273,17 @@ $config['data'] = array(
 	),
 	'action_link'=>array(   //快捷操作
 		array(
+			'title'=>'统计分析',
+			'list'=>array(
+				array(
+					'title'=>'实时统计',
+					'action'=>'c_statistic_realtime/index',
+					'parames'=>array(),
+					'prefix_class'=>'am-icon-line-chart',
+				),
+			)
+		),
+		array(
 			'title'=>'角色管理',
 			'list'=>array(
 				array(
@@ -292,17 +303,6 @@ $config['data'] = array(
 					'action'=>'c_custom/manager',
 					'parames'=>array(),
 					'prefix_class'=>'am-icon-list',
-				),
-			)
-		),
-		array(
-			'title'=>'统计分析',
-			'list'=>array(
-				array(
-					'title'=>'实时统计',
-					'action'=>'c_statistic_realtime/index',
-					'parames'=>array(),
-					'prefix_class'=>'am-icon-line-chart',
 				),
 			)
 		)
