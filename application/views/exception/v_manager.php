@@ -20,12 +20,12 @@
 <table class="am-table am-table-striped am-table-hover table-main">
 <thead>
 <tr>
-	<th class="table-check"><th>序号</th><th>教师姓名</th><th>学生姓名</th><th>订单ID号</th><th>关系类型</th><th>异常号码</th><th>异常描述</th><th>异常时间</th>
+	<th>序号</th><th>教师姓名</th><th>学生姓名</th><th>订单ID号</th><th>关系类型</th><th>异常号码</th><th>异常描述</th><th>异常时间</th>
 </tr>
 </thead>
 <tbody>
 <?php foreach($playback_list as $k=>$playback){
-	$relation = ((int)$playback['F_teacher_real_name'] == 0)?"老师":"学生";
+	$relation = ((int)$playback['F_relation_type'] == 0)?"老师":"学生";
 	$str = '';
 	$str .= '<tr>';
 	$str .= '<td>'.($k+1).'</td>';

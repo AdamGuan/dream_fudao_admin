@@ -34,7 +34,15 @@ $(document).ready(function(){
                 },
                 series: [{
                     name: '数量',
-                    data: data
+                    data: data,
+                    dataLabels: {
+                        enabled: true,
+                        rotation: 360,
+                        color: '#FFFFFF',
+                        align: 'right',
+                        x: 4,
+                        y: 20
+                    }
                 }]
             });
 
@@ -55,6 +63,12 @@ $(document).ready(function(){
             $('#datepicker1').datepicker({format: 'yyyy-mm', viewMode: 'months', minViewMode: 'months'});
             $('#datepicker2').datepicker({format: 'yyyy/', viewMode: 'years', minViewMode: 'years'});
             $('#datepicker'+datetype).show();
+            $('#datepicker'+datetype).datepicker('setValue', $('#date'+datetype).val());
+            $('div[id^="datepicker"]').datepicker().
+                on('changeDate.datepicker.amui', function(event) {
+                    $(this).datepicker('close');
+                }
+            );
         };
 
         //search
@@ -64,14 +78,14 @@ $(document).ready(function(){
                 var $btn = $(this);
                 loadingStart($btn);
 
-                var url = location.href;
+                //var url = location.href;
                 var type0 = $("#datetypelist option:selected").attr("value");
                 var type1 = $("#typelist option:selected").attr("value");
                 var date = $("#date"+type0).val();
                 date = date.replace("/","");
-                var list = url.split("?");
-                var url_pre = list[0];
-                url = url_pre+"?type="+type1+"&datetype="+type0+"&date="+date;
+                //var list = url.split("?");
+                //var url_pre = list[0];
+                url = currentPageBaseUrl+"&type="+type1+"&datetype="+type0+"&date="+date;
                 location.href = url;
 
                 return false;

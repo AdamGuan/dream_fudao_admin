@@ -81,6 +81,7 @@ class C_custom extends MY_Controller {
 			}
 			$page_list[] = $item;
 		}
+		$page_list = split_page($page_list,(int)$parames['page']);
 		//set custom status list
 		$status_list = array();
 		foreach($this->my_config['status_list_view_custom'] as $item)

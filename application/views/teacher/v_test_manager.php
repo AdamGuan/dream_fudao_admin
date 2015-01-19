@@ -3,39 +3,24 @@
 		<div class="am-fl am-cf">
 			<div class="am-btn-toolbar am-fl">
 				<div class="am-btn-group am-btn-group-xs">
-					<?php if(check_privity("c_teacher/teacher_add")){?>
+					<?php if(check_privity("c_teacher/test_teacher_add")){?>
 					<button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" id="teacher_add" url="<?php echo $teacher_add_uri;?>"><span class="am-icon-plus"></span>新增</button>
 					<?php }?>
 					<?php if(check_privity("c_teacher/teacher_delete")){?>
 					<button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger" id="teachers_delete"><span class="am-icon-remove"></span> 删除</button>
 					<?php }?>
+					<!--
 					<?php if(check_privity("c_teacher/teacher_freeze")){?>
 					<button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger" id="teachers_freezon"><span class="am-icon-asterisk"></span>冻结</button>
 					<?php }?>
 					<?php if(check_privity("c_teacher/teacher_active")){?>
 					<button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" id="teachers_active"><span class="am-icon-check"></span>激活</button>
 					<?php }?>
-					<!--
 					<?php if(check_privity("c_teacher/teacher_set_test")){?>
 					<button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" id="teachers_test"><span class="am-icon-archive"></span>设为测试帐号</button>
 					<?php }?>
 					-->
 				</div>
-
-				<?php if(is_array($status_list) && count($status_list) > 0){?>
-				<div class="am-form-group am-margin-left am-fl">
-					<select id="teacher_status_choose">
-						<?php foreach($status_list as $item){
-							$selected = '';
-							if(isset($item['active']) && $item['active'])
-							{
-								$selected = 'selected="selected"';
-							}
-							echo '<option value="'.$item['key'].'" '.$selected.'>'.$item['value'].'</option>';
-						}?>
-					</select>
-				</div>
-				<?php }?>
 
 				<?php if(is_array($view_model_list) && count($view_model_list) > 0){?>
 				<div class="am-form-group am-margin-left am-fl">
@@ -77,7 +62,7 @@
 <table class="am-table am-table-striped am-table-hover table-main">
 <thead>
 <tr>
-	<th class="table-check"><input type="checkbox" id="teacher_select" /></th><th>序号</th><th>账号</th><th>名字</th><th>ID</th><th>专长学科</th><th>年级</th><th>状态</th><th>金币</th><th>管理</th>
+	<th class="table-check"><input type="checkbox" id="teacher_select" /></th><th>序号</th><th>账号</th><th>名字</th><th>ID</th><th>专长学科</th><th>年级</th><th>金币</th><th>管理</th>
 </tr>
 </thead>
 <tbody>
@@ -92,7 +77,6 @@
 	$str .= '<td>'.$teacher['F_teacher_id'].'</td>';
 	$str .= '<td>'.$teacher['F_subject_text'].'</td>';
 	$str .= '<td>'.$teacher['F_grade_text'].'</td>';
-	$str .= '<td>'.$teacher['F_status_text'].'</td>';
 	$str .= '<td>'.$teacher['F_coin'].'</td>';
 	$tmp  = "";
 	if(check_privity("c_teacher/teacher_edit")){
@@ -177,8 +161,8 @@
 
 
 <script>
-	var teacher_freeze_uri = "<?php echo $teacher_freeze_uri;?>";
+//	var teacher_freeze_uri = "<?php //echo $teacher_freeze_uri;?>//";
 	var teacher_delete_uri = "<?php echo $teacher_delete_uri;?>";
-	var teacher_active_uri = "<?php echo $teacher_active_uri;?>";
+//	var teacher_active_uri = "<?php //echo $teacher_active_uri;?>//";
 //	var teacher_set_test_uri = "<?php //echo $teacher_set_test_uri;?>//";
 </script>

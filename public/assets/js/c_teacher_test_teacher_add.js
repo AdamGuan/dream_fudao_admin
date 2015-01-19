@@ -1,6 +1,6 @@
 $(document).ready(function(){
     //模块定义
-    var teacherAddModule = function($){
+    var testTeacherAddModule = function($){
 
         //loading start
         var loadingStart = function(obj){
@@ -196,7 +196,7 @@ $(document).ready(function(){
             }
             //check teacher type
             //var F_status = $("#teacher_type option:selected").val();
-            var F_status = 0;
+            var F_status = 4;
 
             //check teacher description
             var F_description = $("#teacher_description").val();
@@ -236,7 +236,7 @@ $(document).ready(function(){
                         {
                             if(type == 0)
                             {
-                                top.location.href  = manager_url;
+                                top.location.href  = manager_test_url;
                                 /*
                                 if(F_status == 4)
                                 {
@@ -282,6 +282,6 @@ $(document).ready(function(){
     }(jQuery);
 
     //模块调用
-    teacherAddModule.init();
+    testTeacherAddModule.init();
 
 });

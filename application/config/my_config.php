@@ -27,6 +27,12 @@ $config['data'] = array(
 				),
 				array(
 					'prefix_class'=>'am-icon-list',
+					'text'=>'测试老师管理',
+					'link'=>'c_teacher/test_manager',
+					'active'=>0,
+				),
+				array(
+					'prefix_class'=>'am-icon-list',
 					'text'=>'客服管理',
 					'link'=>'c_custom/manager',
 					'active'=>0
@@ -143,6 +149,10 @@ $config['data'] = array(
 							'link'=>'c_teacher/manager',
 						),
 						array(
+							'text'=>'测试老师管理',
+							'link'=>'c_teacher/test_manager',
+						),
+						array(
 							'text'=>'修改老师',
 							'link'=>'c_teacher/teacher_edit',
 						),
@@ -161,10 +171,6 @@ $config['data'] = array(
 						array(
 							'text'=>'激活老师',
 							'link'=>'c_teacher/teacher_active',
-						),
-						array(
-							'text'=>'设置老师为测试帐号',
-							'link'=>'c_teacher/teacher_set_test',
 						),
 					)
 				),
@@ -343,8 +349,8 @@ $config['status_list'] = array('0'=>'激活','1'=>'冻结','2'=>'删除','3'=>'�
 $config['status_list_view'] = array(
 	array("id"=>"0","text"=>"激活的老师","privity"=>"c_teacher/teacher_active"),
 	array("id"=>"1","text"=>"冻结的老师","privity"=>"c_teacher/teacher_freeze"),
-	array("id"=>"2","text"=>"删除的老师","privity"=>"c_teacher/teacher_delete"),
-	array("id"=>"4","text"=>"测试的老师","privity"=>"c_teacher/teacher_set_test"),
+//	array("id"=>"2","text"=>"删除的老师","privity"=>"c_teacher/teacher_delete"),
+//	array("id"=>"4","text"=>"测试的老师","privity"=>"c_teacher/teacher_set_test"),
 );
 $config['status_list_view_student'] = array(
 	array("id"=>"0","text"=>"激活的学生","privity"=>"c_student/student_active"),

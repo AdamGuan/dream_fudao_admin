@@ -124,6 +124,7 @@ class M_teacher extends MY_Model {
 		$result = api_curl($this->my_config['api_uri'], $data, "POST", $this->my_config['api_key']);
 		$result = json_decode($result,true);
 
+
 		if(is_array($result) && isset($result['responseNo']) && $result['responseNo'] == 0)
 		{
 			return $result;
@@ -164,6 +165,36 @@ class M_teacher extends MY_Model {
 			}
 		}
 		return array();
+	}
+
+	/**
+	 * 删除老师
+	 * @param array $parames
+	 * @return boolean
+	 */
+	public function teacher_delete($parames = array()){
+		if(isset($parames['F_teacher_ids']))
+		{
+			unset($parames['c']);
+			unset($parames['m']);
+
+			$data = array(
+				'version'=>$this->my_config['api_version'],
+				'c'=>'teacher',
+				'm'=>'delete_teacher',
+			);
+
+			$data = array_merge($data,$parames);
+
+			$result = api_curl($this->my_config['api_uri'], $data, "POST", $this->my_config['api_key']);
+			$result = json_decode($result,true);
+
+			if(is_array($result) && isset($result['responseNo']) && $result['responseNo'] == 0)
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

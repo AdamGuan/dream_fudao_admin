@@ -40,7 +40,7 @@
 <div class="am-cf admin-main">
 	<!-- sidebar start -->
 	<div class="admin-sidebar">
-		<ul class="am-list admin-sidebar-list">
+		<ul class="am-list admin-sidebar-list" data-am-sticky>
 			<?php foreach($global_left_bar as $key=>$item){
 				$output_str = '';
 				if(isset($item['children']) && is_array($item['children']) && count($item['children']) > 0){
@@ -133,9 +133,12 @@
 	<div class="admin-content">
 
 		<div class="am-cf am-padding">
+			<!--
 			<div class="am-fl am-cf"><strong class="am-text-primary am-text-lg"><?php echo isset($content_title)
 	?$content_title:"";?></strong></div>
+
 			<hr data-am-widget="divider" style="" class="am-divider am-divider-default"/>
+			-->
 		</div>
 
 

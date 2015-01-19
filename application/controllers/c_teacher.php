@@ -39,19 +39,11 @@ class C_teacher extends MY_Controller {
 		if(!isset($parames['is_view_model']))
 		{
 			$tmp = $this -> session -> userdata('is_view_model');
-			if(isset($tmp) && $tmp == 1)
-			{
-				$parames['is_view_model'] = 1;
-			}
-			else{
-				$parames['is_view_model'] = 0;
-			}
+			$parames['is_view_model'] = (isset($tmp) && in_array($tmp,array(-1,1)))?$tmp:1;
 		}
-		else{
-			if(!($parames['is_view_model'] == 1))
-			{
-				$parames['is_view_model'] = 0;
-			}
+		if(!in_array($parames['is_view_model'],array(-1,1)))
+		{
+			$parames['is_view_model'] = 1;
 		}
 		$this->session->set_userdata('is_view_model', $parames['is_view_model']);
 
@@ -107,6 +99,7 @@ class C_teacher extends MY_Controller {
 			}
 			$page_list[] = $item;
 		}
+		$page_list = split_page($page_list,(int)$parames['page']);
 		//set teacher status list
 		$status_list = array();
 		foreach($this->my_config['status_list_view'] as $item)
@@ -136,11 +129,11 @@ class C_teacher extends MY_Controller {
 			)
 		);
 		$tmp = $parames;
-		$tmp['is_view_model'] = 0;
+		$tmp['is_view_model'] = -1;
 		$view_model_list[0]['key'] = get_teacher_manager_list_url($tmp);
 		$tmp['is_view_model'] = 1;
 		$view_model_list[1]['key'] = get_teacher_manager_list_url($tmp);
-		if($parames['is_view_model'])
+		if($parames['is_view_model'] && $parames['is_view_model'] == 1)
 		{
 			$view_model_list[1]['active'] = true;
 		}
@@ -160,13 +153,149 @@ class C_teacher extends MY_Controller {
 		$data['teacher_freeze_uri'] = my_site_url("c_teacher/teacher_freeze");
 		$data['teacher_delete_uri'] = my_site_url("c_teacher/teacher_delete");
 		$data['teacher_active_uri'] = my_site_url("c_teacher/teacher_active");
-		$data['teacher_set_test_uri'] = my_site_url("c_teacher/teacher_set_test");
+//		$data['teacher_set_test_uri'] = my_site_url("c_teacher/teacher_set_test");
 		$data['teacher_add_uri'] = my_site_url("c_teacher/teacher_add");
-		$data['is_view_model'] = ($parames['is_view_model'])?true:false;
+		$data['is_view_model'] = ($parames['is_view_model'] == 1)?true:false;
 		$data['view_model_list'] = $view_model_list;
 		$data['search_text'] = isset($parames['F_teacher_name'])?$parames['F_teacher_name']:'';
 
 		$this->_output_view("teacher/v_manager", $data);
+	}
+
+	/**
+	 * 测试老师管理
+	 * @param array $parames
+	 *          page    int 列表页面
+	 */
+	public function test_manager($parames = array())
+	{
+		//检查是否有登录
+		$result = $this->_check_login();
+		if(is_array($result) && isset($result['redirect_url']))	//未登录
+		{
+			top_redirect($result['redirect_url']);
+		}
+		//检查是否有权限
+		if($this->_check_privity(__CLASS__,__METHOD__) === false)
+		{
+			redirect_to_no_privity_page();
+		}
+		//业务
+
+		//get teacher list
+		$parames['type'] = 4;
+		if(!isset($parames['page']))
+		{
+			$parames['page'] = 1;
+		}
+		if(!isset($parames['is_view_model']))
+		{
+			$tmp = $this -> session -> userdata('is_view_model');
+			$parames['is_view_model'] = (isset($tmp) && in_array($tmp,array(-1,1)))?$tmp:1;
+		}
+		if(!in_array($parames['is_view_model'],array(-1,1)))
+		{
+			$parames['is_view_model'] = 1;
+		}
+		$this->session->set_userdata('is_view_model', $parames['is_view_model']);
+
+		$this -> load -> model('M_teacher', 'mteacher');
+		$teacher_list_result = $this->mteacher->get_teacher_list($parames);
+		if(is_array($teacher_list_result) && count($teacher_list_result) > 0)
+		{
+			foreach($teacher_list_result['list'] as $k=>$item)
+			{
+				$teacher_list_result['list'][$k]['F_grade_text'] = $this->my_config['grade_list'][$item['F_grade']];
+				$teacher_list_result['list'][$k]['F_subject_text'] = $this->my_config['subject_list'][$item['F_subject_id']];
+				$teacher_list_result['list'][$k]['F_status_text'] = $this->my_config['status_list'][$item['F_status']];
+			}
+		}
+		//set page list
+		$page_total = 1;
+		if(isset($teacher_list_result['total']))
+		{
+			$page_total = (int)ceil($teacher_list_result['total']/$this->my_config['page']);
+		}
+		$page_list = array();
+		$page_pre_active =  true;
+		$page_pre_url =  "#";
+		$page_next_active =  true;
+		$page_next_url =  "#";
+		for($i=1;$i<=$page_total;++$i)
+		{
+			$item = array();
+			$item['active'] = 0;
+			$tmp = $parames;
+			$tmp['page'] = $i;
+			$item['url'] = get_test_teacher_manager_list_url($tmp);
+			$item['page'] = $i;
+			if($i == (int)$parames['page'])
+			{
+				$item['url'] = "#";
+				$item['active'] = 1;
+				$tmp = $parames;
+				$tmp['page'] = $i-1;
+				$page_pre_url = get_test_teacher_manager_list_url($tmp);
+				$tmp['page'] = $i+1;
+				$page_next_url = get_test_teacher_manager_list_url($tmp);
+				if($i == 1)
+				{
+					$page_pre_active = false;
+					$page_pre_url = "#";
+				}
+				if($i == $page_total)
+				{
+					$page_next_active =  false;
+					$page_next_url = "#";
+				}
+			}
+			$page_list[] = $item;
+		}
+		$page_list = split_page($page_list,(int)$parames['page']);
+		//set view mode list
+		$view_model_list = array(
+			array(
+				'value'=>'列表式浏览',
+				'key'=>"",
+				'active'=>false
+			),
+			array(
+				'value'=>'平铺式浏览',
+				'key'=>"",
+				'active'=>false
+			)
+		);
+		$tmp = $parames;
+		$tmp['is_view_model'] = -1;
+		$view_model_list[0]['key'] = get_test_teacher_manager_list_url($tmp);
+		$tmp['is_view_model'] = 1;
+		$view_model_list[1]['key'] = get_test_teacher_manager_list_url($tmp);
+		if($parames['is_view_model'] && $parames['is_view_model'] == 1)
+		{
+			$view_model_list[1]['active'] = true;
+		}
+
+		//data
+		$data = $this->_get_data(__CLASS__,__METHOD__);
+		$data['do'] = $this->session->flashdata('do');
+		$data['teacher_list'] = isset($teacher_list_result['list'])?$teacher_list_result['list']:array();
+		$data['teacher_total'] = isset($teacher_list_result['total'])?$teacher_list_result['total']:0;
+		$data['page_total'] = $page_total;
+		$data['page_list'] = $page_list;
+		$data['page_pre_active'] = $page_pre_active;
+		$data['page_next_active'] = $page_next_active;
+		$data['page_pre_url'] = $page_pre_url;
+		$data['page_next_url'] = $page_next_url;
+//		$data['teacher_freeze_uri'] = my_site_url("c_teacher/teacher_freeze");
+		$data['teacher_delete_uri'] = my_site_url("c_teacher/teacher_delete");
+//		$data['teacher_active_uri'] = my_site_url("c_teacher/teacher_active");
+//		$data['teacher_set_test_uri'] = my_site_url("c_teacher/teacher_set_test");
+		$data['teacher_add_uri'] = my_site_url("c_teacher/test_teacher_add");
+		$data['is_view_model'] = ($parames['is_view_model'] == 1)?true:false;
+		$data['view_model_list'] = $view_model_list;
+		$data['search_text'] = isset($parames['F_teacher_name'])?$parames['F_teacher_name']:'';
+
+		$this->_output_view("teacher/v_test_manager", $data);
 	}
 
 	/**
@@ -229,9 +358,19 @@ class C_teacher extends MY_Controller {
 		{
 			$this->_ajax_echo(array('msg'=>'没有权限'));
 		}
+
 		//业务
-		$parames['F_status'] = 2;
-		$this->_do_change_teacher_status($parames);
+		$this -> load -> model('M_teacher', 'mteacher');
+		$result = $this->mteacher->teacher_delete($parames);
+		if($result === true)
+		{
+			$this->session->set_flashdata('do', 'success');
+		}else{
+			$this->session->set_flashdata('do', 'fail');
+		}
+
+		$data = array('result'=>$result);
+		$this->_ajax_echo($data);
 	}
 
 	/**
@@ -364,7 +503,7 @@ class C_teacher extends MY_Controller {
 				$file .= $name;
 				rename($_FILES[$fileElementName]['tmp_name'],$file);
 				$data['name'] = $name;
-				$data['url'] = my_site_url("public/images/upload/".$name);
+				$data['url'] = base_url("public/images/upload/".$name);
 			}
 		}
 		else{
@@ -408,7 +547,7 @@ class C_teacher extends MY_Controller {
 		if(!is_array($result) || count($result) <= 0)
 		{
 			$data["error"] = -1;
-			$data["msg"] = $result['msg'];
+			$data["msg"] = "失败";
 		}
 		else{
 			//删除已经上传的图片
@@ -450,11 +589,47 @@ class C_teacher extends MY_Controller {
 		$data['gender_list'] = $this->my_config['gender_list'];
 		$data['upload_url'] = my_site_url("c_teacher/teacher_upload_header");
 
-		$data['manager_test_url'] = get_controll_url("c_teacher/manager",array("type"=>4));
+//		$data['manager_test_url'] = get_controll_url("c_teacher/manager",array("type"=>4));
 		$data['manager_url'] = my_site_url("c_teacher/manager");
 		$data['js_list'] = array(get_assets_js_url("upload/ajaxfileupload.js"));
 
 		$this->_output_view("teacher/v_add", $data);
+	}
+
+	/**
+	 * 显示添加一个测试老师的页面
+	 * @param array $parames
+	 */
+	public function test_teacher_add($parames = array())
+	{
+		//检查是否有登录
+		$result = $this->_check_login();
+		if(is_array($result) && isset($result['redirect_url']))	//未登录
+		{
+			top_redirect($result['redirect_url']);
+		}
+		//检查是否有权限
+		if($this->_check_privity(__CLASS__,__METHOD__) === false)
+		{
+			redirect_to_no_privity_page();
+		}
+		//业务
+
+		$this -> load -> model('M_teacher', 'mteacher');
+
+		//data
+		$data = $this->_get_data(__CLASS__,__METHOD__);
+		$data['content_title'] = "添加测试老师";
+		$data['grade_list'] = $this->my_config['grade_list'];
+		$data['subject_list'] = $this->my_config['subject_list'];
+		$data['gender_list'] = $this->my_config['gender_list'];
+		$data['upload_url'] = my_site_url("c_teacher/teacher_upload_header");
+
+		$data['manager_test_url'] = get_controll_url("c_teacher/test_manager",array());
+//		$data['manager_url'] = my_site_url("c_teacher/manager");
+		$data['js_list'] = array(get_assets_js_url("upload/ajaxfileupload.js"));
+
+		$this->_output_view("teacher/v_test_add", $data);
 	}
 
 	/**

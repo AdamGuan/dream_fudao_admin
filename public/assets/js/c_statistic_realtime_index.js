@@ -22,7 +22,15 @@ $(document).ready(function(){
                 },
                 series: [{
                     name: '数量',
-                    data: data
+                    data: data,
+                    dataLabels: {
+                        enabled: true,
+                        rotation: 360,
+                        color: '#FFFFFF',
+                        align: 'right',
+                        x: 4,
+                        y: 20
+                    }
                 }]
             });
 

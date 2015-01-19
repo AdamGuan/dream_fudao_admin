@@ -78,4 +78,5 @@
 	<?php if(isset($result['datetype'])){ ?>
 	var datetype = "<?php echo $result['datetype'];?>";
 	<?php }?>
+	var currentPageBaseUrl = "<?php echo my_site_url("c_statistic_student/index",array());?>";
 </script>

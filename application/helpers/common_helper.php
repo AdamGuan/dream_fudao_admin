@@ -469,6 +469,60 @@ function sec_to_time($times){
         return $result;
 }
 
+function split_page($data,$activeNum)
+{
+	if(count($data) > 10)
+	{
+		$start = 1;
+		$end = count($data);
+		if(($activeNum+4) <= $end)
+		{
+			$end2 = $activeNum+4;
+		}
+		else{
+			$end2 = $end;
+		}
+		if(($activeNum-5) >= $start)
+		{
+			$start2 = $activeNum-5;
+		}
+		else{
+			$start2 = $start;
+		}
+		if($end2 - $start2 < 9)
+		{
+			$distince = 9 - ($end2-$start2);
+			if($start2 > $start)
+			{
+				if(($start2-$start) >= $distince)
+				{
+					$start2 = $start2 - $distince;
+					$distince = 0;
+				}else{
+					$distince = $distince - ($start2-$start);
+					$start2 = $start;
+				}
+			}
+			if($distince > 0)
+			{
+				if($end2 < $end)
+				{
+					if(($end - $end2) >= $distince)
+					{
+						$end2 = (int)$end2 + (int)$distince;
+					}else{
+						$end2 = $end;
+					}
+				}
+			}
+		}
+		return array_slice($data,($start2-1),($end2-$start2+1));
+	}
+	else{
+		return $data;
+	}
+}
+
 /**
  * End of file common_helper.php
  */

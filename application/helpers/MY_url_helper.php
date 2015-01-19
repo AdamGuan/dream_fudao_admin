@@ -84,6 +84,10 @@ function get_teacher_manager_list_url($parames = array()) {
 	return my_site_url("c_teacher/manager",$parames);
 }
 
+function get_test_teacher_manager_list_url($parames = array()) {
+	return my_site_url("c_teacher/test_manager",$parames);
+}
+
 function get_teacher_edit_url($parames){
 	return my_site_url("c_teacher/teacher_edit",$parames);
 }

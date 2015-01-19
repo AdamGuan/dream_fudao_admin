@@ -171,7 +171,7 @@
 
 <script>
 	var upload_url = "<?php echo $upload_url;?>";
-//	var manager_test_url = "<?php //echo $manager_test_url;?>//";
-	var manager_url = "<?php echo $manager_url;?>";
+	var manager_test_url = "<?php echo $manager_test_url;?>";
+//	var manager_url = "<?php //echo $manager_url;?>//";
 	var teacher_add_do_url = "<?php echo my_site_url('c_teacher/teacher_add_do');?>";
 </script>

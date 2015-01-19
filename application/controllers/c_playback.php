@@ -110,6 +110,7 @@ class C_playback extends MY_Controller {
 			}
 			$page_list[] = $item;
 		}
+		$page_list = split_page($page_list,(int)$parames['page']);
 		//set playback status list
 		$status_list = array();
 		$parames2tmp = $parames3;

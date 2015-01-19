@@ -85,6 +85,7 @@ class C_exception extends MY_Controller {
 			}
 			$page_list[] = $item;
 		}
+		$page_list = split_page($page_list,(int)$parames['page']);
 
 		//data
 		$data = $this->_get_data(__CLASS__,__METHOD__);

@@ -28,6 +28,12 @@ $(document).ready(function(){
             $('#datepicker1').datepicker({format: 'yyyy-mm', viewMode: 'months', minViewMode: 'months'});
             $('#datepicker2').datepicker({format: 'yyyy/', viewMode: 'years', minViewMode: 'years'});
             $('#datepicker'+datetype).show();
+            $('#datepicker'+datetype).datepicker('setValue', $('#date'+datetype).val());
+            $('div[id^="datepicker"]').datepicker().
+                on('changeDate.datepicker.amui', function(event) {
+                    $(this).datepicker('close');
+                }
+            );
         };
 
         //search
@@ -37,13 +43,13 @@ $(document).ready(function(){
                 var $btn = $(this);
                 loadingStart($btn);
 
-                var url = location.href;
+                //var url = location.href;
                 var type0 = $("#datetypelist option:selected").attr("value");
                 var date = $("#date"+type0).val();
                 date = date.replace("/","");
-                var list = url.split("?");
-                var url_pre = list[0];
-                url = url_pre+"?datetype="+type0+"&date="+date;
+                //var list = url.split("?");
+                //var url_pre = list[0];
+                url = currentPageBaseUrl+"&datetype="+type0+"&date="+date;
                 location.href = url;
 
                 return false;

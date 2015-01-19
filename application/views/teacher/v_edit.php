@@ -179,6 +179,7 @@
 				</div>
 			</div>
 
+			<!--
 			<?php if(check_privity("c_teacher/teacher_set_test")){?>
 			<div class="am-form-group">
 				<label for="teacher_type" class="am-u-sm-3 am-form-label">类型</label>
@@ -190,6 +191,7 @@
 				</div>
 			</div>
 			<?php }?>
+			-->
 
 			<div class="am-form-group">
 				<label for="teacher_description" class="am-u-sm-3 am-form-label">简介</label>

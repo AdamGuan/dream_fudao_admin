@@ -83,4 +83,6 @@
 	data[data.length] = <?php echo $times;?>;
 	<?php
 	 }}?>
+
+	var currentPageBaseUrl = "<?php echo my_site_url("c_statistic_timesection/index",array());?>";
 </script>
