@@ -414,11 +414,12 @@ function build_privity_group2($list,&$return,$tab = 0){
 	}
 }
 
-function build_privity_str($list,$privity = array('all'),$checked_privity = array(),$return='',$tab = 1,$id_pre='privity_check_',$id = 0){
+function build_privity_str($list,$privity = array('all'),$checked_privity = array(),$return='',$tab = 0,$id_pre='privity_check_',$id = 0){
 	if(strlen($return) == 0)
 	{
 		$return .= '<div><input id="check_all" type="checkbox" value="">全部</div>';
 	}
+
 	foreach($list as $item)
 	{
 		if(!isset($item['children']) || count($item['children']) <= 0)

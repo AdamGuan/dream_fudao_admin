@@ -22,10 +22,12 @@ class C_index extends MY_Controller {
 			top_redirect($result['redirect_url']);
 		}
 		//检查是否有权限
+		/*
 		if($this->_check_privity(__CLASS__,__METHOD__) === false)
 		{
 			redirect_to_no_privity_page();
 		}
+		*/
 		//业务
 		$this -> load -> model('M_index', 'mindex');
 		$result = $this->mindex->get_online_num();
