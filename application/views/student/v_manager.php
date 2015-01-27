@@ -69,7 +69,8 @@
 	$str .= '<td>'.$student['F_real_name'].'</td>';
 	$str .= '<td>'.$student['F_user_id'].'</td>';
 	$str .= '<td>'.$student['F_grade_text'].'</td>';
-	$str .= '<td>'.$student['F_coin'].'</td>';
+	$str .= '<td>'.$student['F_coin'].'</td></tr>';
+	/*
 	$tmp  = "";
 	if(check_privity("c_student/student_delete")){
 		$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-danger" F_user_id="'.$student['F_user_id'].'" id="student_delete'.$k.'"><span class="am-icon-remove"></span>删除</button>';
@@ -88,7 +89,9 @@
 			<div class="am-btn-group am-btn-group-xs">'.$tmp.'</div>
 		</div>
 	</td></tr>';
+	*/
 	echo $str;
+	
 }?>
 </tbody>
 </table>

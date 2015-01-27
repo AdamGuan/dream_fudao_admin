@@ -61,6 +61,7 @@
 	if(check_privity("c_custom/custom_edit")){
 		$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-secondary" F_teacher_id="'.$custom['F_teacher_id'].'"  id="custom_edit'.$k.'" url="'.$edit_url.'"><span class="am-icon-pencil-square-o"></span> 编辑</button>';
 	}
+	/*
 	if(check_privity("c_custom/custom_delete")){
 		$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-danger" F_teacher_id="'.$custom['F_teacher_id'].'" id="custom_delete'.$k.'"><span class="am-icon-remove"></span>删除</button>';
 	}
@@ -70,11 +71,13 @@
 	if(check_privity("c_custom/custom_active")){
 		$tmp .= '<button class="am-btn am-btn-default am-btn-xs am-text-secondary" F_teacher_id="'.$custom['F_teacher_id'].'" id="custom_active'.$k.'"><span class="am-icon-check"></span>活激</button>';
 	}
+	*/
 	$str .= '<td>
 		<div class="am-btn-toolbar">
 			<div class="am-btn-group am-btn-group-xs">'.$tmp.'</div>
 		</div>
 	</td>';
+
 	echo $str;
 }?>
 </tbody>

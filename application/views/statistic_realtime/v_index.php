@@ -6,28 +6,28 @@
 	<div class="am-u-sm-6">
 		<div class="am-panel am-panel-primary am-avg-sm-2">
 			<header class="am-panel-hd">
-				<h3 class="am-panel-title">老师在线统计</h3>
+				<h3 class="am-panel-title" style="text-align:center;">老师在线统计</h3>
 			</header>
 			<div class="am-panel-bd">
 				<ul class="am-avg-sm-1 am-avg-md-3  am-text-center">
-					<li><a href="#" class="am-text-success"><br/>总人数<br/><?php echo isset($result['teacher_online_info']['teacher_total'])?$result['teacher_online_info']['teacher_total']:0;?></a></li>
-					<li><a href="#" class="am-text-success"><br/>在线人数<br/><?php echo isset($result['teacher_online_info']['teacher_total'])?($result['teacher_online_info']['teacher_total'] - $result['teacher_online_info']['teacher_offline']):0;?></a></li>
-					<li><a href="#" class="am-text-success"><br/>辅导中<br/><?php echo isset($result['teacher_online_info']['teacher_online_teaching'])?$result['teacher_online_info']['teacher_online_teaching']:0;?></a></li>
+					<li><a href="#" class="am-text-warning"><br/>总人数<br/><strong><?php echo isset($result['teacher_online_info']['teacher_total'])?$result['teacher_online_info']['teacher_total']:0;?></a></strong></li>
+					<li><a href="#" class="am-text-warning"><br/>在线人数<br/><strong><?php echo isset($result['teacher_online_info']['teacher_total'])?($result['teacher_online_info']['teacher_total'] - $result['teacher_online_info']['teacher_offline']):0;?></a></strong></li>
+					<li><a href="#" class="am-text-warning"><br/>辅导中<br/><strong><?php echo isset($result['teacher_online_info']['teacher_online_teaching'])?$result['teacher_online_info']['teacher_online_teaching']:0;?></a></strong></li>
 				</ul>
 			</div>
 		</div>
 	</div>
 
 	<div class="am-u-sm-6">
-		<div class="am-panel am-panel-secondary am-avg-sm-2">
+		<div class="am-panel am-panel-success am-avg-sm-2">
 			<header class="am-panel-hd">
-				<h3 class="am-panel-title">学生在线统计</h3>
+				<h3 class="am-panel-title" style="text-align:center;">学生在线统计</h3>
 			</header>
 			<div class="am-panel-bd">
 				<ul class="am-avg-sm-1 am-avg-md-3  am-text-center">
-					<li><a href="#" class="am-text-success"><br/>总人数<br/><?php echo isset($result['student_online_info']['user_total'])?$result['student_online_info']['user_total']:0;?></a></li>
-					<li><a href="#" class="am-text-success"><br/>在线人数<br/><?php echo isset($result['student_online_info']['user_total'])?($result['student_online_info']['user_total'] - $result['student_online_info']['user_offline']):0;?></a></li>
-					<li><a href="#" class="am-text-success"><br/>辅导中<br/><?php echo isset($result['student_online_info']['user_online_teaching'])?$result['student_online_info']['user_online_teaching']:0;?></a></li>
+					<li><a href="#" class="am-text-warning"><br/>总人数<br/><strong><?php echo isset($result['student_online_info']['user_total'])?$result['student_online_info']['user_total']:0;?></strong></a></li>
+					<li><a href="#" class="am-text-warning"><br/>在线人数<br/><strong><?php echo isset($result['student_online_info']['user_total'])?($result['student_online_info']['user_total'] - $result['student_online_info']['user_offline']):0;?></strong></a></li>
+					<li><a href="#" class="am-text-warning"><br/>辅导中<br/><strong><?php echo isset($result['student_online_info']['user_online_teaching'])?$result['student_online_info']['user_online_teaching']:0;?></strong></a></li>
 				</ul>
 			</div>
 		</div>

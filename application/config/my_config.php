@@ -277,17 +277,6 @@ $config['data'] = array(
 	),
 	'action_link'=>array(   //快捷操作
 		array(
-			'title'=>'统计分析',
-			'list'=>array(
-				array(
-					'title'=>'实时统计',
-					'action'=>'c_statistic_realtime/index',
-					'parames'=>array(),
-					'prefix_class'=>'am-icon-line-chart',
-				),
-			)
-		),
-		array(
 			'title'=>'角色管理',
 			'list'=>array(
 				array(
@@ -297,10 +286,10 @@ $config['data'] = array(
 					'prefix_class'=>'am-icon-list',
 				),
 				array(
-					'title'=>'添加老师',
-					'action'=>'c_teacher/teacher_add',
+					'title'=>'测试老师管理',
+					'action'=>'c_teacher/test_manager',
 					'parames'=>array(),
-					'prefix_class'=>'am-icon-plus-square',
+					'prefix_class'=>'am-icon-list',
 				),
 				array(
 					'title'=>'客服管理',
@@ -308,8 +297,84 @@ $config['data'] = array(
 					'parames'=>array(),
 					'prefix_class'=>'am-icon-list',
 				),
+				array(
+					'title'=>'学生管理',
+					'action'=>'c_student/manager',
+					'parames'=>array(),
+					'prefix_class'=>'am-icon-list',
+				),
+				array(
+					'title'=>'工作人员',
+					'action'=>'c_privity/user_manager',
+					'parames'=>array(),
+					'prefix_class'=>'am-icon-list',
+				),
 			)
-		)
+		),
+		array(
+			'title'=>'统计分析',
+			'list'=>array(
+				array(
+					'title'=>'实时统计',
+					'action'=>'c_statistic_realtime/index',
+					'parames'=>array(),
+					'prefix_class'=>'am-icon-line-chart',
+				),
+				array(
+					'title'=>'时段统计',
+					'action'=>'c_statistic_timesection/index',
+					'parames'=>array(),
+					'prefix_class'=>'am-icon-line-chart',
+				),
+				array(
+					'title'=>'老师统计',
+					'action'=>'c_statistic_teacher/index',
+					'parames'=>array(),
+					'prefix_class'=>'am-icon-list',
+				),
+				array(
+					'title'=>'学生统计',
+					'action'=>'c_statistic_student/index',
+					'parames'=>array(),
+					'prefix_class'=>'am-icon-list',
+				),
+			)
+		),
+		array(
+			'title'=>'其它',
+			'list'=>array(
+				array(
+					'title'=>'回放分类',
+					'action'=>'c_playback/manager',
+					'parames'=>array(),
+					'prefix_class'=>'am-icon-recycle',
+				),
+				array(
+					'title'=>'异常',
+					'action'=>'c_exception/manager',
+					'parames'=>array(),
+					'prefix_class'=>'am-icon-bug',
+				),
+				array(
+					'title'=>'权限组管理',
+					'action'=>'c_privity/group_manager',
+					'parames'=>array(),
+					'prefix_class'=>'am-icon-gear',
+				),
+				array(
+					'title'=>'公告管理',
+					'action'=>'c_publish/manager',
+					'parames'=>array(),
+					'prefix_class'=>'am-icon-volume-up',
+				),
+				array(
+					'title'=>'个人资料',
+					'action'=>'c_person/index',
+					'parames'=>array(),
+					'prefix_class'=>'am-icon-file',
+				),
+			)
+		),
 	),
 );
 

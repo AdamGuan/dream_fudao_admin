@@ -20,7 +20,7 @@
 	以获得更好的体验！</p>
 <![endif]-->
 
-<header class="am-topbar admin-header">
+<header class="am-topbar am-topbar-inverse admin-header">
 	<div class="am-topbar-brand">
 		<strong><?php echo $global_web_title_pro;?></strong> <small><?php echo $global_web_title_suffix;?></small>
 	</div>
@@ -28,16 +28,15 @@
 	<button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only" data-am-collapse="{target: '#topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
 
 	<div class="am-collapse am-topbar-collapse" id="topbar-collapse">
-
 		<ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
-			<li><a href="javascript:;"><span class="am-icon-at"></span> 帐号:<?php echo $global_login_name;?></a></li>
-			<li><a href="javascript:;"><span class="am-icon-user"></span> <?php echo $global_role;?></a></li>
-			<li><a id="exit" href="#"><span class="am-icon-power-off"></span> 退出</a></li>
+			<li><a href="javascript:void(0);" style="color:white;"><span class="am-icon-at"></span> 帐号:<?php echo $global_login_name;?></a></li>
+			<li><a href="javascript:void(0);" style="color:white;"><span class="am-icon-user"></span> <?php echo $global_role;?></a></li>
+			<li><a id="exit" href="#" style="color:white;"><span class="am-icon-power-off"></span> 退出</a></li>
 		</ul>
 	</div>
 </header>
 
-<div class="am-cf admin-main">
+<div class="am-cf admin-main" style="background-color:white;">
 	<!-- sidebar start -->
 	<div class="admin-sidebar">
 		<ul class="am-list admin-sidebar-list" data-am-sticky>

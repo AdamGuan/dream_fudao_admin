@@ -413,7 +413,7 @@ function build_privity_group2($list,&$return,$tab = 0){
 		build_privity_group2($children,$return,($tab+1));
 	}
 }
-
+/*
 function build_privity_str($list,$privity = array('all'),$checked_privity = array(),$return='',$tab = 0,$id_pre='privity_check_',$id = 0){
 	if(strlen($return) == 0)
 	{
@@ -449,6 +449,39 @@ function build_privity_str($list,$privity = array('all'),$checked_privity = arra
 				$return .= '<div>'.str_repeat("&nbsp;",$tab*4).'<input '.$checked.' id="'.$eid.'" type="checkbox" value="'.$item['link'].'">'.$item['text'].'</div>';
 				$return = build_privity_str($item['children'],$privity,$checked_privity,$return,($tab+1),$eid."_");
 			}
+		}
+	}
+	return $return;
+}
+*/
+function build_privity_str($list,$privity = array('all'),$checked_privity = array(),$return='',$tab = 0,$id_pre='privity_check_',$id = 0){
+	if(strlen($return) == 0)
+	{
+		$return .= '<div style="margin-bottom:10px;"><input id="check_all" type="checkbox" value="">全部</div>';
+	}
+
+	foreach($list as $key=>$item)
+	{
+		$eid = $id_pre.$key;
+		$checked = "";
+		if(in_array($item['link'],$checked_privity))
+		{
+			$checked = " checked = \"checked\"";
+		}
+		$return .= '<div style="margin-bottom:10px;"><input '.$checked.' id="'.$eid.'" type="checkbox" value="'.$item['link'].'">'.$item['text'].'</div>';
+		if(isset($item['children']) && count($item['children']) > 0){
+			$return .= "<div style='border:solid 1px;padding: 20px;margin-bottom:10px;margin-left:50px;'>";
+			foreach($item['children'] as $k=>$subitem)
+			{
+				$subeid = $eid."_".$k;
+				$checked = "";
+				if(in_array($subitem['link'],$checked_privity))
+				{
+					$checked = " checked = \"checked\"";
+				}
+				$return .= '<div style="float:left;margin-right:20px;"><input '.$checked.' id="'.$subeid.'" type="checkbox" value="'.$subitem['link'].'">'.$subitem['text'].'</div>';
+			}
+			$return .= "<div style='clear:both;'></div></div>";
 		}
 	}
 	return $return;
