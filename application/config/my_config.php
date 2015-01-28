@@ -281,11 +281,11 @@ $config['data'] = array(
 		),
 	),
 	'teacher_privity'=>array(   //老师权限
-		'c_login/index',
 		'c_index/index',
 		'c_statistic_teacher/index',
 		'c_statistic_student/index',
-		'c_person/index'
+		'c_person/index',
+		'c_teacher_feedback/manager'
 	),
 	'action_link'=>array(   //快捷操作
 		array(
