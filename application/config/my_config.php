@@ -98,6 +98,13 @@ $config['data'] = array(
 			'children'=>array()
 		),
 		array(
+			'prefix_class'=>'am-icon-bug',
+			'text'=>'老师反馈',
+			'link'=>'c_teacher_feedback/manager',
+			'active'=>0,
+			'children'=>array()
+		),
+		array(
 			'prefix_class'=>'am-icon-gear',
 			'text'=>'权限组管理',
 			'link'=>'c_privity/group_manager',
@@ -263,6 +270,11 @@ $config['data'] = array(
 			'children'=>array()
 		),
 		array(
+			'text'=>'老师反馈',
+			'link'=>'c_teacher_feedback/manager',
+			'children'=>array()
+		),
+		array(
 			'text'=>'个人资料',
 			'link'=>'c_person/index',
 			'children'=>array()
@@ -352,6 +364,12 @@ $config['data'] = array(
 				array(
 					'title'=>'异常',
 					'action'=>'c_exception/manager',
+					'parames'=>array(),
+					'prefix_class'=>'am-icon-bug',
+				),
+				array(
+					'title'=>'老师反馈',
+					'action'=>'c_teacher_feedback/manager',
 					'parames'=>array(),
 					'prefix_class'=>'am-icon-bug',
 				),
