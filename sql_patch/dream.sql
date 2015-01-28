@@ -1,8 +1,8 @@
 -- --------------------------------------------------------
--- 主机:                           127.0.0.1
--- 服务器版本:                        5.5.40-0ubuntu0.14.04.1-log - (Ubuntu)
--- 服务器操作系统:                      debian-linux-gnu
--- HeidiSQL 版本:                  8.3.0.4694
+-- 主机:                           115.29.100.13
+-- 服务器版本:                        5.5.2-m2-log - Source distribution
+-- 服务器操作系统:                      unknown-linux-gnu
+-- HeidiSQL 版本:                  9.1.0.4867
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
