@@ -31,17 +31,6 @@ class C_teacher_feedback extends MY_Controller {
 		{
 			$parames['page'] = 1;
 		}
-		$parames2 = array();
-		$parames2['page'] = $parames['page'];
-		if(isset($parames['F_teacher_real_name']))
-		{
-			$parames2['F_teacher_real_name'] = $parames['F_teacher_real_name'];
-		}
-		if(isset($parames['F_user_real_name']))
-		{
-			$parames2['F_user_real_name'] = $parames['F_user_real_name'];
-		}
-		$parames3 = $parames2;
 		$this -> load -> model('M_playback', 'mplayback');
 		$tmp = $parames;
 		$tmp['type'] = 4;
@@ -98,7 +87,7 @@ class C_teacher_feedback extends MY_Controller {
 		$data['page_next_active'] = $page_next_active;
 		$data['page_pre_url'] = $page_pre_url;
 		$data['page_next_url'] = $page_next_url;
-		$data['search_text'] = isset($parames3['F_user_real_name'])?$parames3['F_user_real_name']:"";
+		$data['search_text'] = isset($parames['F_user_real_name'])?$parames['F_user_real_name']:'';
 
 		$this->_output_view("teacher_feedback/v_manager", $data);
 	}
