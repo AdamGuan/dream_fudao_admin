@@ -41,6 +41,7 @@ class C_index extends MY_Controller {
 					if(!check_privity($it['action']))
 					{
 						unset($item['list'][$k]);
+						unset($action_link[$key]['list'][$k]);
 					}
 					else{
 						$action_link[$key]['list'][$k]['url'] = get_controll_url($it['action'],$it['parames']);
