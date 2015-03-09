@@ -120,6 +120,10 @@ function get_publish_edit_url($parames){
 	return my_site_url("c_publish/edit",$parames);
 }
 
+function get_exception_manager_list_url($parames = array()) {
+	return my_site_url("c_exception/manager",$parames);
+}
+
 /**
  * 获取login_valid url.
  *

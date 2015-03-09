@@ -62,16 +62,16 @@ class C_exception extends MY_Controller {
 			$item = array();
 			$item['active'] = 0;
 			$parames2['page'] = $i;
-			$item['url'] = get_playback_manager_list_url($parames2);
+			$item['url'] = get_exception_manager_list_url($parames2);
 			$item['page'] = $i;
 			if($i == (int)$parames['page'])
 			{
 				$item['url'] = "#";
 				$item['active'] = 1;
 				$parames2['page'] = $i-1;
-				$page_pre_url = get_playback_manager_list_url($parames2);
+				$page_pre_url = get_exception_manager_list_url($parames2);
 				$parames2['page'] = $i+1;
-				$page_next_url = get_playback_manager_list_url($parames2);
+				$page_next_url = get_exception_manager_list_url($parames2);
 				if($i == 1)
 				{
 					$page_pre_active = false;
