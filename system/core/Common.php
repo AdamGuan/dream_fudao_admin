@@ -253,8 +253,11 @@ if ( ! function_exists('get_config'))
 				}
 			}
 		}
-
-		return $_config[0] =& $config;
+		
+		//by adam modify
+		$_config[0] =& $config;
+		return $_config[0];
+//		return $_config[0] =& $config;
 	}
 }
 

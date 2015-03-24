@@ -16,7 +16,7 @@
 			</select>
 		  </div>
 
-		  <div style="float: left;width: 15%;margin-left: 10px;">
+		  <div style="float: left;width: 150px;margin-left: 10px;">
 			  <div class="am-input-group am-datepicker-date" id="datepicker1" style="display: none">
 					<input id="date1" type="text" class="am-form-field" placeholder="请选择日期" value="<?php echo date('Y-m',strtotime($result['date']));?>" readonly>
 					<span class="am-input-group-btn am-datepicker-add-on">
@@ -30,12 +30,15 @@
 					</span>
 				</div>
 		  </div>
-
-			<button class="am-btn am-btn-default" id="search" style="margin-left: 10px;">
-			<i class="am-icon-search"></i>
-				查询
-			</button>
+			
+			<div style="float:left;">
+				<button class="am-btn am-btn-default" id="search" style="margin-left: 10px;">
+				<i class="am-icon-search"></i>
+					查询
+				</button>
+			</div>
 			<div style="clear: both"></div>
+			
 
 		</div>
 	</div>
