@@ -24,25 +24,17 @@
 			</div>
 		</div>
 	</div>
+	
+	<div style="float: left;width: 150px;margin-left: 10px;">
+		<input id="mydate" type="text" class="am-form-field am-cf" value="<?php echo ($date=="0000-00-00")?"":$date;?>" placeholder="日期" data-am-datepicker />
+	</div>
 
-<!--
-	<select id="search_type_choose" class="am-u-md-1 am-fr">
-		<?php foreach($search_type_list as $item){
-			$selected = '';
-			if(isset($item['active']) && $item['active'])
-			{
-				$selected = 'selected="selected"';
-			}
-			echo '<option value="'.$item['key'].'" '.$selected.'>'.$item['value'].'</option>';
-		}?>
-	</select>
-	-->
 	<div class="am-u-md-3 am-cf">
 		<div class="am-fr">
 			<div class="am-input-group am-input-group-sm">
 				<input type="text" class="am-form-field" placeholder="输入老师账号或学生搜索" id="search_text" value="<?php echo $search_text;?>">
-                <span class="am-input-group-btn">
-                  <button class="am-btn am-btn-default" type="button" id="search_btn_search"><i class="am-icon-search"></i>搜索</button>
+                <span class="am-input-group-btn" style="margin-left: 10px;">
+                  <button class="am-btn am-btn-default" type="button" id="search_btn_search"><i class="am-icon-search"></i>确定</button>
                 </span>
 			</div>
 		</div>
@@ -95,6 +87,7 @@
 	共 <?php echo $playback_total;?> 条记录
 	<div class="am-fr">
 		<ul class="am-pagination">
+			<li><a href="<?php echo $page_first_url;?>">First</a></li>
 			<?php $page_pre_class = "am-disabled";if($page_pre_active){$page_pre_class = "";} ?>
 			<?php $page_next_class = "am-disabled";if($page_next_active){$page_next_class = "";} ?>
 			<li class="<?php echo $page_pre_class;?>"><a href="<?php echo $page_pre_url;?>">«</a></li>
@@ -107,6 +100,7 @@
 				echo '<li class="'.$class.'"><a href="'.$page['url'].'">'.$page['page'].'</a></li>';
 			}?>
 			<li class="<?php echo $page_next_class;?>"><a href="<?php echo $page_next_url;?>">»</a></li>
+			<li><a href="<?php echo $page_last_url;?>">Last</a></li>
 		</ul>
 	</div>
 </div>

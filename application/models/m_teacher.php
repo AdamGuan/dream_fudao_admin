@@ -39,6 +39,18 @@ class M_teacher extends MY_Model {
 		{
 			$data['F_teacher_name'] = $parames['F_teacher_name'];
 		}
+		if(isset($parames['F_grade']))
+		{
+			$data['F_grade'] = $parames['F_grade'];
+		}
+		if(isset($parames['F_subject_id']))
+		{
+			$data['F_subject_id'] = $parames['F_subject_id'];
+		}
+		if(isset($parames['F_login']))
+		{
+			$data['F_login'] = $parames['F_login'];
+		}
 
 		$result = api_curl($this->my_config['api_uri'], $data, "GET",$this->my_config['api_key']);
 		$result = json_decode($result,true);
@@ -154,9 +166,10 @@ class M_teacher extends MY_Model {
 				);
 
 				$data = array_merge($data,$parames);
-
 				$result = api_curl($this->my_config['api_uri'], $data, "POST", $this->my_config['api_key']);
-				$result = json_decode($result,true);
+				if(isset($result)){
+					$result = json_decode($result,true);
+				}
 
 				if(is_array($result) && isset($result['responseNo']) && $result['responseNo'] == 0)
 				{

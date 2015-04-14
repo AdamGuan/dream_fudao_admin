@@ -21,6 +21,11 @@ class M_statistic_teacher extends MY_Model {
 			unset($parames['m']);
 			$return['datetype'] = (int)$parames['datetype'];
 			$data = array('version'=>$this->my_config['api_version'],'c'=>'statistics_teacher','offset'=>0,'limit'=>10000);
+			if(isset($parames['page']))
+			{
+				$data['offset'] = ((int)$parames['page']-1)*$this->my_config['page'];
+				$data['limit'] = $this->my_config['page'];
+			}
 			switch((int)$parames['datetype']){
 				case 0: //按天
 					$return['date'] = $parames['date'];

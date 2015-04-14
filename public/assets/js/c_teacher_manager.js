@@ -34,6 +34,36 @@ $(document).ready(function(){
             });
         };
 
+		//老师年级选择
+        var teacherGradeChoose = function(){
+            $("#teacher_grade_choose").change( function() {
+                $.AMUI.progress.start();
+
+                var url = $("#teacher_grade_choose option:selected").attr("value");
+                top.location.href = url;
+            });
+        };
+
+		//老师科目选择
+        var teacherSubjectChoose = function(){
+            $("#teacher_subject_choose").change( function() {
+                $.AMUI.progress.start();
+
+                var url = $("#teacher_subject_choose option:selected").attr("value");
+                top.location.href = url;
+            });
+        };
+
+		//老师是否在线选择
+        var teacherLoginChoose = function(){
+            $("#teacher_login_choose").change( function() {
+                $.AMUI.progress.start();
+
+                var url = $("#teacher_login_choose option:selected").attr("value");
+                top.location.href = url;
+            });
+        };
+
         //修改老师状态
         var teacherStatusChange = function(){
             //删除
@@ -420,7 +450,7 @@ $(document).ready(function(){
 
         //return obj
         var obj = {
-            init:function(){teacherStatusChoose();teacherStatusChange();teacher_select();teacherStatusChange_mulit();viewTypeStatusChoose();search();}
+            init:function(){teacherStatusChoose();teacherStatusChange();teacherGradeChoose();teacherSubjectChoose();teacherLoginChoose();teacher_select();teacherStatusChange_mulit();viewTypeStatusChoose();search();}
         };
 
         //return

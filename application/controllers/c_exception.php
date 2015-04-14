@@ -57,6 +57,10 @@ class C_exception extends MY_Controller {
 		$page_pre_url =  "#";
 		$page_next_active =  true;
 		$page_next_url =  "#";
+		$parames2['page'] = 1;
+		$page_first_url = get_exception_manager_list_url($parames2);
+		$parames2['page'] = $page_total;
+		$page_last_url = get_exception_manager_list_url($parames2);
 		for($i=1;$i<=$page_total;++$i)
 		{
 			$item = array();
@@ -98,6 +102,8 @@ class C_exception extends MY_Controller {
 		$data['page_next_active'] = $page_next_active;
 		$data['page_pre_url'] = $page_pre_url;
 		$data['page_next_url'] = $page_next_url;
+		$data['page_first_url'] = $page_first_url;
+		$data['page_last_url'] = $page_last_url;
 		$data['search_text'] = isset($parames3['F_user_real_name'])?$parames3['F_user_real_name']:"";
 
 		$this->_output_view("exception/v_manager", $data);

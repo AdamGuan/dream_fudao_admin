@@ -24,6 +24,26 @@ $(document).ready(function(){
             });
         };
 
+		//学生年级选择
+        var studentGradeChoose = function(){
+            $("#student_grade_choose").change( function() {
+                $.AMUI.progress.start();
+
+                var url = $("#student_grade_choose option:selected").attr("value");
+                top.location.href = url;
+            });
+        };
+
+		//学生是否在线选择
+        var studentLoginChoose = function(){
+            $("#student_login_choose").change( function() {
+                $.AMUI.progress.start();
+
+                var url = $("#student_login_choose option:selected").attr("value");
+                top.location.href = url;
+            });
+        };
+
         //checkbox选择
         var student_select = function(){
             $("#student_select").click( function () {
@@ -386,7 +406,7 @@ $(document).ready(function(){
 
         //return obj
         var obj = {
-            init:function(){studentStatusChoose();student_select();studentStatusChange();studentStatusChange_mulit();search();}
+            init:function(){studentStatusChoose();studentGradeChoose();studentLoginChoose();student_select();studentStatusChange();studentStatusChange_mulit();search();}
         };
 
         //return

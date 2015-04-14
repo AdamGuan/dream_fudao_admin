@@ -39,6 +39,10 @@ class M_playback extends MY_Model {
 		{
 			$data['F_user_real_name'] = $parames['F_user_real_name'];
 		}
+		if(isset($parames['date']))
+		{
+			$data['date'] = $parames['date'];
+		}
 
 		$result = api_curl($this->my_config['api_uri'], $data, "GET",$this->my_config['api_key']);
 		$result = json_decode($result,true);

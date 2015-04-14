@@ -186,7 +186,7 @@ $(document).ready(function(){
                         for(var i=0;i<tmp_list.length;++i)
                         {
                             var tlist = tmp_list[i].split("=");
-                            if(tlist[0] != "F_user_real_name" && tlist[0] != "F_teacher_real_name")
+                            if(tlist[0] != "F_user_real_name" && tlist[0] != "F_teacher_real_name" && tlist[0] != "date")
                             {
                                 url_parames[j] = tlist[0]+"="+tlist[1];
                                 ++j;
@@ -197,7 +197,7 @@ $(document).ready(function(){
 
                 if(url_parames.length > 0)
                 {
-                    if($("#search_text").val().length > 0)
+                    if($("#search_text").val().length > 0 || $("#mydate").val().length > 0)
                     {
                         url = url_pref+"?"+url_parames.join("&")+"&";
                     }
@@ -206,7 +206,7 @@ $(document).ready(function(){
                     }
                 }
                 else{
-                    if($("#search_text").val().length > 0)
+                    if($("#search_text").val().length > 0 || $("#mydate").val().length > 0)
                     {
                         url = url_pref+"?";
                     }else{
@@ -217,6 +217,10 @@ $(document).ready(function(){
                 {
                     url += "F_user_real_name="+$("#search_text").val()+"&";
                     url += "F_teacher_real_name="+$("#search_text").val();
+                }
+				if($("#mydate").val().length > 0)
+                {
+                    url += "date="+$("#mydate").val();
                 }
                 /*
                 if(url_parames.length > 0)
@@ -239,9 +243,18 @@ $(document).ready(function(){
             });
         };
 
+		var dateclick = function(){
+			$('#mydate').datepicker().
+			on('changeDate.datepicker.amui', function(event) {
+//				var vdate = event.date.getFullYear()+"-"+eval(event.date.getMonth()+1)+"-"+event.date.getDate();
+//				$("#myDate").html(vdate);
+				$(this).datepicker('close');
+			});
+		};
+
         //return obj
         var obj = {
-            init:function(){playbackStatusChoose();playbackStatusChange();playback_select();playbackStatusChange_mulit();playback_search();}
+            init:function(){playbackStatusChoose();playbackStatusChange();playback_select();playbackStatusChange_mulit();playback_search();dateclick();}
         };
 
         //return

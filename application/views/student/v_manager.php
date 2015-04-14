@@ -31,6 +31,37 @@
 					</select>
 				</div>
 				<?php }?>
+
+				<?php if(is_array($grade_list) && count($grade_list) > 0){?>
+				<div class="am-form-group am-margin-left am-fl">
+					<select id="student_grade_choose">
+						<?php foreach($grade_list as $item){
+							$selected = '';
+							if(isset($item['active']) && $item['active'])
+							{
+								$selected = 'selected="selected"';
+							}
+							echo '<option value="'.$item['key'].'" '.$selected.'>'.$item['value'].'</option>';
+						}?>
+					</select>
+				</div>
+				<?php }?>
+
+				<?php if(is_array($login_list) && count($login_list) > 0){?>
+				<div class="am-form-group am-margin-left am-fl">
+					<select id="student_login_choose">
+						<?php foreach($login_list as $item){
+							$selected = '';
+							if(isset($item['active']) && $item['active'])
+							{
+								$selected = 'selected="selected"';
+							}
+							echo '<option value="'.$item['key'].'" '.$selected.'>'.$item['value'].'</option>';
+						}?>
+					</select>
+				</div>
+				<?php }?>
+
 			</div>
 		</div>
 	</div>
@@ -65,8 +96,8 @@
 	$str .= '<tr>';
 	$str .= '<td><input type="checkbox" F_user_id="'.$student['F_user_id'].'" id="student_check'.$student['F_user_id'].'" /></td>';
 	$str .= '<td>'.($k+1).'</td>';
-	$str .= '<td>'.$student['F_user_name'].'</td>';
-	$str .= '<td>'.$student['F_real_name'].'</td>';
+	$str .= '<td><a href="'.$student['F_url'].'">'.$student['F_user_name'].'</a></td>';
+	$str .= '<td><a href="'.$student['F_url'].'">'.$student['F_real_name'].'</a></td>';
 	$str .= '<td>'.$student['F_user_id'].'</td>';
 	$str .= '<td>'.$student['F_grade_text'].'</td>';
 	$str .= '<td>'.$student['F_coin'].'</td></tr>';
@@ -99,6 +130,7 @@
 	共 <?php echo $student_total;?> 条记录
 	<div class="am-fr">
 		<ul class="am-pagination">
+			<li><a href="<?php echo $page_first_url;?>">First</a></li>
 			<?php $page_pre_class = "am-disabled";if($page_pre_active){$page_pre_class = "";} ?>
 			<?php $page_next_class = "am-disabled";if($page_next_active){$page_next_class = "";} ?>
 			<li class="<?php echo $page_pre_class;?>"><a href="<?php echo $page_pre_url;?>">«</a></li>
@@ -111,6 +143,7 @@
 				echo '<li class="'.$class.'"><a href="'.$page['url'].'">'.$page['page'].'</a></li>';
 			}?>
 			<li class="<?php echo $page_next_class;?>"><a href="<?php echo $page_next_url;?>">»</a></li>
+			<li><a href="<?php echo $page_last_url;?>">Last</a></li>
 		</ul>
 	</div>
 </div>

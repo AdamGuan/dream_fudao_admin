@@ -268,6 +268,14 @@ function api_curl($url, $data, $method,$key){
 			unset($data2['teacher_header']);
 			$sign = md5(http_build_query($data2)."&key=".$key);
 
+			if (!function_exists('curl_file_create')) {
+				 function curl_file_create($filename, $mimetype = '', $postname = '') {
+					 return "@$filename;filename="
+						 . ($postname ?: basename($filename))
+						 . ($mimetype ? ";type=$mimetype" : '');
+				 }
+			 }
+
 			$data['teacher_header'] = curl_file_create($data['teacher_header']);
 		}
 		else{
@@ -278,6 +286,7 @@ function api_curl($url, $data, $method,$key){
 	{
 		$sign = md5("key=" . $key);
 	}
+	
 	if($method == 'GET')
 	{
 		$url = $url."?".http_build_query($data)."&sign=".$sign;
@@ -291,6 +300,7 @@ function api_curl($url, $data, $method,$key){
 		unset($data['m']);
 		$url = $url."?".http_build_query($tmp_data)."&sign=".$sign;
 	}
+	
 	return curlrequest($url,$data,$method);
 }
 

@@ -56,6 +56,8 @@ class C_custom extends MY_Controller {
 		$page_pre_url =  "#";
 		$page_next_active =  true;
 		$page_next_url =  "#";
+		$page_first_url = get_custom_manager_list_url(array('page'=>1,'type'=>(int)$parames['type']));
+		$page_last_url = get_custom_manager_list_url(array('page'=>$page_total,'type'=>(int)$parames['type']));
 		for($i=1;$i<=$page_total;++$i)
 		{
 			$item = array();
@@ -106,6 +108,8 @@ class C_custom extends MY_Controller {
 		$data['page_next_active'] = $page_next_active;
 		$data['page_pre_url'] = $page_pre_url;
 		$data['page_next_url'] = $page_next_url;
+		$data['page_first_url'] = $page_first_url;
+		$data['page_last_url'] = $page_last_url;
 		$data['status_list'] = $status_list;
 		$data['custom_freeze_uri'] = my_site_url("c_custom/custom_freeze");
 		$data['custom_delete_uri'] = my_site_url("c_custom/custom_delete");

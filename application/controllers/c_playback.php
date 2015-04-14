@@ -37,9 +37,14 @@ class C_playback extends MY_Controller {
 		{
 			$parames['page'] = 1;
 		}
+		if(!isset($parames['date']))
+		{
+			$parames['date'] = '0000-00-00';
+		}
 		$parames2 = array();
 		$parames2['type'] = $parames['type'];
 		$parames2['page'] = $parames['page'];
+		$parames2['date'] = $parames['date'];
 		if(isset($parames['F_teacher_real_name']))
 		{
 			$parames2['F_teacher_real_name'] = $parames['F_teacher_real_name'];
@@ -82,6 +87,10 @@ class C_playback extends MY_Controller {
 		$page_pre_url =  "#";
 		$page_next_active =  true;
 		$page_next_url =  "#";
+		$parames2['page'] = 1;
+		$page_first_url = get_playback_manager_list_url($parames2);
+		$parames2['page'] = $page_total;
+		$page_last_url = get_playback_manager_list_url($parames2);
 		for($i=1;$i<=$page_total;++$i)
 		{
 			$item = array();
@@ -201,11 +210,14 @@ class C_playback extends MY_Controller {
 		$data['page_next_active'] = $page_next_active;
 		$data['page_pre_url'] = $page_pre_url;
 		$data['page_next_url'] = $page_next_url;
+		$data['page_first_url'] = $page_first_url;
+		$data['page_last_url'] = $page_last_url;
 		$data['status_list'] = $status_list;
 //		$data['search_type_list'] = $search_type_list;
 		$data['search_text'] = isset($parames3['F_user_real_name'])?$parames3['F_user_real_name']:"";
 		$data['set_playback_active_uri'] = my_site_url("c_playback/playback_active");
 		$data['set_playback_deactive_uri'] = my_site_url("c_playback/playback_deactive");
+		$data['date'] = $parames['date'];
 
 		$this->_output_view("playback/v_manager", $data);
 	}

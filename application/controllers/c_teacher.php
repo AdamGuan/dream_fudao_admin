@@ -45,6 +45,18 @@ class C_teacher extends MY_Controller {
 		{
 			$parames['is_view_model'] = 1;
 		}
+		if(!isset($parames['F_grade']))
+		{
+			$parames['F_grade'] = 0;
+		}
+		if(!isset($parames['F_subject_id']))
+		{
+			$parames['F_subject_id'] = 0;
+		}
+		if(!isset($parames['F_login']))
+		{
+			$parames['F_login'] = -2;
+		}
 		$this->session->set_userdata('is_view_model', $parames['is_view_model']);
 
 		$this -> load -> model('M_teacher', 'mteacher');
@@ -69,6 +81,11 @@ class C_teacher extends MY_Controller {
 		$page_pre_url =  "#";
 		$page_next_active =  true;
 		$page_next_url =  "#";
+		$tmp = $parames;
+		$tmp['page'] = 1;
+		$page_first_url = get_teacher_manager_list_url($tmp);
+		$tmp['page'] = $page_total;
+		$page_last_url = get_teacher_manager_list_url($tmp);
 		for($i=1;$i<=$page_total;++$i)
 		{
 			$item = array();
@@ -106,7 +123,7 @@ class C_teacher extends MY_Controller {
 		{
 			if(check_privity($item['privity']))
 			{
-				$it = array('key'=>get_teacher_manager_list_url(array('type'=>$item['id'])),'value'=>$item['text'],
+				$it = array('key'=>get_teacher_manager_list_url(array('type'=>$item['id'],'F_grade'=>$parames['F_grade'],'F_subject_id'=>$parames['F_subject_id'],'F_login'=>$parames['F_login'])),'value'=>$item['text'],
 					'active'=>false);
 				if((int)$parames['type'] == $item['id'])
 				{
@@ -128,6 +145,44 @@ class C_teacher extends MY_Controller {
 				'active'=>false
 			)
 		);
+		//set teacher grade list
+		$grade_list = array(array('key'=>get_teacher_manager_list_url(array('type'=>$parames['type'],'F_grade'=>'0','F_subject_id'=>$parames['F_subject_id'],'F_login'=>$parames['F_login'])),'value'=>'所有年级','active'=>true));
+		foreach($this->my_config['grade_list'] as $key=>$item)
+		{
+			$it = array('key'=>get_teacher_manager_list_url(array('type'=>$parames['type'],'F_grade'=>$key,'F_subject_id'=>$parames['F_subject_id'],'F_login'=>$parames['F_login'])),'value'=>$item,'active'=>false);
+			if((int)$parames['F_grade'] == $key)
+			{
+				$grade_list[0]['active'] = false;
+				$it['active'] = true;
+			}
+			$grade_list[] = $it;
+		}
+		//set teacher subject list
+		$subject_list = array(array('key'=>get_teacher_manager_list_url(array('type'=>$parames['type'],'F_grade'=>$parames['F_grade'],'F_subject_id'=>'0','F_login'=>$parames['F_login'])),'value'=>'所有科目','active'=>true));
+		foreach($this->my_config['subject_list'] as $key=>$item)
+		{
+			$it = array('key'=>get_teacher_manager_list_url(array('type'=>$parames['type'],'F_grade'=>$parames['F_grade'],'F_subject_id'=>$key,'F_login'=>$parames['F_login'])),'value'=>$item,'active'=>false);
+			if((int)$parames['F_subject_id'] == $key)
+			{
+				$subject_list[0]['active'] = false;
+				$it['active'] = true;
+			}
+			$subject_list[] = $it;
+		}
+		//set teacher F_login list
+		$tmp = array('2'=>'辅导中','-1'=>'在线','0'=>'离线');
+		$login_list = array(array('key'=>get_teacher_manager_list_url(array('type'=>$parames['type'],'F_grade'=>$parames['F_grade'],'F_subject_id'=>$parames['F_subject_id'],'F_login'=>-2)),'value'=>'全部在线&离线','active'=>true));
+		foreach($tmp as $key=>$item)
+		{
+			$it = array('key'=>get_teacher_manager_list_url(array('type'=>$parames['type'],'F_grade'=>$parames['F_grade'],'F_subject_id'=>$parames['F_subject_id'],'F_login'=>$key)),'value'=>$item,'active'=>false);
+			if((int)$parames['F_login'] == $key)
+			{
+				$login_list[0]['active'] = false;
+				$it['active'] = true;
+			}
+			$login_list[] = $it;
+		}
+
 		$tmp = $parames;
 		$tmp['is_view_model'] = -1;
 		$view_model_list[0]['key'] = get_teacher_manager_list_url($tmp);
@@ -149,7 +204,12 @@ class C_teacher extends MY_Controller {
 		$data['page_next_active'] = $page_next_active;
 		$data['page_pre_url'] = $page_pre_url;
 		$data['page_next_url'] = $page_next_url;
+		$data['page_first_url'] = $page_first_url;
+		$data['page_last_url'] = $page_last_url;
 		$data['status_list'] = $status_list;
+		$data['grade_list'] = $grade_list;
+		$data['subject_list'] = $subject_list;
+		$data['login_list'] = $login_list;
 		$data['teacher_freeze_uri'] = my_site_url("c_teacher/teacher_freeze");
 		$data['teacher_delete_uri'] = my_site_url("c_teacher/teacher_delete");
 		$data['teacher_active_uri'] = my_site_url("c_teacher/teacher_active");
@@ -221,6 +281,11 @@ class C_teacher extends MY_Controller {
 		$page_pre_url =  "#";
 		$page_next_active =  true;
 		$page_next_url =  "#";
+		$tmp = $parames;
+		$tmp['page'] = 1;
+		$page_first_url = get_test_teacher_manager_list_url($tmp);
+		$tmp['page'] = $page_total;
+		$page_last_url = get_test_teacher_manager_list_url($tmp);
 		for($i=1;$i<=$page_total;++$i)
 		{
 			$item = array();
@@ -286,6 +351,8 @@ class C_teacher extends MY_Controller {
 		$data['page_next_active'] = $page_next_active;
 		$data['page_pre_url'] = $page_pre_url;
 		$data['page_next_url'] = $page_next_url;
+		$data['page_first_url'] = $page_first_url;
+		$data['page_last_url'] = $page_last_url;
 //		$data['teacher_freeze_uri'] = my_site_url("c_teacher/teacher_freeze");
 		$data['teacher_delete_uri'] = my_site_url("c_teacher/teacher_delete");
 //		$data['teacher_active_uri'] = my_site_url("c_teacher/teacher_active");
@@ -644,6 +711,7 @@ class C_teacher extends MY_Controller {
 			top_redirect($result['redirect_url']);
 		}
 		//检查是否有权限
+		
 		if($this->_check_privity(__CLASS__,"teacher_add") === false)
 		{
 			redirect_to_no_privity_page();
@@ -671,6 +739,7 @@ class C_teacher extends MY_Controller {
 			}
 			$this->session->set_flashdata('do', 'success');
 		}
+		
 		$this->_ajax_echo($data);
 	}
 

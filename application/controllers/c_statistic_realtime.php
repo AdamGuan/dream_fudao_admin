@@ -39,6 +39,14 @@ class C_statistic_realtime extends MY_Controller {
 			array('key'=>get_controll_url("c_statistic_realtime/index",array("type"=>3)),'value'=>'在线人数'),
 		);
 		$type_list[$parames['type']]['selected'] = "selected";
+		//设置学生总人数,在线人数,辅导中 的url
+		$student_total_url = get_student_manager_list_url(array('F_login'=>-2));
+		$student_online_url = get_student_manager_list_url(array('F_login'=>-1));
+		$student_teaching_url = get_student_manager_list_url(array('F_login'=>2));
+		//设置老师总人数,在线人数,辅导中 的url
+		$teacher_total_url = get_teacher_manager_list_url(array('F_login'=>-2));
+		$teacher_online_url = get_teacher_manager_list_url(array('F_login'=>-1));
+		$teacher_teaching_url = get_teacher_manager_list_url(array('F_login'=>2));
 
 		//data
 		$data = $this->_get_data(__CLASS__,__METHOD__);
@@ -46,6 +54,12 @@ class C_statistic_realtime extends MY_Controller {
 		$data['result'] = $result;
 		$data['type_list'] = $type_list;
 		$data['js_list'] = array(get_assets_js_url("Highcharts-4.0.3/js/highcharts.js"));
+		$data['student_total_url'] = $student_total_url;
+		$data['student_online_url'] = $student_online_url;
+		$data['student_teaching_url'] = $student_teaching_url;
+		$data['teacher_total_url'] = $teacher_total_url;
+		$data['teacher_online_url'] = $teacher_online_url;
+		$data['teacher_teaching_url'] = $teacher_teaching_url;
 		$this->_output_view("statistic_realtime/v_index", $data);
 	}
 

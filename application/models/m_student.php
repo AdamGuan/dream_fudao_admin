@@ -37,6 +37,14 @@ class M_student extends MY_Model {
 		{
 			$data['F_user_name'] = $parames['F_user_name'];
 		}
+		if(isset($parames['F_grade']))
+		{
+			$data['F_grade'] = $parames['F_grade'];
+		}
+		if(isset($parames['F_login']))
+		{
+			$data['F_login'] = $parames['F_login'];
+		}
 
 		$result = api_curl($this->my_config['api_uri'], $data, "GET",$this->my_config['api_key']);
 		$result = json_decode($result,true);
@@ -75,6 +83,32 @@ class M_student extends MY_Model {
 			}
 		}
 		return false;
+	}
+
+	public function get_a_student_teaching_info($parames = array()){
+		$return = array('total'=>0,'list'=>array());
+		if(isset($parames['student_id']) && strlen($parames['student_id']) > 0)
+		{
+			$data = array('version'=>$this->my_config['api_version'],'c'=>'statistics_student','offset'=>0,'limit'=>10000);
+			$data['m'] = 'get_a_student_all_teaching_info';
+			$data['student_id'] = $parames['student_id'];
+			if(isset($parames['page']))
+			{
+				$data['offset'] = ((int)$parames['page']-1)*$this->my_config['page'];
+				$data['limit'] = $this->my_config['page'];
+			}
+			
+			//curl
+			
+			$result = api_curl($this->my_config['api_uri'], $data, "GET",$this->my_config['api_key']);
+			$result = json_decode($result,true);
+			if(is_array($result) && isset($result['responseNo'],$result['list'],$result['total']) && $result['responseNo'] == 0)
+			{
+				$return['list'] = $result['list'];
+				$return['total'] = $result['total'];
+			}
+		}
+		return $return;
 	}
 
 }

@@ -124,6 +124,31 @@ function get_exception_manager_list_url($parames = array()) {
 	return my_site_url("c_exception/manager",$parames);
 }
 
+function get_statistic_teacher_list_url($parames = array()) {
+	return my_site_url("c_statistic_teacher/index",$parames);
+}
+
+function get_statistic_student_teaching_info_timesection_url($parames = array()) {
+	return my_site_url("c_statistic_student/teaching_info_timesection",$parames);
+}
+
+function get_statistic_student_all_teaching_info_timesection_url($parames = array()) {
+	return my_site_url("c_statistic_student/all_teaching_info_timesection",$parames);
+}
+
+function get_statistic_student_list_url($parames = array()) {
+	return my_site_url("c_statistic_student/index",$parames);
+}
+
+function get_a_student_teaching_info_url($parames = array()) {
+	return my_site_url("c_student/get_a_student_teaching_info",$parames);
+}
+
+function get_statistics_teaching_url($parames = array()) {
+	return my_site_url("c_statistic_teaching/index",$parames);
+}
+
+
 /**
  * 获取login_valid url.
  *

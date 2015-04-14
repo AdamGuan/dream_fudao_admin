@@ -1,5 +1,5 @@
 <div class="am-g">
-	<div class="am-u-md-6 am-cf">
+	<div class="am-u-md-7 am-cf">
 		<div class="am-fl am-cf">
 			<div class="am-btn-toolbar am-fl">
 				<div class="am-btn-group am-btn-group-xs">
@@ -41,6 +41,51 @@
 				<div class="am-form-group am-margin-left am-fl">
 					<select id="view_type_choose">
 						<?php foreach($view_model_list as $item){
+							$selected = '';
+							if(isset($item['active']) && $item['active'])
+							{
+								$selected = 'selected="selected"';
+							}
+							echo '<option value="'.$item['key'].'" '.$selected.'>'.$item['value'].'</option>';
+						}?>
+					</select>
+				</div>
+				<?php }?>
+
+				<?php if(is_array($grade_list) && count($grade_list) > 0){?>
+				<div class="am-form-group am-margin-left am-fl">
+					<select id="teacher_grade_choose">
+						<?php foreach($grade_list as $item){
+							$selected = '';
+							if(isset($item['active']) && $item['active'])
+							{
+								$selected = 'selected="selected"';
+							}
+							echo '<option value="'.$item['key'].'" '.$selected.'>'.$item['value'].'</option>';
+						}?>
+					</select>
+				</div>
+				<?php }?>
+
+				<?php if(is_array($subject_list) && count($subject_list) > 0){?>
+				<div class="am-form-group am-margin-left am-fl">
+					<select id="teacher_subject_choose">
+						<?php foreach($subject_list as $item){
+							$selected = '';
+							if(isset($item['active']) && $item['active'])
+							{
+								$selected = 'selected="selected"';
+							}
+							echo '<option value="'.$item['key'].'" '.$selected.'>'.$item['value'].'</option>';
+						}?>
+					</select>
+				</div>
+				<?php }?>
+
+				<?php if(is_array($login_list) && count($login_list) > 0){?>
+				<div class="am-form-group am-margin-left am-fl">
+					<select id="teacher_login_choose">
+						<?php foreach($login_list as $item){
 							$selected = '';
 							if(isset($item['active']) && $item['active'])
 							{
@@ -154,6 +199,7 @@
 	共 <?php echo $teacher_total;?> 条记录
 	<div class="am-fr">
 		<ul class="am-pagination">
+			<li><a href="<?php echo $page_first_url;?>">First</a></li>
 			<?php $page_pre_class = "am-disabled";if($page_pre_active){$page_pre_class = "";} ?>
 			<?php $page_next_class = "am-disabled";if($page_next_active){$page_next_class = "";} ?>
 			<li class="<?php echo $page_pre_class;?>"><a href="<?php echo $page_pre_url;?>">«</a></li>
@@ -166,6 +212,7 @@
 				echo '<li class="'.$class.'"><a href="'.$page['url'].'">'.$page['page'].'</a></li>';
 			}?>
 			<li class="<?php echo $page_next_class;?>"><a href="<?php echo $page_next_url;?>">»</a></li>
+			<li><a href="<?php echo $page_last_url;?>">Last</a></li>
 		</ul>
 	</div>
 </div>

@@ -80,6 +80,12 @@ $config['data'] = array(
 					'text'=>'学生统计',
 					'link'=>'c_statistic_student/index',
 					'active'=>0
+				),
+				array(
+					'prefix_class'=>'am-icon-list',
+					'text'=>'辅导统计',
+					'link'=>'c_statistic_teaching/index',
+					'active'=>0
 				)
 			)
 		),
@@ -256,6 +262,10 @@ $config['data'] = array(
 				array(
 					'text'=>'学生统计',
 					'link'=>'c_statistic_student/index',
+				),
+				array(
+					'text'=>'辅导统计',
+					'link'=>'c_statistic_teaching/index',
 				)
 			)
 		),
@@ -350,6 +360,12 @@ $config['data'] = array(
 					'parames'=>array(),
 					'prefix_class'=>'am-icon-list',
 				),
+				array(
+					'title'=>'辅导统计',
+					'action'=>'c_statistic_teaching/index',
+					'parames'=>array(),
+					'prefix_class'=>'am-icon-list',
+				)
 			)
 		),
 		array(

@@ -44,6 +44,7 @@
 	共 <?php echo $playback_total;?> 条记录
 	<div class="am-fr">
 		<ul class="am-pagination">
+			<li><a href="<?php echo $page_first_url;?>">First</a></li>
 			<?php $page_pre_class = "am-disabled";if($page_pre_active){$page_pre_class = "";} ?>
 			<?php $page_next_class = "am-disabled";if($page_next_active){$page_next_class = "";} ?>
 			<li class="<?php echo $page_pre_class;?>"><a href="<?php echo $page_pre_url;?>">«</a></li>
@@ -56,6 +57,7 @@
 				echo '<li class="'.$class.'"><a href="'.$page['url'].'">'.$page['page'].'</a></li>';
 			}?>
 			<li class="<?php echo $page_next_class;?>"><a href="<?php echo $page_next_url;?>">»</a></li>
+			<li><a href="<?php echo $page_last_url;?>">Last</a></li>
 		</ul>
 	</div>
 </div>
